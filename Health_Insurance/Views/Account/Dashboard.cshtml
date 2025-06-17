@@ -280,6 +280,11 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
             <h2 class="h3 fw-bold text-gray-800 mb-4">Organization Management</h2>
             <div class="card mb-4 p-3">
                 <h3 class="h5 fw-semibold text-gray-700 mb-3">Registered Organizations</h3>
+
+                <div class="mb-3">
+                    <input type="text" id="organizationNameSearchInput" class="form-control" placeholder="Search by Organization Name..." onkeyup="applyOrganizationNameSearch()">
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead class="bg-light">
@@ -288,17 +293,14 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                                 <th>Name</th>
                                 <th>Contact Person</th>
                                 <th>Contact Email</th>
-                                
                             </tr>
                         </thead>
                         <tbody id="organizationsTableBody">
-                            <!-- Data will be populated by JavaScript -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
         <!-- Claims Section -->
         <div id="claims-section" class="dashboard-section" style="display: none;">
             <h2 class="h3 fw-bold text-gray-800 mb-4">Claims Management</h2>
@@ -353,6 +355,7 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
         let organizationsData = [];
         let currentPolicyNameSearchTerm = '';
         let currentPolicyTypeFilter = 'All';
+        let currentOrganizationNameSearchTerm = '';
 
         // --- Chart Instances ---
         let claimsStatusChartInstance = null;
@@ -539,29 +542,42 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
         }
 
         // Render function for Organizations Section
-        async function renderOrganizationsSection() {
-            // Data is already fetched by fetchDashboardData()
+                        function renderOrganizationsSection() {
             const tableBody = document.getElementById('organizationsTableBody');
             tableBody.innerHTML = ''; // Clear previous data
 
-            if (organizationsData.length === 0) {
+            // Apply filtering based on current search term
+            let filteredOrganizations = organizationsData.filter(org => {
+                // Ensure org.name exists before calling toLowerCase()
+                const orgName = org.name ? org.name.toLowerCase() : '';
+                const searchTerm = currentOrganizationNameSearchTerm.toLowerCase();
+                return orgName.includes(searchTerm);
+            });
+
+            if (filteredOrganizations.length === 0) {
                 const row = tableBody.insertRow();
-                row.innerHTML = `<td colspan="5" class="text-center text-muted py-4">No organizations found.</td>`;
+                // Adjust colspan based on your actual number of columns in the HTML <thead>
+                row.innerHTML = `<td colspan="4" class="text-center text-muted py-4">No organizations found matching your search.</td>`;
                 return;
             }
 
-            organizationsData.forEach(org => {
+            filteredOrganizations.forEach(org => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td>${org.id}</td>
-                    <td><a href="#" class="text-primary fw-medium">${org.name || 'N/A'}</a></td>
+                    <td>${org.id || 'N/A'}</td>
+                    <td>${org.name || 'N/A'}</td>
                     <td>${org.contactPerson || 'N/A'}</td>
                     <td>${org.contactEmail || 'N/A'}</td>
-                    
-                `;
+                    `;
             });
         }
 
+        // NEW: Function to be called on keyup event from the search input
+        function applyOrganizationNameSearch() {
+            const searchInput = document.getElementById('organizationNameSearchInput');
+            currentOrganizationNameSearchTerm = searchInput ? searchInput.value : '';
+            renderOrganizationsSection(); // Re-render the table with the new search term
+        }
         async function renderClaimsSection(filterStatus = 'All') {
             // Data is already fetched by fetchDashboardData()
             renderClaimsTrendChart(); // Ensure this chart is always rendered for the claims section
