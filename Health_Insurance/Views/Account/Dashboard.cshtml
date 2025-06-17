@@ -171,7 +171,7 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
         </div>
 
         <!-- Policies Section -->
-        <div id="policies-section" class="dashboard-section" style="display: none;">
+        @* <div id="policies-section" class="dashboard-section" style="display: none;">
             <h2 class="h3 fw-bold text-gray-800 mb-4">Policy Management</h2>
             <div class="card mb-4 p-3">
                 <h3 class="h5 fw-semibold text-gray-700 mb-3">All Active Policies</h3>
@@ -189,6 +189,43 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                         </thead>
                         <tbody id="policiesTableBody">
                             <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> *@
+
+        <div id="policies-section" class="dashboard-section" style="display: none;">
+            <h2 class="h3 fw-bold text-gray-800 mb-4">Policy Management</h2>
+            <div class="card mb-4 p-3">
+                <h3 class="h5 fw-semibold text-gray-700 mb-3">All Active Policies</h3>
+
+                <div class="row mb-3 align-items-center">
+                    <div class="col-md-5">
+                        <input type="text" id="policyNameSearchInput" class="form-control" placeholder="Search policies by name..." onkeyup="applyPolicyFilters()">
+                    </div>
+                    <div class="col-md-4">
+                        <select id="policyTypeFilter" class="form-select" onchange="applyPolicyFilters()">
+                            <option value="All">All Types</option>
+                            <option value="Individual">Individual</option>
+                            <option value="Family Floater">Family Floater</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 text-end">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Policy ID</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Coverage</th>
+                                <th>Premium</th>
+                            </tr>
+                        </thead>
+                        <tbody id="policiesTableBody">
                         </tbody>
                     </table>
                 </div>
@@ -239,30 +276,6 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
         </div>
 
         @* <!-- Organizations Section -->
-        <div id="organizations-section" class="dashboard-section" style="display: none;">
-            <h2 class="h3 fw-bold text-gray-800 mb-4">Organization Management</h2>
-            <div class="card mb-4 p-3">
-                <h3 class="h5 fw-semibold text-gray-700 mb-3">Registered Organizations</h3>
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped">
-                        <thead class="bg-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Contact Person</th>
-                                <th>Contact Email</th>
-
-                            </tr>
-                        </thead>
-                        <tbody id="organizationsTableBody">
-                            <!-- Data will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> *@
-
-
         <div id="organizations-section" class="dashboard-section" style="display: none;">
             <h2 class="h3 fw-bold text-gray-800 mb-4">Organization Management</h2>
             <div class="card mb-4 p-3">
@@ -334,13 +347,15 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
     <script>
-                // --- Data Variables (will be populated by API calls) ---
-                let policiesData = [];
-                let employeesData = [];
-                let claimsData = [];
-                let claimsTrendData = [];
-                let organizationsData = [];
-                        let organizationsChartInstance = null; // If you have an org chart
+        // --- Data Variables (will be populated by API calls) ---
+        let policiesData = [];
+        let employeesData = [];
+        let claimsData = [];
+        let claimsTrendData = [];
+        let organizationsData = [];
+        let currentPolicyNameSearchTerm = '';
+        let currentPolicyTypeFilter = 'All';
+        let currentOrganizationNameSearchTerm = '';
 
         // NEW: Global variable for the search term
         let currentOrganizationNameSearchTerm = '';
@@ -426,7 +441,7 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                 }
 
 
-                // --- Render Functions (updated to use fetched data) ---
+        // --- Render Functions (updated to use fetched data)  ---
 
                 async function renderOverviewSection() {
                     // Data is already fetched by fetchDashboardData()
@@ -450,34 +465,57 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                     renderRecentPendingClaimsTable();
                 }
 
-                async function renderPoliciesSection() {
-                    // Data is already fetched by fetchDashboardData()
-                    const tableBody = document.getElementById('policiesTableBody');
-                    tableBody.innerHTML = ''; // Clear previous data
+               function renderPoliciesSection() {
+            const tableBody = document.getElementById('policiesTableBody');
+            tableBody.innerHTML = ''; // Clear previous data
 
-                    if (policiesData.length === 0) {
-                        const row = tableBody.insertRow();
-                        row.innerHTML = `<td colspan="6" class="text-center text-muted py-4">No policies found.</td>`;
-                        return;
-                    }
+            let filteredPolicies = policiesData.filter(policy => {
+                // Search by Name (case-insensitive)
+                const matchesName = policy.name
+                                    ? policy.name.toLowerCase().includes(currentPolicyNameSearchTerm.toLowerCase())
+                                    : false;
 
-                    policiesData.forEach(policy => {
-                        const row = tableBody.insertRow();
-                        row.innerHTML = `
-                            <td>${policy.id}</td>
-                            <td><a href="#" class="text-primary fw-medium">${policy.name || 'N/A'}</a></td>
-                            <td>${policy.type || 'N/A'}</td>
-                            <td>${policy.coverage || 'N/A'}</td>
-                            <td>${formatCurrency(policy.premium)}</td>
+                // Filter by Type (case-insensitive)
+                const matchesType = currentPolicyTypeFilter === 'All' ||
+                                    (policy.type && policy.type.toLowerCase() === currentPolicyTypeFilter.toLowerCase());
 
-                        `;
-                    });
-                }
+                return matchesName && matchesType;
+            });
 
-                async function renderEmployeesSection() {
-                    // Data is already fetched by fetchDashboardData()
-                    renderEmployeeEnrollmentChart();
-                    renderEmployeesByDepartmentChart();
+            if (filteredPolicies.length === 0) {
+                const row = tableBody.insertRow();
+                // Adjust colspan based on your actual number of columns in the HTML <thead>
+                // (Policy ID, Name, Type, Coverage, Premium = 5 columns)
+                row.innerHTML = `<td colspan="5" class="text-center text-muted py-4">No policies found matching your criteria.</td>`;
+                return;
+            }
+
+            filteredPolicies.forEach(policy => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${policy.id || 'N/A'}</td>
+                    <td>${policy.name || 'N/A'}</td>
+                    <td>${policy.type || 'N/A'}</td>
+                    <td>${formatCurrency(policy.coverage) || 'N/A'}</td>
+                    <td>${formatCurrency(policy.premium) || 'N/A'}</td>
+                    `;
+            });
+        }
+
+        // NEW: Function to apply policy filters and search
+        function applyPolicyFilters() {
+            const policyNameInput = document.getElementById('policyNameSearchInput');
+            const policyTypeSelect = document.getElementById('policyTypeFilter');
+
+            currentPolicyNameSearchTerm = policyNameInput ? policyNameInput.value : '';
+            currentPolicyTypeFilter = policyTypeSelect ? policyTypeSelect.value : 'All';
+
+            renderPoliciesSection(); // Re-render the table with the new filters
+        }
+        async function renderEmployeesSection() {
+            // Data is already fetched by fetchDashboardData()
+            renderEmployeeEnrollmentChart();
+            renderEmployeesByDepartmentChart();
 
                     const tableBody = document.getElementById('employeesTableBody');
                     tableBody.innerHTML = ''; // Clear previous data
@@ -505,8 +543,9 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                     });
                 }
 
-                // Render function for Organizations Section
-                       function renderOrganizationsSection() {
+        // Render function for Organizations Section
+                        function renderOrganizationsSection() {
+            // Data is already fetched by fetchDashboardData()
             const tableBody = document.getElementById('organizationsTableBody');
             tableBody.innerHTML = ''; // Clear previous data
 
@@ -535,17 +574,16 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                     `;
             });
         }
-
         // NEW: Function to be called on keyup event from the search input
         function applyOrganizationNameSearch() {
             const searchInput = document.getElementById('organizationNameSearchInput');
             currentOrganizationNameSearchTerm = searchInput ? searchInput.value : '';
             renderOrganizationsSection(); // Re-render the table with the new search term
         }
-
-                async function renderClaimsSection(filterStatus = 'All') {
-                    // Data is already fetched by fetchDashboardData()
-                    renderClaimsTrendChart(); // Ensure this chart is always rendered for the claims section
+        async function renderClaimsSection(filterStatus = 'All') {
+            // Data is already fetched by fetchDashboardData()
+            renderClaimsTrendChart(); // Ensure this chart is always rendered for the claims section
+            renderClaimsTrendChart(); // Ensure this chart is always rendered for the claims section
 
                     const tableBody = document.getElementById('claimsTableBody');
                     tableBody.innerHTML = ''; // Clear previous data
