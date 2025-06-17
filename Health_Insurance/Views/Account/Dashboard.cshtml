@@ -184,7 +184,7 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                                 <th>Type</th>
                                 <th>Coverage</th>
                                 <th>Premium</th>
-
+                                
                             </tr>
                         </thead>
                         <tbody id="policiesTableBody">
@@ -275,7 +275,7 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
             </div>
         </div>
 
-        @* <!-- Organizations Section -->
+        <!-- Organizations Section -->
         <div id="organizations-section" class="dashboard-section" style="display: none;">
             <h2 class="h3 fw-bold text-gray-800 mb-4">Organization Management</h2>
             <div class="card mb-4 p-3">
@@ -347,18 +347,16 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
     <script>
-        // --- Data Variables (will be populated by API calls) ---
-        let policiesData = [];
-        let employeesData = [];
-        let claimsData = [];
-        let claimsTrendData = [];
-        let organizationsData = [];
-        let currentPolicyNameSearchTerm = '';
-        let currentPolicyTypeFilter = 'All';
-        let currentOrganizationNameSearchTerm = '';
+                // --- Data Variables (will be populated by API calls) ---
+                let policiesData = [];
+                let employeesData = [];
+                let claimsData = [];
+                let claimsTrendData = [];
+                let organizationsData = [];
+                let currentPolicyNameSearchTerm = '';
+                let currentPolicyTypeFilter = 'All';
+                let currentOrganizationNameSearchTerm = '';
 
-        // NEW: Global variable for the search term
-        let currentOrganizationNameSearchTerm = '';
                 // --- Chart Instances ---
                 let claimsStatusChartInstance = null;
                 let claimsByPolicyTypeChartInstance = null;
@@ -441,7 +439,7 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                 }
 
 
-        // --- Render Functions (updated to use fetched data)  ---
+                // --- Render Functions (updated to use fetched data)  ---
 
                 async function renderOverviewSection() {
                     // Data is already fetched by fetchDashboardData()
@@ -465,57 +463,57 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                     renderRecentPendingClaimsTable();
                 }
 
-               function renderPoliciesSection() {
-            const tableBody = document.getElementById('policiesTableBody');
-            tableBody.innerHTML = ''; // Clear previous data
+                       function renderPoliciesSection() {
+                    const tableBody = document.getElementById('policiesTableBody');
+                    tableBody.innerHTML = ''; // Clear previous data
 
-            let filteredPolicies = policiesData.filter(policy => {
-                // Search by Name (case-insensitive)
-                const matchesName = policy.name
-                                    ? policy.name.toLowerCase().includes(currentPolicyNameSearchTerm.toLowerCase())
-                                    : false;
+                    let filteredPolicies = policiesData.filter(policy => {
+                        // Search by Name (case-insensitive)
+                        const matchesName = policy.name
+                                            ? policy.name.toLowerCase().includes(currentPolicyNameSearchTerm.toLowerCase())
+                                            : false;
 
-                // Filter by Type (case-insensitive)
-                const matchesType = currentPolicyTypeFilter === 'All' ||
-                                    (policy.type && policy.type.toLowerCase() === currentPolicyTypeFilter.toLowerCase());
+                        // Filter by Type (case-insensitive)
+                        const matchesType = currentPolicyTypeFilter === 'All' ||
+                                            (policy.type && policy.type.toLowerCase() === currentPolicyTypeFilter.toLowerCase());
 
-                return matchesName && matchesType;
-            });
+                        return matchesName && matchesType;
+                    });
 
-            if (filteredPolicies.length === 0) {
-                const row = tableBody.insertRow();
-                // Adjust colspan based on your actual number of columns in the HTML <thead>
-                // (Policy ID, Name, Type, Coverage, Premium = 5 columns)
-                row.innerHTML = `<td colspan="5" class="text-center text-muted py-4">No policies found matching your criteria.</td>`;
-                return;
-            }
+                    if (filteredPolicies.length === 0) {
+                        const row = tableBody.insertRow();
+                        // Adjust colspan based on your actual number of columns in the HTML <thead>
+                        // (Policy ID, Name, Type, Coverage, Premium = 5 columns)
+                        row.innerHTML = `<td colspan="5" class="text-center text-muted py-4">No policies found matching your criteria.</td>`;
+                        return;
+                    }
 
-            filteredPolicies.forEach(policy => {
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${policy.id || 'N/A'}</td>
-                    <td>${policy.name || 'N/A'}</td>
-                    <td>${policy.type || 'N/A'}</td>
-                    <td>${formatCurrency(policy.coverage) || 'N/A'}</td>
-                    <td>${formatCurrency(policy.premium) || 'N/A'}</td>
-                    `;
-            });
-        }
+                    filteredPolicies.forEach(policy => {
+                        const row = tableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${policy.id || 'N/A'}</td>
+                            <td>${policy.name || 'N/A'}</td>
+                            <td>${policy.type || 'N/A'}</td>
+                            <td>${formatCurrency(policy.coverage) || 'N/A'}</td>
+                            <td>${formatCurrency(policy.premium) || 'N/A'}</td>
+                            `;
+                    });
+                }
 
-        // NEW: Function to apply policy filters and search
-        function applyPolicyFilters() {
-            const policyNameInput = document.getElementById('policyNameSearchInput');
-            const policyTypeSelect = document.getElementById('policyTypeFilter');
+                // NEW: Function to apply policy filters and search
+                function applyPolicyFilters() {
+                    const policyNameInput = document.getElementById('policyNameSearchInput');
+                    const policyTypeSelect = document.getElementById('policyTypeFilter');
 
-            currentPolicyNameSearchTerm = policyNameInput ? policyNameInput.value : '';
-            currentPolicyTypeFilter = policyTypeSelect ? policyTypeSelect.value : 'All';
+                    currentPolicyNameSearchTerm = policyNameInput ? policyNameInput.value : '';
+                    currentPolicyTypeFilter = policyTypeSelect ? policyTypeSelect.value : 'All';
 
-            renderPoliciesSection(); // Re-render the table with the new filters
-        }
-        async function renderEmployeesSection() {
-            // Data is already fetched by fetchDashboardData()
-            renderEmployeeEnrollmentChart();
-            renderEmployeesByDepartmentChart();
+                    renderPoliciesSection(); // Re-render the table with the new filters
+                }
+                async function renderEmployeesSection() {
+                    // Data is already fetched by fetchDashboardData()
+                    renderEmployeeEnrollmentChart();
+                    renderEmployeesByDepartmentChart();
 
                     const tableBody = document.getElementById('employeesTableBody');
                     tableBody.innerHTML = ''; // Clear previous data
@@ -543,46 +541,46 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                     });
                 }
 
-        // Render function for Organizations Section
-                        function renderOrganizationsSection() {
-            const tableBody = document.getElementById('organizationsTableBody');
-            tableBody.innerHTML = ''; // Clear previous data
+                // Render function for Organizations Section
+                                function renderOrganizationsSection() {
+                    const tableBody = document.getElementById('organizationsTableBody');
+                    tableBody.innerHTML = ''; // Clear previous data
 
-            // Apply filtering based on current search term
-            let filteredOrganizations = organizationsData.filter(org => {
-                // Ensure org.name exists before calling toLowerCase()
-                const orgName = org.name ? org.name.toLowerCase() : '';
-                const searchTerm = currentOrganizationNameSearchTerm.toLowerCase();
-                return orgName.includes(searchTerm);
-            });
+                    // Apply filtering based on current search term
+                    let filteredOrganizations = organizationsData.filter(org => {
+                        // Ensure org.name exists before calling toLowerCase()
+                        const orgName = org.name ? org.name.toLowerCase() : '';
+                        const searchTerm = currentOrganizationNameSearchTerm.toLowerCase();
+                        return orgName.includes(searchTerm);
+                    });
 
-            if (filteredOrganizations.length === 0) {
-                const row = tableBody.insertRow();
-                // Adjust colspan based on your actual number of columns in the HTML <thead>
-                row.innerHTML = `<td colspan="4" class="text-center text-muted py-4">No organizations found matching your search.</td>`;
-                return;
-            }
+                    if (filteredOrganizations.length === 0) {
+                        const row = tableBody.insertRow();
+                        // Adjust colspan based on your actual number of columns in the HTML <thead>
+                        row.innerHTML = `<td colspan="4" class="text-center text-muted py-4">No organizations found matching your search.</td>`;
+                        return;
+                    }
 
-            filteredOrganizations.forEach(org => {
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${org.id || 'N/A'}</td>
-                    <td>${org.name || 'N/A'}</td>
-                    <td>${org.contactPerson || 'N/A'}</td>
-                    <td>${org.contactEmail || 'N/A'}</td>
-                    `;
-            });
-        }
+                    filteredOrganizations.forEach(org => {
+                        const row = tableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${org.id || 'N/A'}</td>
+                            <td>${org.name || 'N/A'}</td>
+                            <td>${org.contactPerson || 'N/A'}</td>
+                            <td>${org.contactEmail || 'N/A'}</td>
+                            `;
+                    });
+                }
 
-        // NEW: Function to be called on keyup event from the search input
-        function applyOrganizationNameSearch() {
-            const searchInput = document.getElementById('organizationNameSearchInput');
-            currentOrganizationNameSearchTerm = searchInput ? searchInput.value : '';
-            renderOrganizationsSection(); // Re-render the table with the new search term
-        }
-        async function renderClaimsSection(filterStatus = 'All') {
-            // Data is already fetched by fetchDashboardData()
-            renderClaimsTrendChart(); // Ensure this chart is always rendered for the claims section
+                // NEW: Function to be called on keyup event from the search input
+                function applyOrganizationNameSearch() {
+                    const searchInput = document.getElementById('organizationNameSearchInput');
+                    currentOrganizationNameSearchTerm = searchInput ? searchInput.value : '';
+                    renderOrganizationsSection(); // Re-render the table with the new search term
+                }
+                async function renderClaimsSection(filterStatus = 'All') {
+                    // Data is already fetched by fetchDashboardData()
+                    renderClaimsTrendChart(); // Ensure this chart is always rendered for the claims section
 
                     const tableBody = document.getElementById('claimsTableBody');
                     tableBody.innerHTML = ''; // Clear previous data
