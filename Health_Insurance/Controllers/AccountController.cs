@@ -78,6 +78,7 @@ namespace Health_Insurance.Controllers
                 return View(model);
             }
 
+//here  claims is a built in thig to check the user authentication ,not in perspective of the policy claims,for generating cookie
             var claims = new List<System.Security.Claims.Claim>
             {
                 new System.Security.Claims.Claim(ClaimTypes.Name, model.Username),
@@ -127,7 +128,7 @@ namespace Health_Insurance.Controllers
             // Redirect based on role after successful login
             if (userRole == "Admin")
             {
-                return RedirectToAction("Index", "Employee");
+                return RedirectToAction("Dashboard", "Account");
             }
             else if (userRole == "Employee")
             {
