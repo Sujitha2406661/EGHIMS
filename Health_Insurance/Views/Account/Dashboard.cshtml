@@ -545,7 +545,6 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
 
         // Render function for Organizations Section
                         function renderOrganizationsSection() {
-            // Data is already fetched by fetchDashboardData()
             const tableBody = document.getElementById('organizationsTableBody');
             tableBody.innerHTML = ''; // Clear previous data
 
@@ -574,6 +573,7 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
                     `;
             });
         }
+
         // NEW: Function to be called on keyup event from the search input
         function applyOrganizationNameSearch() {
             const searchInput = document.getElementById('organizationNameSearchInput');
@@ -582,7 +582,6 @@ Layout = "~/Views/Shared/_Layout.cshtml"; // Ensure this points to your shared l
         }
         async function renderClaimsSection(filterStatus = 'All') {
             // Data is already fetched by fetchDashboardData()
-            renderClaimsTrendChart(); // Ensure this chart is always rendered for the claims section
             renderClaimsTrendChart(); // Ensure this chart is always rendered for the claims section
 
                     const tableBody = document.getElementById('claimsTableBody');
