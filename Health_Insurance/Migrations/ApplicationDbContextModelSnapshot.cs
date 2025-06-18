@@ -96,6 +96,9 @@ namespace Health_Insurance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Designation")
                         .IsRequired()
                         .HasMaxLength(50)

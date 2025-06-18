@@ -9,15 +9,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims; // Needed for User.FindFirst
 using System.Collections.Generic; // Needed for List<T>
+using System.Linq; // Required for LINQ methods like ToList(), Any()
 
 namespace Health_Insurance.Controllers
 {
-    // All actions in this controller require authentication.
     [Authorize]
     public class EnrollmentController : Controller
     {
         private readonly IEnrollmentService _enrollmentService;
-        private readonly IPremiumCalculatorService _premiumCalculatorService;
+        private readonly IPremiumCalculatorService _premiumCalculatorService; // Keep if other Enrollment actions rely on it
         private readonly ApplicationDbContext _context;
 
         public EnrollmentController(IEnrollmentService enrollmentService, IPremiumCalculatorService premiumCalculatorService, ApplicationDbContext context)
@@ -28,95 +28,104 @@ namespace Health_Insurance.Controllers
         }
 
         // GET: /Enrollment/Index
-        // Accessible to all authenticated users (Admin and Employee)
         public async Task<IActionResult> Index()
         {
             var policies = await _enrollmentService.GetAllPoliciesAsync();
 
-            // --- Logic for Employee/Admin specific dropdowns ---
             if (User.IsInRole("Employee"))
             {
                 var loggedInEmployeeIdClaim = User.FindFirst("EmployeeId")?.Value;
                 if (loggedInEmployeeIdClaim != null && int.TryParse(loggedInEmployeeIdClaim, out int actualEmployeeId))
                 {
-                    // For an Employee, only pass their own ID for implicit use.
-                    // The dropdown will be hidden in the view.
                     ViewBag.IsEmployee = true;
                     ViewBag.LoggedInEmployeeId = actualEmployeeId;
                     var employee = await _context.Employees.FindAsync(actualEmployeeId);
                     ViewBag.LoggedInEmployeeName = employee?.Name;
-                    // No need to populate a SelectList for 'all employees' for the employee view.
                 }
                 else
                 {
-                    // Fallback for an authenticated employee without an EmployeeId claim (shouldn't happen)
                     ViewBag.IsEmployee = true;
-                    ViewBag.LoggedInEmployeeId = 0; // Or handle as an error
+                    ViewBag.LoggedInEmployeeId = 0;
                     ViewBag.LoggedInEmployeeName = "Unknown Employee (Error)";
                 }
             }
-            else if (User.IsInRole("Admin"))
+            else if (User.IsInRole("Admin") || User.IsInRole("HR")) // Admins and HR can enroll multiple employees
             {
-                // For an Admin, fetch all employees to populate the dropdown
                 ViewBag.IsEmployee = false;
-                var employees = await _context.Employees.ToListAsync();
+                var employees = await _context.Employees.OrderBy(e => e.Name).ToListAsync();
                 ViewBag.EmployeeList = new SelectList(employees, "EmployeeId", "Name");
             }
-            else
+            else // Other roles or unhandled
             {
-                // Should not be reached due to [Authorize]
                 ViewBag.IsEmployee = false;
-                ViewBag.EmployeeList = new SelectList(new List<Employee>()); // Empty list
+                ViewBag.EmployeeList = new SelectList(new List<Employee>());
             }
-            // --- End Logic for Employee/Admin specific dropdowns ---
 
             return View(policies);
         }
 
-        // GET: /Enrollment/Enroll?policyId=X&employeeId=Y
-        // Accessible to all authenticated users (Admin and Employee)
-        public async Task<IActionResult> Enroll(int policyId, int employeeId)
+        // POST: /Enrollment/Enroll
+        // MODIFIED: Now accepts a list of employee IDs for multi-enrollment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // Parameters: policyId (for the specific policy), employeeIds (array of selected employee IDs)
+        public async Task<IActionResult> Enroll(int policyId, [FromForm] IEnumerable<int> employeeIds)
         {
-            // IMPORTANT: In a real application, you would verify that the 'employeeId'
-            // matches the logged-in user's EmployeeId if the user is an 'Employee'.
-            // An Admin can enroll any employee, but an Employee can only enroll themselves.
+            // If no employee IDs are selected, return a bad request or error message.
+            if (employeeIds == null || !employeeIds.Any())
+            {
+                return BadRequest("No employees selected for enrollment.");
+            }
+
+            // For Employee role, ensure they can only enroll themselves.
+            // This is a crucial server-side check for privilege escalation.
             if (User.IsInRole("Employee"))
             {
                 var loggedInEmployeeId = User.FindFirst("EmployeeId")?.Value;
-                if (loggedInEmployeeId == null || !int.TryParse(loggedInEmployeeId, out int actualEmployeeId) || actualEmployeeId != employeeId)
+                if (loggedInEmployeeId == null || !int.TryParse(loggedInEmployeeId, out int actualEmployeeId) || employeeIds.Count() != 1 || employeeIds.First() != actualEmployeeId)
                 {
-                    // Attempt by an Employee to enroll someone else or an invalid employeeId
-                    return Forbid(); // Or RedirectToAction("AccessDenied", "Account");
+                    // An employee can only enroll themselves, and only one at a time via this route.
+                    // If they attempt multi-enroll or for another ID, deny.
+                    return Forbid();
                 }
             }
 
-            var success = await _enrollmentService.EnrollEmployeeInPolicyAsync(employeeId, policyId);
+            // List to hold results of individual enrollments
+            var enrollmentResults = new List<string>();
+            bool overallSuccess = true;
 
-            if (success)
+            // Loop through each selected employee ID and attempt enrollment
+            foreach (var empId in employeeIds)
             {
-                return RedirectToAction("EnrolledPolicies", new { employeeId = employeeId });
+                var success = await _enrollmentService.EnrollEmployeeInPolicyAsync(empId, policyId);
+                if (success)
+                {
+                    var employee = await _context.Employees.FindAsync(empId);
+                    enrollmentResults.Add($"Successfully enrolled {employee?.Name ?? $"Employee ID {empId}"} into Policy ID {policyId}.");
+                }
+                else
+                {
+                    var employee = await _context.Employees.FindAsync(empId);
+                    enrollmentResults.Add($"Failed to enroll {employee?.Name ?? $"Employee ID {empId}"} into Policy ID {policyId}. (Already enrolled or invalid data)");
+                    overallSuccess = false; // Mark overall process as failed if any single enrollment fails
+                }
             }
-            else
-            {
-                ViewBag.ErrorMessage = "Enrollment failed. Please check if you are already enrolled or if the policy/employee exists.";
-                return RedirectToAction(nameof(Index));
-            }
+
+            // For AJAX calls, return a JSON response instead of a redirect.
+            // This allows the frontend JavaScript to display individual messages.
+            return Json(new { success = overallSuccess, messages = enrollmentResults });
         }
 
+
         // GET: /Enrollment/EnrolledPolicies/5
-        // Accessible to all authenticated users.
-        // An Admin can view any employee's enrollments. An Employee can only view their own.
-        //[Authorize(Roles ="Employee,Admin")]
         public async Task<IActionResult> EnrolledPolicies(int employeeId)
         {
-            // Enforce that an Employee can only view their own enrollments
             if (User.IsInRole("Employee"))
             {
                 var loggedInEmployeeId = User.FindFirst("EmployeeId")?.Value;
                 if (loggedInEmployeeId == null || !int.TryParse(loggedInEmployeeId, out int actualEmployeeId) || actualEmployeeId != employeeId)
                 {
-                    // Attempt by an Employee to view someone else's enrollments
-                    return Forbid(); // Or RedirectToAction("AccessDenied", "Account");
+                    return Forbid();
                 }
             }
 
@@ -129,20 +138,16 @@ namespace Health_Insurance.Controllers
         }
 
         // POST: /Enrollment/CancelEnrollment/5
-        // Accessible to all authenticated users.
-        // An Admin can cancel any enrollment. An Employee can only cancel their own.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CancelEnrollment(int enrollmentId, int employeeId)
         {
-            // Enforce that an Employee can only cancel their own enrollments
             if (User.IsInRole("Employee"))
             {
                 var loggedInEmployeeId = User.FindFirst("EmployeeId")?.Value;
                 if (loggedInEmployeeId == null || !int.TryParse(loggedInEmployeeId, out int actualEmployeeId) || actualEmployeeId != employeeId)
                 {
-                    // Attempt by an Employee to cancel someone else's enrollment
-                    return Forbid(); // Or RedirectToAction("AccessDenied", "Account");
+                    return Forbid();
                 }
             }
 
@@ -158,27 +163,8 @@ namespace Health_Insurance.Controllers
                 return RedirectToAction("EnrolledPolicies", new { employeeId = employeeId });
             }
         }
-
-        // POST: /Enrollment/CalculatePremium - Action to calculate premium via AJAX
-        // Accessible to all authenticated users
-        [HttpPost]
-        public async Task<IActionResult> CalculatePremium(int employeeId, int policyId)
-        {
-            // In a real application, you might verify if the employeeId belongs to the logged-in user
-            // if the user is an 'Employee' and not an 'Admin'.
-            if (User.IsInRole("Employee"))
-            {
-                var loggedInEmployeeId = User.FindFirst("EmployeeId")?.Value;
-                if (loggedInEmployeeId == null || !int.TryParse(loggedInEmployeeId, out int actualEmployeeId) || actualEmployeeId != employeeId)
-                {
-                    return Forbid(); // Attempt by an Employee to calculate for someone else
-                }
-            }
-
-            var calculatedPremium = await _premiumCalculatorService.CalculatePremiumAsync(employeeId, policyId);
-            return Json(new { premium = calculatedPremium });
-        }
     }
 }
+
 
 

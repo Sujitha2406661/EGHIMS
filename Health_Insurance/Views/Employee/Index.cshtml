@@ -32,6 +32,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Organization)
             </th>
+            <th>@Html.DisplayNameFor(model => model.Username)</th>
+            <th>@Html.DisplayNameFor(model => model.CreateDate)</th>
             <th></th> @* Column for action links (Edit, Details, Delete) *@
         </tr>
     </thead>
@@ -54,6 +56,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Organization.OrganizationName)
                 </td>
+                <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                <td>@(item.CreateDate.ToString("yyyy-MM-dd"))</td>
                 <td>
                     @* Apply Bootstrap button classes to links *@
                     <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-info">Edit</a> |
