@@ -501,3 +501,51 @@ body {
 }
 
 /*FOOTER SECTION STYLES END HERE*/
+
+
+
+
+
+
+
+
+
+
+/* Reports Dashboard Specific Styles */
+.custom-report-item {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition for hover effects */
+    padding: 1.25rem 1.5rem; /* Increase padding for a more spacious look */
+    border-color: #dee2e6 !important; /* Ensure subtle border color */
+}
+
+    .custom-report-item:hover {
+        transform: translateY(-3px); /* Lifts the item slightly on hover */
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* More pronounced shadow on hover */
+        background-color: #f8f9fa; /* Light background change on hover */
+        z-index: 1; /* Ensures hover shadow is on top */
+    }
+
+    .custom-report-item h5 {
+        font-weight: 600; /* Make headings a bit bolder */
+        display: flex; /* Use flexbox for icon alignment */
+        justify-content: space-between; /* Pushes icon to the right */
+        align-items: center; /* Vertically centers icon */
+    }
+
+    .custom-report-item p {
+        font-size: 0.95rem; /* Slightly smaller text for description */
+        line-height: 1.4;
+    }
+
+/* Ensure the last item of the list group has rounded bottom corners */
+.list-group.rounded-3 .list-group-item:last-child {
+    border-bottom-left-radius: 0.5rem !important;
+    border-bottom-right-radius: 0.5rem !important;
+}
+
+/* Ensure the first item has rounded top corners */
+.list-group.rounded-3 .list-group-item:first-child {
+    border-top-left-radius: 0.5rem !important;
+    border-top-right-radius: 0.5rem !important;
+}
+/*reports section end*/

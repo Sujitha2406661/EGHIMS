@@ -1,54 +1,199 @@
 ﻿@model Health_Insurance.Models.HREditViewModel
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit HR";
 }
 
-<h1>Edit</h1>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
-<h4>HR</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="HRId" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">Edit HR Details</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="HRId" />
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group button-group-spacing">
+                        <input type="submit" value="Save Changes" class="btn btn-primary dashboard-btn-primary" />
+                        <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn ms-2">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+<style>
+    /* General body and dashboard container styles (consistent across views) */
+    body {
+        background-color: #f4f7f6;
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+        .dashboard-header h1 {
+            margin: 0;
+            color: #343a40;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .dashboard-card-header {
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+        background-color: #f8f9fa;
+    }
+
+    .dashboard-card-title {
+        margin: 0;
+        font-size: 1.5em;
+        color: #343a40;
+    }
+
+    .dashboard-card-body {
+        padding: 20px;
+    }
+
+    /* Form specific adjustments */
+    .form-group label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        padding: 10px 15px;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+
+    /* Primary "Save Changes" button (using Bootstrap's primary blue) */
+    .dashboard-btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-btn-primary i {
+            margin-right: 8px;
+        }
+
+    /* MODERN ACTION BUTTONS (for 'Back to List') */
+    .modern-action-btn {
+        padding: 8px 12px;
+        font-size: 0.9em;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .modern-action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .modern-action-btn i {
+            margin-right: 5px;
+        }
+
+    /* Spacing for buttons at the bottom of the form */
+    .button-group-spacing {
+        margin-top: 20px;
+    }
+
+    /* Bootstrap's default margin-bottom for form-group was mb-3, but adding it explicitly */
+    .mb-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .ms-2 {
+        margin-left: 0.5rem !important;
+    }
+</style>

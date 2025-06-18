@@ -1,51 +1,266 @@
 ﻿@model Health_Insurance.Models.HR
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete HR Record"; // More specific title
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>HR</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="HRId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
 </div>
+
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="card-title-custom">Confirm Deletion</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <h3 class="text-danger mb-4">Are you sure you want to delete this HR record?</h3> @* Emphasize the question *@
+
+        <div class="alert alert-warning delete-warning-message mb-4" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i> This action cannot be undone. Please review the details carefully.
+        </div>
+
+        <h4>HR Details</h4>
+        <hr class="mb-4" /> @* Add margin bottom to HR *@
+
+        <dl class="row detail-list">
+            @* Reuse detail-list class *@
+            <dt class="col-sm-3 detail-label">
+                @* Use col-sm-3 for labels for consistency with Details view *@
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @* Use col-sm-9 for values *@
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+            <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+            @* <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.PasswordHash)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.PasswordHash)
+            </dd> *@
+        </dl>
+
+        <form asp-action="Delete" class="mt-5">
+            @* Add top margin to form *@
+            <input type="hidden" asp-for="HRId" />
+            <div class="button-group-spacing">
+                @* Use button-group-spacing for consistent button layout *@
+                <button type="submit" class="btn btn-danger dashboard-btn-danger me-2">
+                    @* Custom class for danger button *@
+                    <i class="fas fa-trash-alt"></i> Delete
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn">
+                    @* Reuse modern-action-btn *@
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+                
+
+<style>
+    /* General Body & Typography */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+        line-height: 1.6;
+    }
+
+    /* Dashboard Header */
+    .dashboard-header {
+        background-color: #ffffff;
+        padding: 30px 20px;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .dashboard-header h1 {
+        font-size: 2.2em;
+        color: #212529;
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    /* Dashboard Card */
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin: 0 auto;
+        max-width: 800px;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+    }
+
+    .dashboard-card-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .card-title-custom {
+        font-size: 1.5em;
+        color: #343a40;
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+    .dashboard-card-body {
+        padding: 30px 25px;
+    }
+
+    /* Detail List */
+    .detail-list {
+        margin-bottom: 0;
+    }
+
+    .detail-list > dt,
+    .detail-list > dd {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #e9ecef;
+        margin-bottom: 0;
+    }
+
+    .detail-list > dt:last-child,
+    .detail-list > dd:last-child {
+        border-bottom: none;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #495057;
+        text-align: left;
+    }
+
+    .detail-value {
+        color: #212529;
+        font-weight: 500;
+    }
+
+    /* Button Group Spacing */
+    .button-group-spacing {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-start;
+    }
+
+    /* Base Button Styles */
+    .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn i {
+        margin-right: 8px;
+    }
+
+    /* Modern Action Buttons */
+    .modern-action-btn {
+        background-color: transparent;
+        color: #6c757d;
+        border: 1px solid #6c757d;
+    }
+
+    .modern-action-btn:hover {
+        background-color: #e9ecef;
+        color: #495057;
+        border-color: #495057;
+        transform: translateY(-2px);
+    }
+
+    /* --- NEW / Specific Styles for Delete View --- */
+
+    /* Delete Warning Message */
+    .delete-warning-message {
+        padding: 15px 20px;
+        border-radius: 8px;
+        background-color: #fff3cd; /* Bootstrap warning yellow */
+        color: #664d03; /* Darker text for warning */
+        border: 1px solid #ffecb5; /* Lighter warning border */
+        font-weight: 500;
+        font-size: 0.95em;
+        display: flex;
+        align-items: center;
+    }
+
+    .delete-warning-message i {
+        color: #ffc107; /* Bright yellow icon */
+        font-size: 1.2em;
+    }
+
+    /* Danger Button Specifics */
+    .dashboard-btn-danger {
+        background-color: #dc3545; /* Bootstrap danger red */
+        border-color: #dc3545;
+        color: #fff;
+    }
+
+    .dashboard-btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+    }
+
+    /* Responsive Adjustments */
+    @@media (max-width: 576px) {
+        .dashboard-card {
+            margin: 0 15px;
+            border-radius: 0;
+        }
+
+        .dashboard-header {
+            padding: 20px 15px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card-header,
+        .dashboard-card-body {
+            padding: 20px 15px;
+        }
+
+        .button-group-spacing {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        .detail-list > dt,
+        .detail-list > dd {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+    }
+</style>

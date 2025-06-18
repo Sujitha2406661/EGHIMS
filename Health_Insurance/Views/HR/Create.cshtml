@@ -5,50 +5,219 @@
     ViewData["Title"] = "Create HR Personnel";
 }
 
-<h1 class="mb-4">Create HR Personnel</h1>
+<style>
+    /* General Body & Typography - Basic setup for a clean look */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f8f9fa; /* Light background for the whole page */
+        color: #343a40; /* Darker text for readability */
+        line-height: 1.6;
+    }
 
-<h4>HR Personnel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
+    /* Dashboard Header - For the main page title */
+    .dashboard-header {
+        background-color: #ffffff;
+        padding: 30px 20px;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+        .dashboard-header h1 {
+            font-size: 2.2em;
+            color: #212529;
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+
+    /* Dashboard Card - The container for the form */
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 12px; /* Softly rounded corners */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* A nice, subtle shadow */
+        margin: 0 auto; /* Center the card */
+        max-width: 800px; /* Limit width for readability */
+        overflow: hidden;
+        border: 1px solid #e0e0e0; /* Gentle border */
+    }
+
+    .dashboard-card-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa; /* Light background for the header within the card */
+    }
+
+    .card-title-custom { /* For the title within the card header */
+        font-size: 1.5em;
+        color: #343a40;
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+    .dashboard-card-body {
+        padding: 30px 25px; /* Ample internal padding for the form */
+    }
+
+    /* Form specific styles (mostly leverages Bootstrap) */
+    .form-group .form-label {
+        font-weight: 600; /* Make labels slightly bolder */
+        color: #495057;
+        margin-bottom: 5px; /* Small space below label */
+    }
+
+    .form-control {
+        border-radius: 8px; /* Match button/card radius */
+        border: 1px solid #ced4da;
+        padding: 10px 15px; /* More comfortable padding */
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03); /* Subtle inner shadow */
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #86b7fe; /* Bootstrap primary blue on focus */
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* Bootstrap focus ring */
+            outline: 0;
+        }
+
+    .text-danger {
+        font-size: 0.875em; /* Smaller font for validation messages */
+    }
+
+    /* Button Styling - Reusing patterns from previous views */
+    .button-group-spacing {
+        display: flex; /* Flexbox for consistent button layout */
+        gap: 15px; /* Space between buttons */
+        justify-content: flex-start;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease; /* Smooth transitions for hover effects */
+    }
+
+        .btn i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+    /* Primary Button (Create) */
+    .dashboard-btn-primary {
+        background-color: #007bff; /* Bootstrap primary blue */
+        border-color: #007bff;
+        color: #fff;
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #004085;
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
+        }
+
+    /* Outline Button (Back to List) */
+    .modern-action-btn {
+        background-color: transparent;
+        color: #6c757d; /* Bootstrap secondary grey */
+        border: 1px solid #6c757d;
+    }
+
+        .modern-action-btn:hover {
+            background-color: #e9ecef; /* Light grey background on hover */
+            color: #495057;
+            border-color: #495057;
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+    /* Responsive Adjustments */
+    @@media (max-width: 576px) {
+        .dashboard-card
+
+    {
+        margin: 0 15px; /* Add some side margin on small screens */
+        border-radius: 0; /* Less rounded or no rounded corners for full width */
+    }
+
+    .dashboard-header {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-card-header,
+    .dashboard-card-body {
+        padding: 20px 15px; /* Reduce padding on smaller screens */
+    }
+
+    .button-group-spacing {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 10px; /* Adjust gap for vertical stacking */
+    }
+
+    .btn {
+        width: 100%; /* Full width buttons on small screens */
+    }
+
+    }
+</style>
+
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="card-title-custom">Enter HR Details</h2>
+    </div>
+    <div class="dashboard-card-body">
         <form asp-action="Create">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-            <div class="form-group mb-3">
-                <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Phone" class="form-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Username" class="form-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="PasswordHash" class="form-label">Password</label> @* User-friendly label for password input *@
-                <input asp-for="PasswordHash" type="password" class="form-control" />
-                <span asp-validation-for="PasswordHash" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="row">
+                <div class="col-md-6">
+                    @* Keep column for layout, ensures form isn't too wide *@
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Phone" class="form-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Username" class="form-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="PasswordHash" class="form-label">Password</label>
+                        <input asp-for="PasswordHash" type="password" class="form-control" />
+                        <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        @* Increased top margin for buttons *@
+                        <div class="button-group-spacing">
+                            <button type="submit" value="Create" class="btn btn-primary dashboard-btn-primary">
+                                <i class="fas fa-plus-circle"></i> Create
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn">
+                                <i class="fas fa-arrow-left"></i> Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div class="mt-3">
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

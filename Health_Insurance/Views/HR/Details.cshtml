@@ -1,43 +1,210 @@
 ﻿@model Health_Insurance.Models.HR
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "HR Details";
 }
 
-<h1>Details</h1>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
-<div>
-    <h4>HR</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dd>
-        
-    </dl>
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="card-title-custom">HR Information</h2> @* Added a custom class for styling the card title *@
+    </div>
+    <div class="dashboard-card-body">
+        <dl class="row detail-list">
+            @* Added a custom class for the definition list *@
+            <dt class="col-sm-3 detail-label">@Html.DisplayNameFor(m => m.Name)</dt>
+            <dd class="col-sm-9 detail-value">@Html.DisplayFor(m => m.Name)</dd>
+
+            <dt class="col-sm-3 detail-label">@Html.DisplayNameFor(m => m.Email)</dt>
+            <dd class="col-sm-9 detail-value">@Html.DisplayFor(m => m.Email)</dd>
+
+            <dt class="col-sm-3 detail-label">@Html.DisplayNameFor(m => m.Phone)</dt>
+            <dd class="col-sm-9 detail-value">@Html.DisplayFor(m => m.Phone)</dd>
+
+            <dt class="col-sm-3 detail-label">@Html.DisplayNameFor(m => m.Username)</dt>
+            <dd class="col-sm-9 detail-value">@Html.DisplayFor(m => m.Username)</dd>
+        </dl>
+
+        <div class="button-group-spacing mt-4">
+            <a asp-action="Edit" asp-route-id="@Model?.HRId" class="btn btn-primary dashboard-btn-primary me-2">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.HRId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+            <style>
+
+    /* General Body & Typography */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; /* Modern sans-serif font stack */
+        background-color: #f8f9fa; /* Light background for the whole page */
+        color: #343a40; /* Darker text for readability */
+        line-height: 1.6;
+    }
+
+    /* Dashboard Header */
+    .dashboard-header {
+        background-color: #ffffff; /* White background for header */
+        padding: 30px 20px; /* Ample padding */
+        border-bottom: 1px solid #e9ecef; /* Subtle bottom border */
+        margin-bottom: 30px; /* Space below header */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Light shadow */
+        text-align: center; /* Center the title */
+    }
+
+        .dashboard-header h1 {
+            font-size: 2.2em; /* Larger, prominent title */
+            color: #212529;
+            margin-bottom: 0;
+            font-weight: 600; /* Slightly bolder */
+        }
+
+    /* Dashboard Card */
+    .dashboard-card {
+        background-color: #ffffff; /* White card background */
+        border-radius: 12px; /* Slightly more rounded corners */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More pronounced shadow for cards */
+        margin: 0 auto; /* Center the card horizontally */
+        max-width: 800px; /* Max width for readability on large screens */
+        overflow: hidden; /* Ensures border-radius applies correctly */
+        border: 1px solid #e0e0e0; /* Subtle border for definition */
+    }
+
+    .dashboard-card-header {
+        padding: 20px 25px; /* Good padding */
+        border-bottom: 1px solid #dee2e6; /* Separator for header */
+        background-color: #f8f9fa; /* Light background for card header */
+        display: flex; /* For aligning elements if you add more */
+        align-items: center;
+        justify-content: space-between; /* Pushes content to edges if there's more */
+    }
+
+    .card-title-custom { /* Custom class for the card title */
+        font-size: 1.5em;
+        color: #343a40;
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+
+    .dashboard-card-body {
+        padding: 30px 25px; /* Ample padding inside the card body */
+    }
+
+    /* Detail List (for dl.row) */
+    .detail-list {
+        margin-bottom: 0; /* Remove default bottom margin from dl */
+    }
+
+        .detail-list > dt,
+        .detail-list > dd {
+            padding-top: 10px; /* Space between rows */
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #e9ecef; /* Subtle dashed line for separation */
+            margin-bottom: 0; /* Remove default margin */
+        }
+
+            .detail-list > dt:last-child,
+            .detail-list > dd:last-child {
+                border-bottom: none; /* No border for the last row */
+            }
+
+
+    .detail-label {
+        font-weight: 600; /* Slightly bolder labels */
+        color: #495057; /* Slightly darker than body text */
+        text-align: left; /* Ensure labels align left */
+    }
+
+    .detail-value {
+        color: #212529; /* Stronger color for values */
+        font-weight: 500; /* Slightly less bold than label */
+    }
+
+    /* Buttons */
+    .button-group-spacing {
+        display: flex; /* Use flexbox for button spacing */
+        gap: 15px; /* Space between buttons */
+        justify-content: flex-start; /* Align buttons to the left */
+    }
+
+    .btn {
+        padding: 10px 20px; /* More padding for a solid feel */
+        border-radius: 8px; /* Slightly more rounded buttons */
+        font-weight: 500; /* Medium font weight */
+        transition: all 0.3s ease; /* Smooth transitions for hover effects */
+    }
+
+    .dashboard-btn-primary { /* Custom primary button style */
+        background-color: #007bff; /* Bootstrap primary blue */
+        border-color: #007bff;
+        color: #fff;
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #004085;
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
+        }
+
+    .modern-action-btn { /* Custom outline button style */
+        background-color: transparent;
+        color: #6c757d; /* Bootstrap secondary grey */
+        border: 1px solid #6c757d;
+    }
+
+        .modern-action-btn:hover {
+            background-color: #e9ecef; /* Light grey background on hover */
+            color: #495057;
+            border-color: #495057;
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+    .btn i {
+        margin-right: 8px; /* Space between icon and text */
+    }
+
+    /* Responsive Adjustments (Optional, but good practice) */
+    @@media (max-width: 576px) {
+        .dashboard-card
+
+    {
+        margin: 0 15px; /* Add some side margin on small screens */
+        border-radius: 0; /* Less rounded or no rounded corners for full width */
+    }
+
+    .dashboard-header {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-card-header,
+    .dashboard-card-body {
+        padding: 20px 15px; /* Reduce padding on smaller screens */
+    }
+
+    .button-group-spacing {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 10px; /* Adjust gap for vertical stacking */
+    }
+
+    .btn {
+        width: 100%; /* Full width buttons on small screens */
+    }
+
+    .detail-list > dt,
+    .detail-list > dd {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    }
+            </style>
