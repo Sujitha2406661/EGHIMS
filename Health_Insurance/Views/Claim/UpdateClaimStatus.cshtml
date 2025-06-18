@@ -5,76 +5,85 @@
     ViewData["Title"] = "Update Claim Status";
 }
 
-<h1 class="mb-4">Update Claim Status</h1>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
-<h4>Claim #@Model.ClaimId</h4> @* Display the Claim ID directly in the heading *@
-<hr />
-@* Use Bootstrap row and column for layout *@
-<div class="row">
-    <div class="col-md-6">
-        @* Use a column to limit the form width *@
-        @* Form for updating claim status. Posts data to the UpdateClaimStatus action. *@
-        <form asp-action="UpdateClaimStatus" method="post">
-            @* Ensure method="post" is explicit *@
-            @* Hidden field for CSRF protection *@
-            @Html.AntiForgeryToken()
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">Claim #@Model.ClaimId Details</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <hr class="mb-4" /> @* Added margin-bottom for spacing *@
 
-            @* Hidden input for the ClaimId, needed to identify which claim is being updated *@
-            <input type="hidden" name="id" value="@Model.ClaimId" /> @* Changed to name="id" to match controller parameter *@
+        <div class="row">
+            <div class="col-md-7">
+                @* Adjusted column width for slightly wider form *@
+                @* Form for updating claim status. Posts data to the UpdateClaimStatus action. *@
+                <form asp-action="UpdateClaimStatus" method="post">
+                    @Html.AntiForgeryToken() @* Hidden field for CSRF protection *@
 
-            @* Validation summary with Bootstrap text-danger class *@
-            @* We might still get errors here if the dropdown is not selected *@
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div> @* Added margin-bottom *@
+                    @* Hidden input for the ClaimId, needed to identify which claim is being updated *@
+                    <input type="hidden" name="id" value="@Model.ClaimId" /> @* Changed to name="id" to match controller parameter *@
 
-            @* Display current claim details (read-only) for context *@
-            <div class="form-group mb-3">
-                <label asp-for="EnrollmentId" class="form-label"></label>
-                <input asp-for="EnrollmentId" class="form-control" readonly />
+                    @* Validation summary with Bootstrap text-danger class *@
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div> @* Increased margin-bottom *@
+
+                    @* Display current claim details (read-only) for context *@
+                    <fieldset disabled>
+                        @* Group read-only fields for disabled styling *@
+                        <div class="form-group mb-3">
+                            <label asp-for="EnrollmentId" class="form-label"></label>
+                            <input asp-for="EnrollmentId" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="ClaimAmount" class="form-label"></label>
+                            <input asp-for="ClaimAmount" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="ClaimDate" class="form-label"></label>
+                            <input asp-for="ClaimDate" class="form-control" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="ClaimReason" class="form-label"></label>
+                            <textarea asp-for="ClaimReason" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Current Status:</label>
+                            <input value="@Model.ClaimStatus" class="form-control" />
+                        </div>
+                    </fieldset>
+
+
+                    @* Dropdown for selecting the NEW status *@
+                    <div class="form-group mb-4 mt-3">
+                        @* Added margin-top for spacing from read-only fields *@
+                        <label asp-for="ClaimStatus" class="form-label">Select New Status:</label>
+                        <select id="ClaimStatus" name="ClaimStatus" class="form-control" asp-items="ViewBag.Statuses">
+                            <option value="">-- Select New Status --</option>
+                        </select>
+                        <span asp-validation-for="ClaimStatus" class="text-danger mt-1 d-block"></span> @* d-block for better spacing *@
+                    </div>
+
+
+                    <div class="form-group mt-4 button-group-spacing">
+                        @* Added margin-top and button spacing class *@
+                        <input type="submit" value="Update Status" class="btn btn-primary dashboard-btn-primary" /> @* Styled button *@
+                        <a asp-action="ListAllClaims" class="btn btn-outline-secondary modern-action-btn ms-2">
+                            @* Styled back button *@
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                        <a asp-action="Details" asp-route-id="@Model.ClaimId" class="btn btn-outline-info modern-action-btn ms-2">
+                            @* Back to details with style *@
+                            <i class="fas fa-info-circle"></i> Back to Details
+                        </a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group mb-3">
-                <label asp-for="ClaimAmount" class="form-label"></label>
-                <input asp-for="ClaimAmount" class="form-control" readonly />
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ClaimDate" class="form-label"></label>
-                <input asp-for="ClaimDate" class="form-control" readonly />
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ClaimReason" class="form-label"></label>
-                @* ClaimReason is readonly. No need for data-val attributes or validation span. *@
-                <textarea asp-for="ClaimReason" class="form-control" readonly></textarea>
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label">Current Status:</label>
-                <input value="@Model.ClaimStatus" class="form-control" readonly /> @* Display current status as read-only text *@
-            </div>
-
-
-            @* Dropdown for selecting the NEW status with Bootstrap form-group and form-control *@
-            @* This is the field that will be bound to ClaimStatus for updating *@
-            <div class="form-group mb-3">
-                <label asp-for="ClaimStatus" class="form-label">Select New Status:</label> @* Use asp-for for correct label text *@
-                @* Changed id to match asp-for for consistency. This will render name="ClaimStatus" *@
-                <select id="ClaimStatus" name="ClaimStatus" class="form-control" asp-items="ViewBag.Statuses">
-                    @* Changed asp-for to name for direct binding to string param *@
-                    <option value="">-- Select New Status --</option> @* Optional: Add a default empty option *@
-                </select>
-                @* Displays validation errors for ClaimStatus with Bootstrap text-danger *@
-                <span asp-validation-for="ClaimStatus" class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group mt-3">
-                <input type="submit" value="Update Status" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div class="mt-3">
-    <a asp-action="GetClaimDetails" asp-route-id="@Model.ClaimId">Back to Details</a> |
-    <a asp-action="ListAllClaims">Back to List</a>
-</div>
 
 @section Scripts {
     @{
@@ -82,3 +91,122 @@
     }
 }
 
+<style>
+    /* General body and dashboard container styles */
+    body {
+        background-color: #f4f7f6; /* Light gray background */
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Example font */
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+        .dashboard-header h1 {
+            margin: 0;
+            color: #343a40;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .dashboard-card-header {
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+        background-color: #f8f9fa;
+    }
+
+    .dashboard-card-title {
+        margin: 0;
+        font-size: 1.5em;
+        color: #343a40;
+    }
+
+    .dashboard-card-body {
+        padding: 20px;
+    }
+
+    /* Primary "Update Status" button */
+    .dashboard-btn-primary {
+        background-color: #007bff; /* Primary blue for update */
+        border-color: #007bff;
+        color: #fff;
+        padding: 8px 15px;
+        font-size: 0.9em;
+        border-radius: 5px;
+        transition: all 0.3s ease; /* Smooth transitions */
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-btn-primary i {
+            margin-right: 8px;
+        }
+
+    /* MODERN ACTION BUTTONS (Back to List, Back to Details) */
+    .modern-action-btn {
+        padding: 8px 12px; /* Slightly more padding */
+        font-size: 0.85em;
+        border-radius: 5px; /* Rounded corners */
+        transition: all 0.3s ease; /* Smooth transitions for hover effects */
+        margin: 0 4px; /* Space between buttons */
+        display: inline-flex; /* Align icon and text vertically */
+        align-items: center;
+        justify-content: center;
+    }
+
+        /* Hover effect: fill the button with its color */
+        .modern-action-btn.btn-outline-info:hover {
+            background-color: #17a2b8; /* Bootstrap info color */
+            color: #fff;
+            transform: translateY(-1px); /* Slight lift */
+            box-shadow: 0 2px 6px rgba(23, 162, 184, 0.3); /* Subtle shadow */
+        }
+
+        .modern-action-btn.btn-outline-secondary:hover {
+            background-color: #6c757d; /* Bootstrap secondary color */
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);
+        }
+
+        /* Icon spacing for action buttons */
+        .modern-action-btn i {
+            margin-right: 5px;
+        }
+
+    /* Styling for disabled form controls */
+    fieldset:disabled .form-control {
+        background-color: #e9ecef; /* Lighter background for disabled inputs */
+        opacity: 1; /* Ensure full opacity for text readability */
+        cursor: not-allowed;
+    }
+
+    /* Spacing for button group */
+    .button-group-spacing .btn {
+        margin-right: 10px; /* Space between buttons */
+    }
+
+        .button-group-spacing .btn:last-child {
+            margin-right: 0;
+        }
+</style>

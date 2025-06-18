@@ -5,74 +5,231 @@
     ViewData["Title"] = "Submit Claim";
 }
 
-<h1 class="mb-4">Submit New Claim</h1>
+<style>
+    /* General Body & Typography */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f8f9fa; /* Light background for the whole page */
+        color: #343a40; /* Darker text for readability */
+        line-height: 1.6;
+    }
 
-<h4>Claim</h4>
-<hr />
-@* Use Bootstrap row and column for layout *@
-<div class="row">
-    <div class="col-md-6">
-        @* Use a column to limit the form width *@
-        @* Form for submitting a new claim. Posts data to the SubmitClaim action. *@
+    /* Dashboard Header - For the main page title */
+    .dashboard-header {
+        background-color: #ffffff;
+        padding: 30px 20px;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+        .dashboard-header h1 {
+            font-size: 2.2em;
+            color: #212529;
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+
+    /* Dashboard Card - The container for the form */
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 12px; /* Softly rounded corners */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* A nice, subtle shadow */
+        margin: 0 auto; /* Center the card */
+        max-width: 800px; /* Limit width for readability */
+        overflow: hidden;
+        border: 1px solid #e0e0e0; /* Gentle border */
+    }
+
+    .dashboard-card-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa; /* Light background for the header within the card */
+        display: flex; /* For aligning elements if you add more */
+        align-items: start;
+        justify-content: space-between;
+    }
+
+    .card-title-custom { /* For the title within the card header */
+        font-size: 1.5em;
+        color: #343a40;
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+    .dashboard-card-body {
+        padding: 30px 25px; /* Ample internal padding for the form */
+    }
+
+    /* Form specific styles */
+    .form-group .form-label {
+        font-weight: 600; /* Make labels slightly bolder */
+        color: #495057;
+        margin-bottom: 5px; /* Small space below label */
+    }
+
+    .form-control {
+        border-radius: 8px; /* Match button/card radius */
+        border: 1px solid #ced4da;
+        padding: 10px 15px; /* More comfortable padding */
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03); /* Subtle inner shadow */
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #86b7fe; /* Bootstrap primary blue on focus */
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* Bootstrap focus ring */
+            outline: 0;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545; /* Red border for invalid input */
+            padding-right: calc(1.5em + 0.75rem); /* Space for validation icon */
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(0.375em + 0.1875rem) center;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        }
+
+    .text-danger {
+        font-size: 0.875em; /* Smaller font for validation messages */
+        margin-top: 0.25rem; /* Small space above error message */
+    }
+
+    /* Button Styling - Reusing patterns from previous views */
+    .button-group-spacing {
+        display: flex; /* Flexbox for consistent button layout */
+        gap: 15px; /* Space between buttons */
+        justify-content: flex-start;
+        margin-top: 30px; /* Space above the button group */
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease; /* Smooth transitions for hover effects */
+    }
+
+        .btn i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+    /* Primary Button (Submit Claim) */
+    .dashboard-btn-primary {
+        background-color: #007bff; /* Bootstrap primary blue */
+        border-color: #007bff;
+        color: #fff;
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #004085;
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
+        }
+
+    /* Outline Button (Back to List) */
+    .modern-action-btn {
+        background-color: transparent;
+        color: #6c757d; /* Bootstrap secondary grey */
+        border: 1px solid #6c757d;
+    }
+
+        .modern-action-btn:hover {
+            background-color: #e9ecef; /* Light grey background on hover */
+            color: #495057;
+            border-color: #495057;
+            transform: translateY(-2px);
+        }
+
+    /* Responsive Adjustments */
+    @@media (max-width: 576px) {
+        .dashboard-card
+
+    {
+        margin: 0 15px; /* Add some side margin on small screens */
+        border-radius: 0; /* Less rounded or no rounded corners for full width */
+    }
+
+    .dashboard-header {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-card-header,
+    .dashboard-card-body {
+        padding: 20px 15px; /* Reduce padding on smaller screens */
+    }
+
+    .button-group-spacing {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 10px; /* Adjust gap for vertical stacking */
+    }
+
+    .btn {
+        width: 100%; /* Full width buttons on small screens */
+    }
+
+    }
+</style>
+
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="card-title-custom">New Claim Request</h2>
+    </div>
+    <div class="dashboard-card-body">
         <form asp-action="SubmitClaim" id="claimSubmitForm">
-            @* Added an ID to the form *@
-            @* Hidden field for CSRF protection *@
             @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-            @* Validation summary with Bootstrap text-danger class *@
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div> @* Added margin-bottom *@
+            <div class="row">
+                <div class="col-md-8">
+                    @* Adjusted column width for slightly wider form input area *@
+                    <div class="form-group mb-3">
+                        <label asp-for="EnrollmentId" class="form-label"></label>
+                        <select asp-for="EnrollmentId" class="form-control" asp-items="ViewBag.EnrollmentList">
+                            <option value="">-- Select Enrollment --</option>
+                        </select>
+                        <span asp-validation-for="EnrollmentId" class="text-danger"></span>
+                    </div>
 
-            @* Dropdown for selecting Enrollment with Bootstrap form-group and form-control *@
-            @* Requires ViewBag.EnrollmentList populated in the controller *@
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="EnrollmentId" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                @* The asp-items tag helper populates the dropdown using the SelectList from ViewBag *@
-                <select asp-for="EnrollmentId" class="form-control" asp-items="ViewBag.EnrollmentList">
-                    <option value="">-- Select Enrollment --</option> @* Optional: Add a default empty option *@
-                </select>
-                @* Displays validation errors for EnrollmentId with Bootstrap text-danger *@
-                <span asp-validation-for="EnrollmentId" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ClaimAmount" class="form-label"></label>
+                        <input asp-for="ClaimAmount" class="form-control" />
+                        <span asp-validation-for="ClaimAmount" class="text-danger"></span>
+                    </div>
 
-            @* Input field for Claim Amount with Bootstrap form-group and form-control *@
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="ClaimAmount" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                <input asp-for="ClaimAmount" class="form-control" />
-                <span asp-validation-for="ClaimAmount" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ClaimReason" class="form-label"></label>
+                        <textarea asp-for="ClaimReason" class="form-control" rows="4"></textarea> @* Added rows for better textarea height *@
+                        <span asp-validation-for="ClaimReason" class="text-danger"></span>
+                    </div>
 
-            @* Input field for Claim Reason with Bootstrap form-group and form-control *@
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="ClaimReason" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                @* Using textarea for potentially longer reasons *@
-                <textarea asp-for="ClaimReason" class="form-control"></textarea>
-                <span asp-validation-for="ClaimReason" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ClaimDate" class="form-label"></label>
+                        <input asp-for="ClaimDate" class="form-control" type="date" />
+                        <span asp-validation-for="ClaimDate" class="text-danger"></span>
+                    </div>
 
-            @* Input field for Claim Date with Bootstrap form-group and form-control *@
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="ClaimDate" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                @* Using type="date" for a date picker in modern browsers *@
-                <input asp-for="ClaimDate" class="form-control" type="date" />
-                <span asp-validation-for="ClaimDate" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mt-3">
-                @* Added margin-top to button *@
-                <input type="submit" value="Submit Claim" class="btn btn-primary" /> @* Use Bootstrap button class *@
+                    <div class="button-group-spacing">
+                        @* Placed buttons in the common spacing div *@
+                        <button type="submit" value="Submit Claim" class="btn btn-primary dashboard-btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Claim
+                        </button>
+                        <a asp-action="ListAllClaims" class="btn btn-outline-secondary modern-action-btn">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div class="mt-3">
-    @* Added margin-top *@
-    @* Link back to the list of all claims *@
-    <a asp-action="ListAllClaims">Back to List</a>
 </div>
 
 @section Scripts {
@@ -121,6 +278,3 @@
         });
     </script>
 }
-
-
-

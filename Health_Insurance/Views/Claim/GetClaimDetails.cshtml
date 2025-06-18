@@ -5,64 +5,240 @@
     ViewData["Title"] = "Claim Details";
 }
 
-<h1 class="mb-4">Claim Details</h1>
+<style>
+    /* General Body & Typography */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f8f9fa; /* Light background for the whole page */
+        color: #343a40; /* Darker text for readability */
+        line-height: 1.6;
+    }
 
-<div>
-    <h4>Claim</h4>
-    <hr />
-    @* Use Bootstrap row and column for layout and display classes *@
-    <dl class="row">
-        @* Use dl, dt, dd with row/col for definition list layout *@
-        @* Displaying each property of the Claim model *@
-        <dt class="col-sm-3">
-            @* Use column for label *@
-            @Html.DisplayNameFor(model => model.ClaimId)
-        </dt>
-        <dd class="col-sm-9">
-            @* Use column for value *@
-            @Html.DisplayFor(model => model.ClaimId)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Enrollment) @* Display name for the navigation property *@
-        </dt>
-        <dd class="col-sm-9">
-            @* Display details from the related Enrollment and Policy *@
-            Enrollment ID: @Html.DisplayFor(model => model.EnrollmentId)<br />
-            Employee: @Html.DisplayFor(model => model.Enrollment.Employee.Name)<br /> @* Assuming Employee is included in Enrollment navigation property *@
-            Policy: @Html.DisplayFor(model => model.Enrollment.Policy.PolicyName)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.ClaimAmount)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.ClaimAmount)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.ClaimReason)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.ClaimReason)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.ClaimDate)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.ClaimDate)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.ClaimStatus)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.ClaimStatus)
-        </dd>
-    </dl>
+    /* Dashboard Header - For the main page title */
+    .dashboard-header {
+        background-color: #ffffff;
+        padding: 30px 20px;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+        .dashboard-header h1 {
+            font-size: 2.2em;
+            color: #212529;
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+
+    /* Dashboard Card - The container for the main content */
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 12px; /* Softly rounded corners */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* A nice, subtle shadow */
+        margin: 0 auto; /* Center the card */
+        max-width: 800px; /* Limit width for readability */
+        overflow: hidden;
+        border: 1px solid #e0e0e0; /* Gentle border */
+    }
+
+    .dashboard-card-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa; /* Light background for the header within the card */
+        display: flex; /* For aligning elements if you add more */
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .card-title-custom { /* For the title within the card header */
+        font-size: 1.5em;
+        color: #343a40;
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+    .dashboard-card-body {
+        padding: 30px 25px; /* Ample internal padding for the content */
+    }
+
+    /* Detail List Styling (for dl.row) */
+    .detail-list {
+        margin-bottom: 0; /* Remove default bottom margin from dl */
+    }
+
+        .detail-list > dt,
+        .detail-list > dd {
+            padding-top: 10px; /* Space between rows */
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #e9ecef; /* Subtle dashed line for separation */
+            margin-bottom: 0; /* Remove default margin */
+        }
+
+            .detail-list > dt:last-child,
+            .detail-list > dd:last-child {
+                border-bottom: none; /* No border for the last row */
+            }
+
+    .detail-label {
+        font-weight: 600; /* Slightly bolder labels */
+        color: #495057; /* Slightly darker than body text */
+        text-align: left; /* Ensure labels align left */
+    }
+
+    .detail-value {
+        color: #212529; /* Stronger color for values */
+        font-weight: 500; /* Slightly less bold than label */
+    }
+
+    /* Button Group Spacing */
+    .button-group-spacing {
+        display: flex; /* Use flexbox for consistent button spacing */
+        gap: 15px; /* Space between buttons */
+        justify-content: flex-start; /* Align buttons to the left */
+        margin-top: 30px; /* Space above the button group */
+    }
+
+    /* Base Button Styles */
+    .btn {
+        padding: 10px 20px; /* More padding for a solid feel */
+        border-radius: 8px; /* Slightly more rounded buttons */
+        font-weight: 500; /* Medium font weight */
+        transition: all 0.3s ease; /* Smooth transitions for hover effects */
+    }
+
+        .btn i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+    /* Primary Button (Update Status) */
+    .dashboard-btn-primary { /* Custom primary button style */
+        background-color: #007bff; /* Bootstrap primary blue */
+        border-color: #007bff;
+        color: #fff;
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #004085;
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
+        }
+
+    /* Outline Button (Back to List) */
+    .modern-action-btn { /* Custom outline button style */
+        background-color: transparent;
+        color: #6c757d; /* Bootstrap secondary grey */
+        border: 1px solid #6c757d;
+    }
+
+        .modern-action-btn:hover {
+            background-color: #e9ecef; /* Light grey background on hover */
+            color: #495057;
+            border-color: #495057;
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+    /* Responsive Adjustments */
+    @@media (max-width: 576px) {
+        .dashboard-card
+
+    {
+        margin: 0 15px; /* Add some side margin on small screens */
+        border-radius: 0; /* Less rounded or no rounded corners for full width */
+    }
+
+    .dashboard-header {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-card-header,
+    .dashboard-card-body {
+        padding: 20px 15px; /* Reduce padding on smaller screens */
+    }
+
+    .button-group-spacing {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 10px; /* Adjust gap for vertical stacking */
+    }
+
+    .btn {
+        width: 100%; /* Full width buttons on small screens */
+    }
+
+    .detail-list > dt,
+    .detail-list > dd {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    }
+</style>
+
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
 </div>
-<div class="mt-3">
-    @* Added margin-top *@
-    @* Link to the Update Status page for this claim with Bootstrap button class *@
-    <a asp-action="UpdateClaimStatus" asp-route-id="@Model.ClaimId" class="btn btn-primary">Update Status</a> |
-    @* Link back to the list of all claims *@
-    <a asp-action="ListAllClaims">Back to List</a>
+
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="card-title-custom">Claim Information</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <dl class="row detail-list">
+            @* Added custom class for styling the definition list *@
+            @* Displaying each property of the Claim model *@
+            <dt class="col-sm-3 detail-label">
+                @* Use custom classes for label/value styling *@
+                @Html.DisplayNameFor(model => model.ClaimId)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.ClaimId)
+            </dd>
+            <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.Enrollment)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                Enrollment ID: @Html.DisplayFor(model => model.EnrollmentId)<br />
+                Employee: @Html.DisplayFor(model => model.Enrollment.Employee.Name)<br />
+                Policy: @Html.DisplayFor(model => model.Enrollment.Policy.PolicyName)
+            </dd>
+            <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.ClaimAmount)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.ClaimAmount)
+            </dd>
+            <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.ClaimReason)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.ClaimReason)
+            </dd>
+            <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.ClaimDate)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.ClaimDate)
+            </dd>
+            <dt class="col-sm-3 detail-label">
+                @Html.DisplayNameFor(model => model.ClaimStatus)
+            </dt>
+            <dd class="col-sm-9 detail-value">
+                @Html.DisplayFor(model => model.ClaimStatus)
+            </dd>
+        </dl>
+
+        <div class="button-group-spacing">
+            @* Use button-group-spacing for consistent button layout *@
+            <a asp-action="UpdateClaimStatus" asp-route-id="@Model.ClaimId" class="btn btn-primary dashboard-btn-primary me-2">
+                <i class="fas fa-edit"></i> Update Status
+            </a>
+            <a asp-action="ListAllClaims" class="btn btn-outline-secondary modern-action-btn">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

@@ -335,6 +335,9 @@ body {
 
 /* Custom link color for Navbar links and brand */
 .custom-nav-link {
+    display: flex;
+    align-items: center; /* Vertically align the icon and text */
+    white-space: nowrap;
     color: #254D70 floralwhite !important; /* Corrected: Only one color, floralwhite */
     font-weight: 500;
     font-size: 1.2rem;

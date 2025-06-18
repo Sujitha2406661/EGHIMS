@@ -1,0 +1,21 @@
+[33mff6a3db[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m Merge branch 'master' of https://github.com/Sujitha2406661/EGHIMS
+[33mbb0bcfb[m updated hr views-styled
+[33mce37e24[m Added ExportToPDF
+[33m701f0d3[m[33m ([m[1;31morigin/Bharat[m[33m)[m Added ExportToPDF
+[33mb925a06[m added pdf report
+[33mf696aed[m fixed organization edit error
+[33mb336628[m admin dashboard updated completely
+[33m270627a[m admin dashboard  updated
+[33m86ddf33[m merged
+[33mca8440d[m[33m ([m[1;31morigin/suji[m[33m, [m[1;32msuji[m[33m)[m admin dashboard with search and filter functionality done
+[33m497c646[m added search and filter option for policies section in admin dashboard
+[33m96ae88d[m added search fuctionality to organization in admin dashboard
+[33mcd5874f[m organization views styles updated
+[33m65a4655[m styles all policies things
+[33md44bbc1[m new brach cc
+[33m20791f0[m admin dashboard error fixed
+[33m79e09f6[m employee dashboard done
+[33md219aff[m hr dashboard completed
+[33meed8c6a[m completed admin dashboard and addedd constraints and premium calculator
+[33mcbf2af0[m changed commit
+[33mfe42944[m initial comming with frontend upto admin dashboard

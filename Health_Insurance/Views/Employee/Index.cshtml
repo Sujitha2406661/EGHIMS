@@ -56,9 +56,9 @@
                 </td>
                 <td>
                     @* Apply Bootstrap button classes to links *@
-                    <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-info">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-secondary">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-danger">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i>Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-outline-secondary"><i class="fas fa-info-circle"></i> Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</a>
                 </td>
             </tr>
         }
@@ -72,5 +72,4 @@
         @ViewBag.ErrorMessage
     </div>
 }
-
 
