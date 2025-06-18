@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Health_Insurance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250612082103_addedconstarints")]
-    partial class addedconstarints
+    [Migration("20250618084636_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
