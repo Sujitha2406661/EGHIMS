@@ -7,125 +7,165 @@
     <title>@ViewData["Title"] - Health_Insurance</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Health_Insurance.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm custom-navbar-bg sticky-top" data-bs-theme="light">
-            <div class="container-fluid">
-                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PrimeProtect</a> *@
-                <a class="navbar-brand custom-nav-link p-0" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo_primeProtect.png" alt="Health Insurance Logo" style="height: 100px; margin-right: 2px;object-fit: cover">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm custom-navbar-bg sticky-top">
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="container-fluid">
+                    <a class="navbar-brand custom-nav-link p-0" asp-area="" asp-controller="Account" asp-action="Dashboard">
+                        <img src="~/images/logo_primeProtect.png" alt="Health Insurance Logo" style="height: 100px; margin-right: 2px;object-fit: cover">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Account" asp-action="Dashboard"><i class="fas fa-home me-1"></i>Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Employee" asp-action="Index"><i class="fas fa-users me-1"></i>Employees</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Organization" asp-action="Index"><i class="fas fa-building me-1"></i>Organizations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Policies" asp-action="Index"><i class="fas fa-file-invoice me-1"></i>Policies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Enrollment" asp-action="Index"><i class="fas fa-user-plus me-1"></i>Enrollments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Claim" asp-action="ListAllClaims"><i class="fas fa-hand-holding-medical me-1"></i>Claims</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Report" asp-action="Index"><i class="fas fa-chart-pie me-1"></i>Reports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="HR" asp-action="Index"><i class="fas fa-user-tie me-1"></i>HR</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
 
-                        @* Admin Specific Links *@
-                        @if (User.IsInRole("Admin"))
-                        {
+            @if (User.IsInRole("HR"))
+            {
+                <div class="container-fluid">
+                    <a class="navbar-brand custom-nav-link p-0" asp-area="" asp-controller="Account" asp-action="HrDashboard">
+                        <img src="~/images/logo_primeProtect.png" alt="Health Insurance Logo" style="height: 100px; margin-right: 2px;object-fit: cover">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Account" asp-action="Dashboard">Home</a>
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Account" asp-action="HrDashboard"><i class="fas fa-home me-1"></i>Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Employee" asp-action="Index">Employees</a>
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Employee" asp-action="Index"><i class="fas fa-users me-1"></i>Employees (HR)</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Organization" asp-action="Index">Organizations</a>
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Organization" asp-action="Index"><i class="fas fa-building me-1"></i>Organizations (HR)</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Policies" asp-action="Index">Policies</a>
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Report" asp-action="Index"><i class="fas fa-chart-pie me-1"></i>Reports (HR)</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Enrollment" asp-action="Index">Enrollments</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Claim" asp-action="ListAllClaims">Claims</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Report" asp-action="Index">Reports</a> @* NEW Report Link for Admin *@
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="HR" asp-action="Index">HR</a> @* NEW Report Link for Admin *@
-                            </li>
-                        }
+                        </ul>
+                    </div>
+                </div>
+            }
 
-                        @* HR Specific Links *@
-                        @if (User.IsInRole("HR"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Account" asp-action="HrDashboard">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Employee" asp-action="Index">Employees (HR)</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Organization" asp-action="Index">Organizations (HR)</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Report" asp-action="Index">Reports (HR)</a> @* NEW Report Link for HR *@
-                            </li>
-                        }
-
-                        @* Employee Specific Links *@
-                        @if (User.IsInRole("Employee"))
-                        {
-                            // --- NEW LOGIC: Get EmployeeId for "My Enrollments" and "My Claims" links ---
+            @if (User.IsInRole("Employee"))
+            {
+                <div class="container-fluid">
+                    <a class="navbar-brand custom-nav-link p-0" asp-area="" asp-controller="Account" asp-action="EmpDashboard">
+                        <img src="~/images/logo_primeProtect.png" alt="Health Insurance Logo" style="height: 100px; margin-right: 2px;object-fit: cover">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        @{
                             int? employeeId = null;
                             var employeeIdClaim = User.FindFirst("EmployeeId");
                             if (employeeIdClaim != null && int.TryParse(employeeIdClaim.Value, out int id))
                             {
                                 employeeId = id;
                             }
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Account" asp-action="EmpDashboard">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Enrollment" asp-action="EnrolledPolicies" asp-route-employeeId="@employeeId">My Enrollments</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Claim" asp-action="SubmitClaim">Submit Claim</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Claim" asp-action="ListAllClaims">My Claims</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Enrollment" asp-action="Index">View Available Policies</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="PremiumCalculator" asp-action="Index">Premium Calculator</a>
-                            </li>
                         }
-                    </ul>
-                    <ul class="navbar-nav">
-                        @if (User.Identity.IsAuthenticated)
-                        {
+                        <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <span class="nav-link custom-nav-link">Hello, @User.Identity.Name!</span>
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Account" asp-action="EmpDashboard"><i class="fas fa-home me-1"></i>Home</a>
                             </li>
-                            <li class="nav-item btn-warning">
-                                <form asp-controller="Account" asp-action="Logout" method="get">
-                                    <button type="submit" class="custom-nav-link btn btn-dark">Logout</button>
-                                </form>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Enrollment" asp-action="EnrolledPolicies" asp-route-employeeId="@employeeId"><i class="fas fa-id-card-alt me-1"></i>My Enrollments</a>
                             </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item" >
-                                <a class="btn btn-outline-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Claim" asp-action="SubmitClaim"><i class="fas fa-file-medical-alt me-1"></i>Submit Claim</a>
                             </li>
-                        }
-                    </ul>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Claim" asp-action="ListAllClaims"><i class="fas fa-list-alt me-1"></i>My Claims</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="Enrollment" asp-action="Index"><i class="fas fa-search-dollar me-1"></i>View Available Policies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link" asp-area="" asp-controller="PremiumCalculator" asp-action="Index"><i class="fas fa-calculator me-1"></i>Premium Calculator</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            }
+
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <ul class="navbar-nav flex-grow-1 d-flex justify-content-between align-items-center">
+                    <li class="nav-item">
+                        <span class="nav-link custom-nav-link"><i class="fas fa-user-circle me-1"></i>@User.Identity.Name</span>
+                    </li>
+                    <li class="nav-item">
+                        <form asp-controller="Account" asp-action="Logout" method="get">
+                            <button type="submit" class="custom-nav-button btn btn-dark d-flex align-items-center">Logout <i class="fas fa-sign-out-alt ms-1"></i></button>
+                        </form>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                <ul class="navbar-nav flex-grow-1 d-flex justify-content-between align-items-center pe-3">
+                    <div class="d-flex align-items-center">
+                    <li>
+                        <a class="navbar-brand custom-nav-link p-0" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="~/images/logo_primeProtect.png" alt="Health Insurance Logo" style="height: 100px; margin-right: 2px;object-fit: cover">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link custom-nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-home me-1"></i>Home</a>
+                    </li>
+                    </div>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-dark custom-nav-button d-flex align-items-center" asp-area="" asp-controller="Account" asp-action="Login">Login <i class="fas fa-sign-in-alt ms-1"></i></a>
+                    </li>
+                </ul>
+            }
+
         </nav>
     </header>
     <div class="container-fluid">
@@ -134,113 +174,113 @@
         </main>
     </div>
 
-    @* NEW COMPLEX FOOTER FOR UNAUTHENTICATED USERS STARTS HERE *@
+    ---
+
+    @* FOOTER REMAINS THE SAME *@
     @if (!User.Identity.IsAuthenticated)
     {
-    <footer class="footer-custom">
-        <div class="container">
-            <div class="footer-header-section">
-                <img src="~/images/logo_primeProtect.png" alt="Health Insurance Logo" class="footer-logo" /> @* REPLACE with your actual logo path *@
-                <div class="footer-dropdowns">
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-flag"></i>@* REPLACE with your actual flag path *@
-                            India
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">USA</a></li>
-                            <li><a class="dropdown-item" href="#">UK</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown ms-2">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-globe"></i> English
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Spanish</a></li>
-                            <li><a class="dropdown-item" href="#">French</a></li>
-                        </ul>
+        <footer class="footer-custom">
+            <div class="container">
+                <div class="footer-header-section">
+                    <img src="~/images/logo_primeProtect.png" alt="Health Insurance Logo" class="footer-logo" />
+                    <div class="footer-dropdowns">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-flag me-1"></i>
+                                India
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">USA</a></li>
+                                <li><a class="dropdown-item" href="#">UK</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown ms-2">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-globe me-1"></i> English
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Spanish</a></li>
+                                <li><a class="dropdown-item" href="#">French</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row footer-links-section">
-                <div class="col-md-2 col-sm-6 mb-3">
-                    <h5 class="footer-column-title">ABOUT APPLICATION</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Who We Are</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Work With Us</a></li>
-                        <li><a href="#">Investor Relations</a></li>
-                        <li><a href="#">Report Fraud</a></li>
-                        <li><a href="#">Press Kit</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 col-sm-6 mb-3">
-                    <h5 class="footer-column-title">CATEGORIES</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Health Plans</a></li>
-                        <li><a href="#">Life Insurance</a></li>
-                        <li><a href="#">Travel Insurance</a></li>
-                        <li><a href="#">Car Insurance</a></li>
-                        <li><a href="#">Home Insurance</a></li>
-                        <li><a href="#">Pet Insurance</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 col-sm-6 mb-3">
-                    <h5 class="footer-column-title">FOR USERS</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Partner With Us</a></li>
-                        <li><a href="#">Agent Portal</a></li>
-                        <li><a href="#">Broker Login</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 col-sm-6 mb-3">
-                    <h5 class="footer-column-title">LEARN MORE</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Security</a></li>
-                        <li><a href="#">Terms</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 col-sm-12 mb-3 footer-social-app">
-                    <h5 class="footer-column-title">SOCIAL LINKS</h5>
-                    <div class="social-icons mb-3">
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <div class="row footer-links-section">
+                    <div class="col-md-2 col-sm-6 mb-3">
+                        <h5 class="footer-column-title">ABOUT APPLICATION</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Who We Are</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Work With Us</a></li>
+                            <li><a href="#">Investor Relations</a></li>
+                            <li><a href="#">Report Fraud</a></li>
+                            <li><a href="#">Press Kit</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
                     </div>
-                     <div class="app-badges d-flex flex-column align-items-center">
+                    <div class="col-md-2 col-sm-6 mb-3">
+                        <h5 class="footer-column-title">CATEGORIES</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Health Plans</a></li>
+                            <li><a href="#">Life Insurance</a></li>
+                            <li><a href="#">Travel Insurance</a></li>
+                            <li><a href="#">Car Insurance</a></li>
+                            <li><a href="#">Home Insurance</a></li>
+                            <li><a href="#">Pet Insurance</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-6 mb-3">
+                        <h5 class="footer-column-title">FOR USERS</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Partner With Us</a></li>
+                            <li><a href="#">Agent Portal</a></li>
+                            <li><a href="#">Broker Login</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-6 mb-3">
+                        <h5 class="footer-column-title">LEARN MORE</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Terms</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-12 mb-3 footer-social-app">
+                        <h5 class="footer-column-title">SOCIAL LINKS</h5>
+                        <div class="social-icons mb-3">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                        <div class="app-badges d-flex flex-column align-items-center">
                             <a href="#" class="btn btn-outline-dark d-flex align-items-center justify-content-center px-4 py-2" style="width: 180px;">
                                 <i class="fab fa-apple fa-2x me-2"></i> <span>App Store</span>
                             </a>
                             <a href="#" class="btn btn-outline-dark d-flex align-items-center justify-content-center px-4 py-2 mt-2" style="width: 180px;">
                                 <i class="fab fa-google-play fa-2x me-2"></i> <span>Google Play</span>
                             </a>
-                     </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="footer-divider" />
+                <div class="footer-copyright text-center">
+                    <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners. 2008-@(DateTime.Now.Year) © Health_Insurance™ Ltd. All rights reserved.</p>
                 </div>
             </div>
-            <hr class="footer-divider" />
-            <div class="footer-copyright text-center">
-                <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners. 2008-@(DateTime.Now.Year) © Health_Insurance™ Ltd. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-        @* NEW COMPLEX FOOTER FOR UNAUTHENTICATED USERS ENDS HERE *@
+        </footer>
     }
     else
     {
-
         <footer class="border-top footer text-muted">
             <div class="container">
                 &copy; 2025 - Health_Insurance - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>
     }
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

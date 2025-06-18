@@ -171,7 +171,7 @@ namespace Health_Insurance.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(viewModel); // Return the view with validation errors
+            return View(); // Return the view with validation errors
         }
 
         // GET: /HR/Delete/5
