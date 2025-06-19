@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding; // Required for [BindNever]
+using System; // Required for DateTime
 
 namespace Health_Insurance.Models // Ensure this namespace is correct based on your project name
 {
@@ -51,8 +52,9 @@ namespace Health_Insurance.Models // Ensure this namespace is correct based on y
         public string PasswordHash { get; set; }
         // --- End Authentication Fields ---
 
-        // Navigation property for Enrollments (if needed later)
-        // public virtual ICollection<Enrollment> Enrollments { get; set; }
+        [Required(ErrorMessage = "Create Date is required.")]
+        [Display(Name = "Create Date")]
+        public DateTime CreateDate { get; set; } = DateTime.Now;
     }
 }
 

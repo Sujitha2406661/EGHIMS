@@ -3,7 +3,7 @@ using Health_Insurance.Data; // Ensure namespace is correct for your DbContext
 using Health_Insurance.Models; // Ensure namespace is correct for your Models
 using Health_Insurance.Services; // Ensure namespace is correct for your Services
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore; // Needed for .ToListAsync()
+using Microsoft.EntityFrameworkCore; // Needed for .ToListAsync(), .Include()
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -41,7 +41,6 @@ namespace Health_Insurance.Controllers
             }
             else if (User.IsInRole("Employee"))
             {
-                // Explicitly qualify System.Security.Claims.Claim
                 System.Security.Claims.Claim employeeIdClaim = User.FindFirst("EmployeeId");
                 if (employeeIdClaim == null || !int.TryParse(employeeIdClaim.Value, out int actualEmployeeId))
                 {
@@ -61,7 +60,7 @@ namespace Health_Insurance.Controllers
                 }
 
                 // Filter claims by the authenticated employee's ID
-                claims = (await _claimService.ListAllClaimsAsync()).Where(c => c.Enrollment.EmployeeId == employeeId.Value);
+                claims = (await _claimService.ListAllClaimsAsync()).Where(c => c.Enrollment?.EmployeeId == employeeId.Value); // Added null conditional for Enrollment
             }
             else
             {
@@ -76,22 +75,18 @@ namespace Health_Insurance.Controllers
         // Accessible to all authenticated users.
         public async Task<IActionResult> SubmitClaim()
         {
-            // Only allow employees to submit claims for themselves.
-            // Admin can submit for anyone, but this form is typically for employees.
             if (User.IsInRole("Employee"))
             {
-                // Explicitly qualify System.Security.Claims.Claim
                 System.Security.Claims.Claim employeeIdClaim = User.FindFirst("EmployeeId");
                 if (employeeIdClaim == null || !int.TryParse(employeeIdClaim.Value, out int actualEmployeeId))
                 {
                     return Forbid(); // EmployeeId claim missing or invalid
                 }
 
-                // Fetch enrollments only for the logged-in employee
                 var enrollments = await _context.Enrollments
-                                                .Include(e => e.Policy)
-                                                .Where(e => e.EmployeeId == actualEmployeeId) // Filter by logged-in employee
-                                                .ToListAsync();
+                                                    .Include(e => e.Policy)
+                                                    .Where(e => e.EmployeeId == actualEmployeeId) // Filter by logged-in employee
+                                                    .ToListAsync();
 
                 ViewBag.EnrollmentList = new SelectList(enrollments.Select(e => new {
                     EnrollmentId = e.EnrollmentId,
@@ -100,11 +95,10 @@ namespace Health_Insurance.Controllers
             }
             else if (User.IsInRole("Admin"))
             {
-                // Admin can see all enrollments
                 var enrollments = await _context.Enrollments
-                                                .Include(e => e.Employee)
-                                                .Include(e => e.Policy)
-                                                .ToListAsync();
+                                                    .Include(e => e.Employee)
+                                                    .Include(e => e.Policy)
+                                                    .ToListAsync();
                 ViewBag.EnrollmentList = new SelectList(enrollments.Select(e => new {
                     EnrollmentId = e.EnrollmentId,
                     DisplayText = $"Enrollment #{e.EnrollmentId} - {e.Employee?.Name ?? "Unknown Employee"} ({e.Policy?.PolicyName ?? "Unknown Policy"})"
@@ -121,7 +115,6 @@ namespace Health_Insurance.Controllers
         // POST: /Claim/SubmitClaim
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // Added ClaimId to bind list (though it's usually 0 for new records, it's safer)
         public async Task<IActionResult> SubmitClaim([Bind("ClaimId,EnrollmentId,ClaimAmount,ClaimReason,ClaimDate")] Health_Insurance.Models.Claim claim)
         {
             // CRITICAL FIX: Set ClaimStatus to SUBMITTED before ModelState.IsValid check
@@ -146,7 +139,28 @@ namespace Health_Insurance.Controllers
                 }
             }
 
-            if (ModelState.IsValid) // This should now be true if other fields are valid
+            // --- NEW VALIDATION: Claim Amount vs. Policy Coverage Amount ---
+            // Fetch the enrollment *with* its policy details to get coverage amount
+            var claimEnrollment = await _context.Enrollments
+                                                .Include(e => e.Policy)
+                                                .AsNoTracking()
+                                                .FirstOrDefaultAsync(e => e.EnrollmentId == claim.EnrollmentId);
+
+            if (claimEnrollment == null)
+            {
+                // This scenario should be caught by the EnrollmentId validation above,
+                // but as a safeguard, if policy details can't be fetched.
+                ModelState.AddModelError("EnrollmentId", "Selected enrollment or its policy details not found.");
+            }
+            else if (claim.ClaimAmount > claimEnrollment.Policy?.CoverageAmount)
+            {
+                // Add a ModelState error if ClaimAmount exceeds CoverageAmount
+                ModelState.AddModelError("ClaimAmount", $"Claim Amount cannot exceed the policy's Coverage Amount of {claimEnrollment.Policy?.CoverageAmount:C}.");
+            }
+            // --- END NEW VALIDATION ---
+
+
+            if (ModelState.IsValid) // This will now also check the new ClaimAmount validation
             {
                 var success = await _claimService.SubmitClaimAsync(claim);
 
@@ -160,7 +174,7 @@ namespace Health_Insurance.Controllers
                     return await RePopulateSubmitClaimDropdown(claim);
                 }
             }
-            // If ModelState is not valid, re-populate dropdowns and return view
+            // If ModelState is not valid (due to any validation, including the new one), re-populate dropdowns and return view
             return await RePopulateSubmitClaimDropdown(claim);
         }
 
@@ -175,9 +189,9 @@ namespace Health_Insurance.Controllers
                     return Forbid();
                 }
                 var enrollments = await _context.Enrollments
-                                                .Include(e => e.Policy)
-                                                .Where(e => e.EmployeeId == actualEmployeeId)
-                                                .ToListAsync();
+                                                    .Include(e => e.Policy)
+                                                    .Where(e => e.EmployeeId == actualEmployeeId)
+                                                    .ToListAsync();
                 ViewBag.EnrollmentList = new SelectList(enrollments.Select(e => new {
                     EnrollmentId = e.EnrollmentId,
                     DisplayText = $"Enrollment #{e.EnrollmentId} - {e.Policy?.PolicyName ?? "Unknown Policy"}"
@@ -186,9 +200,9 @@ namespace Health_Insurance.Controllers
             else if (User.IsInRole("Admin"))
             {
                 var enrollments = await _context.Enrollments
-                                                .Include(e => e.Employee)
-                                                .Include(e => e.Policy)
-                                                .ToListAsync();
+                                                    .Include(e => e.Employee)
+                                                    .Include(e => e.Policy)
+                                                    .ToListAsync();
                 ViewBag.EnrollmentList = new SelectList(enrollments.Select(e => new {
                     EnrollmentId = e.EnrollmentId,
                     DisplayText = $"Enrollment #{e.EnrollmentId} - {e.Employee?.Name ?? "Unknown Employee"} ({e.Policy?.PolicyName ?? "Unknown Policy"})"
@@ -314,7 +328,3 @@ namespace Health_Insurance.Controllers
         }
     }
 }
-
-
-
-

@@ -48,6 +48,11 @@
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Organization.OrganizationName)
         </dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Username)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Username)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CreateDate)</dt> @* NEW ROW *@
+        <dd class="col-sm-9">@(Model.CreateDate.ToString("yyyy-MM-dd"))</dd>
     </dl>
 
     @* Form for confirming deletion. Posts to the DeleteConfirmed action. *@
