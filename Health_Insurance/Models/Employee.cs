@@ -1,10 +1,10 @@
 ﻿// Models/Employee.cs
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Mvc.ModelBinding; // Required for [BindNever]
-using System; // Required for DateTime
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 
-namespace Health_Insurance.Models // Ensure this namespace is correct based on your project name
+namespace Health_Insurance.Models
 {
     // Represents an Employee entity, mapping to the Employee table in the database.
     public class Employee
@@ -20,7 +20,7 @@ namespace Health_Insurance.Models // Ensure this namespace is correct based on y
 
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(100)]
-        [EmailAddress] // Provides validation for email format
+        [EmailAddress]
         public string Email { get; set; }
 
         [StringLength(15)]
@@ -34,23 +34,22 @@ namespace Health_Insurance.Models // Ensure this namespace is correct based on y
         public string Designation { get; set; }
 
         // Foreign Key to the Organization table
-        [Required(ErrorMessage = "Organization is required.")] // Ensure this is present
+        [Required(ErrorMessage = "Organization is required.")]
         public int OrganizationId { get; set; }
 
         // Navigation property to the related Organization
-        [ForeignKey("OrganizationId")] // Specifies the foreign key property
-        [BindNever] // ADD THIS ATTRIBUTE! Tells model binder to ignore this property from form data
+        [ForeignKey("OrganizationId")] 
+        [BindNever]
         public virtual Organization? Organization { get; set; }
 
         // --- Authentication Fields for Employee Login ---
-        [Required(ErrorMessage = "Username is required.")] // Username is still required
+        [Required(ErrorMessage = "Username is required.")]
         [StringLength(50)]
         public string Username { get; set; }
 
         // Password hash. Not [Required] on the model, but handled for initial creation in controller.
         [StringLength(256)]
         public string PasswordHash { get; set; }
-        // --- End Authentication Fields ---
 
         [Required(ErrorMessage = "Create Date is required.")]
         [Display(Name = "Create Date")]

@@ -94,13 +94,6 @@ namespace Health_Insurance.Controllers
                 employee.CreateDate = DateTime.UtcNow; // Using UtcNow is generally best practice for timestamps
                 // --- END NEW ---
 
-                // Manually retrieve and assign the Organization navigation property IF NEEDED
-                // It's often handled by EF Core automatically when OrganizationId is set and saved,
-                // but explicit fetching ensures the Organization object is tracked if needed for immediate display.
-                // For this scenario (just saving), the direct ID assignment is usually sufficient.
-                // var organization = await _context.Organizations.FindAsync(employee.OrganizationId);
-                // if (organization != null) employee.Organization = organization;
-
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

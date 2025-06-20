@@ -1,7 +1,6 @@
 ﻿// Controllers/AccountController.cs
 using Health_Insurance.Data;
 using Health_Insurance.Models;
-using Health_Insurance.Models;
 using Health_Insurance.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -9,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System; // Add this
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
@@ -20,7 +19,6 @@ namespace Health_Insurance.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
-        //private readonly IUserService _userService;
         private readonly ApplicationDbContext _context;
 
         public AccountController(IUserService userService, ApplicationDbContext context)
@@ -47,15 +45,15 @@ namespace Health_Insurance.Controllers
                     }
                     return RedirectToAction("Index", "Home");
                 }
-                // --- NEW: Redirect HR users ---
+              
                 else if (User.IsInRole("HR"))
                 {
                     // HR personnel might also manage employees, so redirect them to Employee/Index
                     //return RedirectToAction("Index", "Employee");
                     return RedirectToAction("HRDashboard", "Account");
                 }
-                // --- END NEW ---
-                return RedirectToAction("Index", "Home"); // Fallback
+                
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -134,13 +132,13 @@ namespace Health_Insurance.Controllers
             {
                 return RedirectToAction("EnrolledPolicies", "Enrollment", new { employeeId = userId });
             }
-            // --- NEW: Redirect HR personnel after login ---
+            
             else if (userRole == "HR")
             {
                 return RedirectToAction("HRDashboard", "Account"); // HR also goes to Employee management initially
             }
-            // --- END NEW ---
-            return RedirectToAction("Index", "Home"); // Fallback redirect
+            
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize(Roles = "HR,Admin")] // Both HR and Admin can access this dashboard view

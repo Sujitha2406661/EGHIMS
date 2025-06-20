@@ -1,12 +1,12 @@
 // Program.cs
 using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
-using Health_Insurance.Data; // Ensure this namespace is correct for ApplicationDbContext
-using Health_Insurance.Models; // Add this using statement for your Admin, Employee, HR models
-using Health_Insurance.Services; // Ensure this namespace is correct for your Services
-using Microsoft.EntityFrameworkCore; // For UseSqlServer and Migrate()
-using Microsoft.AspNetCore.Authentication.Cookies; // For CookieAuthenticationDefaults
-using Microsoft.Extensions.Logging; // For logging in the seeding process
-using BCrypt.Net; // Add this for password hashing (Install BCrypt.Net-Next NuGet package)
+using Health_Insurance.Data;
+using Health_Insurance.Models;
+using Health_Insurance.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Logging;
+using BCrypt.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,8 +26,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login"; // Path to your login page
-        options.LogoutPath = "/Account/Logout"; // Path to your logout action
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
         options.AccessDeniedPath = "/Account/AccessDenied"; // Path for access denied
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Cookie expiration
         options.SlidingExpiration = true; // Renew cookie on activity
@@ -81,10 +81,6 @@ if (app.Environment.IsDevelopment()) // Seeding logic should primarily run in de
                 logger.LogInformation("Seeding initial Admin user...");
                 var adminUser = new Admin
                 {
-                    // For manual insertion, you might want to skip AdminId=1 if DB is managing identity.
-                    // If your AdminId is an IDENTITY column in the database, you generally don't set it here.
-                    // The database will assign it automatically upon insertion.
-                    // AdminId=1, // <--- Consider removing this line if AdminId is an IDENTITY column
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
                     Username = "admin@example.com",
                     Name = "System Administrator" // Add other properties as per your Admin model
@@ -156,14 +152,14 @@ app.MapControllerRoute(
 // --- TEMPORARY CODE TO GENERATE PASSWORD HASH ---
 // Run the application, check the console output for the hashed password,
 // then STOP the application and REMOVE this block.
-string plainTextPasswordToHash = "Admin@123"; // <<< CHANGE THIS TO YOUR DESIRED PASSWORD
-string hashedPasswordForManualInsert = BCrypt.Net.BCrypt.HashPassword(plainTextPasswordToHash);
-Console.WriteLine($"\n=======================================================");
-Console.WriteLine($"TEMPORARY HASH GENERATOR:");
-Console.WriteLine($"Plain text password: '{plainTextPasswordToHash}'");
-Console.WriteLine($"Generated Hashed Password: '{hashedPasswordForManualInsert}'");
-Console.WriteLine($"\n>> Copy this hash and use it for manual database insertion. <<");
-Console.WriteLine($"\n=======================================================");
+//string plainTextPasswordToHash = "Admin@123"; // <<< CHANGE THIS TO YOUR DESIRED PASSWORD
+//string hashedPasswordForManualInsert = BCrypt.Net.BCrypt.HashPassword(plainTextPasswordToHash);
+//Console.WriteLine($"\n=======================================================");
+//Console.WriteLine($"TEMPORARY HASH GENERATOR:");
+//Console.WriteLine($"Plain text password: '{plainTextPasswordToHash}'");
+//Console.WriteLine($"Generated Hashed Password: '{hashedPasswordForManualInsert}'");
+//Console.WriteLine($"\n>> Copy this hash and use it for manual database insertion. <<");
+//Console.WriteLine($"\n=======================================================");
 // --- END TEMPORARY CODE ---
 
 

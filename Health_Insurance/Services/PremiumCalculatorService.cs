@@ -1,17 +1,14 @@
 ﻿// Services/PremiumCalculatorService.cs
-using Health_Insurance.Data; // Ensure namespace is correct for your DbContext
-using Health_Insurance.Models; // Ensure namespace is correct for your Models
+using Health_Insurance.Data;
+using Health_Insurance.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using System; // Required for ArgumentException or general Exceptions
+using System;
 
-namespace Health_Insurance.Services // Ensure this namespace is correct for your Services folder
+namespace Health_Insurance.Services
 {
-    // Interface for the Premium Calculator Service
-   
-
     // Implementation of the Premium Calculator Service
-    public class PremiumCalculatorService : IPremiumCalculatorService // Explicitly implement the interface
+    public class PremiumCalculatorService : IPremiumCalculatorService
     {
         private readonly ApplicationDbContext _context; // DbContext for database interaction
 
@@ -55,16 +52,16 @@ namespace Health_Insurance.Services // Ensure this namespace is correct for your
                 switch (employee.Designation.ToUpperInvariant()) // Use ToUpperInvariant() for robust comparison
                 {
                     case "CEO":
-                        calculatedPremium *= 2.5m; // Example: CEO pays 2.5x the base premium
+                        calculatedPremium *= 2.5m;
                         break;
                     case "DIRECTOR":
-                        calculatedPremium *= 2.0m; // Example: Director pays 2.0x
+                        calculatedPremium *= 2.0m;
                         break;
                     case "MANAGER":
-                        calculatedPremium *= 1.5m; // Example: Manager pays 1.5x
+                        calculatedPremium *= 1.5m;
                         break;
                     case "SENIOR ASSOCIATE":
-                        calculatedPremium *= 1.2m; // Example: Senior Associate pays 1.2x
+                        calculatedPremium *= 1.2m;
                         break;
                     case "ASSOCIATE":
                         calculatedPremium *= 1.0m;
@@ -72,7 +69,6 @@ namespace Health_Insurance.Services // Ensure this namespace is correct for your
                     case "INTERN":
                         calculatedPremium *= 1.0m;
                         break;
-                    // Add more designations and their respective premium adjustments
                     default:
                         // No specific adjustment for unknown or unlisted designations
                         calculatedPremium *= 1.0m;
@@ -89,7 +85,5 @@ namespace Health_Insurance.Services // Ensure this namespace is correct for your
 
             return calculatedPremium;
         }
-
-        // You would add other calculation methods here if needed
     }
 }

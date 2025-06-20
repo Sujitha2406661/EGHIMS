@@ -12,7 +12,7 @@ namespace Health_Insurance.Models
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain alphabets and spaces.")] // NEW VALIDATION
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Email is required.")] // Email is required for edit as well
+        [Required(ErrorMessage = "Email is required.")]
         [StringLength(100)]
         [EmailAddress(ErrorMessage = "Invalid Email Address.")]
         public string Email { get; set; }

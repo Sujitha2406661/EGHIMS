@@ -3,7 +3,7 @@ using Health_Insurance.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
-using Health_Insurance.Services; // Add this using statement for IUserService
+using Health_Insurance.Services;
 
 namespace Health_Insurance.Controllers
 {
@@ -36,11 +36,6 @@ namespace Health_Insurance.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        // --- TEMPORARY: Action to hash passwords for database insertion ---
-        // REMOVE THIS ACTION AND THE _userService FIELD/CONSTRUCTOR PARAMETER AFTER USE!
-        
-        
+        }  
     }
 }

@@ -1,11 +1,11 @@
 ﻿// Controllers/HRController.cs
-using Health_Insurance.Data; // Ensure this namespace is correct for your DbContext
-using Health_Insurance.Models; // Ensure this namespace is correct for your Models
-using Health_Insurance.Services; // Ensure this namespace is correct for IUserService
-using Microsoft.AspNetCore.Authorization; // For [Authorize]
+using Health_Insurance.Data;
+using Health_Insurance.Models;
+using Health_Insurance.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore; // For ToListAsync, FindAsync, Any, Include
-using System.Linq; // For Any
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Health_Insurance.Controllers

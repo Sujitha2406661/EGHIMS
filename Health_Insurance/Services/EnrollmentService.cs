@@ -1,16 +1,16 @@
 ﻿// Services/EnrollmentService.cs
-using Health_Insurance.Data; // Ensure namespace is correct for your DbContext
-using Health_Insurance.Models; // Ensure namespace is correct for your Models
+using Health_Insurance.Data;
+using Health_Insurance.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Health_Insurance.Services // Ensure this namespace is correct for your Services folder
+namespace Health_Insurance.Services
 {
     // Implementation of the Enrollment Service interface
-    public class EnrollmentService : IEnrollmentService // Explicitly implement the interface
+    public class EnrollmentService : IEnrollmentService
     {
         private readonly ApplicationDbContext _context; // DbContext for database interaction
 
@@ -34,8 +34,8 @@ namespace Health_Insurance.Services // Ensure this namespace is correct for your
             // Include Policy and Employee navigation properties to load related data
             // Filter by employeeId
             return await _context.Enrollments
-                .Include(e => e.Policy) // Load the related Policy data
-                .Include(e => e.Employee) // Load the related Employee data (optional, but good for completeness)
+                .Include(e => e.Policy)
+                .Include(e => e.Employee)
                 .Where(e => e.EmployeeId == employeeId)
                 .ToListAsync();
         }
@@ -68,7 +68,7 @@ namespace Health_Insurance.Services // Ensure this namespace is correct for your
             {
                 EmployeeId = employeeId,
                 PolicyId = policyId,
-                EnrollmentDate = DateTime.UtcNow, // Set enrollment date (using UTC is good practice)
+                EnrollmentDate = DateTime.UtcNow,
                 Status = "ACTIVE" // Set the initial status to ACTIVE
             };
 
@@ -111,10 +111,6 @@ namespace Health_Insurance.Services // Ensure this namespace is correct for your
             // Check if SaveChangesAsync successfully wrote at least one entity
             return result > 0;
         }
-
-        // You will add more complex business logic here as needed based on project requirements
-        // e.g., validation based on employee age, dependents, policy rules, etc.
-        // Premium calculation logic would likely go in the PremiumCalculatorService.
     }
 }
 

@@ -1,7 +1,7 @@
-﻿using Health_Insurance.Models; // Ensure this namespace is correct
+﻿using Health_Insurance.Models;
 using System.Threading.Tasks;
 
-namespace Health_Insurance.Services // Ensure this namespace is correct
+namespace Health_Insurance.Services 
 {
     // Interface defining the contract for the User (Authentication) Service
     public interface IUserService
@@ -16,7 +16,5 @@ namespace Health_Insurance.Services // Ensure this namespace is correct
 
         // Method to verify a password against a stored hash
         bool VerifyPassword(string password, string hashedPassword);
-
-        // You might add methods for user registration, password reset, etc., later.
     }
 }

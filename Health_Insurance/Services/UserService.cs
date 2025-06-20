@@ -47,7 +47,6 @@ namespace Health_Insurance.Services
                     return employee;
                 }
             }
-            // --- NEW: Authenticate HR personnel ---
             else if (loginType == "HR")
             {
                 var hr = await _context.HRs.FirstOrDefaultAsync(h => h.Username == username);
@@ -56,8 +55,6 @@ namespace Health_Insurance.Services
                     return hr;
                 }
             }
-            // --- END NEW ---
-
             return null; // Authentication failed for the specified loginType
         }
     }
