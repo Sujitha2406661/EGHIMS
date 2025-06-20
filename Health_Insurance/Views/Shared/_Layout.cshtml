@@ -1,5 +1,4 @@
-﻿﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,8 +13,284 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Health_Insurance.styles.css" asp-append-version="true" />
+    @* NOTE: You mentioned moving away from CSS files for other views,
+       but for the layout, we're using a <style> block directly.
+       You might consider removing these if they cause conflicts with new styles. *@
+    @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
+    @* <link rel="stylesheet" href="~/css/Health_Insurance.styles.css" asp-append-version="true" /> *@
+
+
+    <style>
+        /* Earthy & Muted Green Theme Colors */
+        :root {
+            --primary-bg-light: #F0F2ED; /* Very light, almost off-white with a hint of green */
+            --main-text-color: #3C4538; /* A slightly darker, warm charcoal */
+            --heading-color: #4B5945; /* Your deepest green */
+            --secondary-text-color: #66785F; /* Your muted olive green */
+            --accent-color: #A3A67C; /* Warm, slightly golden-olive */
+            --button-text-color: #FFFFFF; /* Pure White */
+            --link-color: #91AC8F; /* Your soft sage green */
+            --link-hover-color: #66785F; /* Muted olive green for hover */
+            --border-color: #D1D8C7; /* Very light, cool green-gray */
+            --success-color: #7FB88A; /* Slightly brighter, friendly green */
+            --danger-color: #D98C88; /* Muted, soft terracotta/rose */
+            --card-bg-color: #FFFFFF; /* White for card backgrounds */
+            --navbar-bg: #4B5945; /* Deep green for navbar background */
+            --navbar-link-color: #F0F2ED; /* Light text for navbar links */
+            --navbar-link-hover-color: #B2C9AD; /* Your light green for navbar link hover */
+            --footer-bg: #3C4538; /* Dark charcoal for footer background */
+            --footer-text: #F0F2ED; /* Light text for footer */
+            --footer-link: #91AC8F; /* Soft sage green for footer links */
+            --footer-link-hover: #A3A67C; /* Accent color for footer link hover */
+            --button-hover-bg: #8E926D; /* A slightly darker accent for button hover */
+        }
+
+        /* General Body Styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg-light);
+            color: var(--main-text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1; /* Allows main content to grow and push footer down */
+        }
+
+        /* Navbar Styling */
+        .custom-navbar-bg {
+            background-color: var(--navbar-bg) !important; /* Use deep green for navbar */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .custom-nav-link {
+            color: var(--navbar-link-color) !important; /* Light text for navbar links */
+            font-weight: 500;
+            padding: 15px 12px !important; /* Adjust padding for better look */
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+            .custom-nav-link:hover,
+            .custom-nav-link.active {
+                color: var(--navbar-link-hover-color) !important; /* Lighter green on hover */
+                background-color: rgba(255, 255, 255, 0.08); /* Subtle background on hover */
+                border-radius: 6px;
+            }
+
+        .custom-nav-button {
+            background-color: var(--accent-color) !important; /* Accent color for login/logout buttons */
+            color: var(--button-text-color) !important;
+            border: 1px solid var(--accent-color) !important;
+            padding: 8px 18px !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+            .custom-nav-button:hover {
+                background-color: var(--button-hover-bg) !important; /* Slightly darker accent on hover */
+                border-color: var(--button-hover-bg) !important;
+            }
+
+        .navbar-brand img {
+            height: 80px; /* Adjust logo size for a more modern header */
+            object-fit: contain; /* Ensure logo fits within its box without distortion */
+        }
+
+        /* Footer Styling (for !User.Identity.IsAuthenticated) */
+        .footer-custom {
+            background-color: var(--footer-bg); /* Dark charcoal for footer */
+            color: var(--footer-text); /* Light text */
+            padding: 40px 0;
+            margin-top: auto; /* Pushes footer to the bottom */
+            font-size: 0.95em;
+        }
+
+            .footer-custom a {
+                color: var(--footer-link); /* Soft sage green for footer links */
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .footer-custom a:hover {
+                    color: var(--footer-link-hover); /* Accent color on hover */
+                    text-decoration: underline;
+                }
+
+        .footer-logo {
+            height: 90px; /* Adjust footer logo size */
+            margin-bottom: 20px;
+        }
+
+        .footer-header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            margin-bottom: 30px;
+        }
+
+        .footer-dropdowns .btn {
+            background-color: transparent !important;
+            border-color: var(--border-color) !important; /* Light border for dropdowns */
+            color: var(--footer-text) !important;
+        }
+
+            .footer-dropdowns .btn:hover {
+                background-color: rgba(255, 255, 255, 0.1) !important;
+            }
+
+        .footer-dropdowns .dropdown-menu {
+            background-color: var(--footer-bg);
+            border-color: var(--border-color);
+        }
+
+        .footer-dropdowns .dropdown-item {
+            color: var(--footer-text);
+        }
+
+            .footer-dropdowns .dropdown-item:hover {
+                background-color: var(--secondary-text-color); /* Muted olive for dropdown hover */
+                color: var(--button-text-color);
+            }
+
+        .footer-column-title {
+            color: var(--link-hover-color); /* Muted olive for column titles */
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .footer-links-section ul {
+            padding-left: 0;
+        }
+
+        .footer-links-section li {
+            margin-bottom: 8px;
+        }
+
+        .social-icons a {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: var(--link-color); /* Link color for social icons */
+            transition: color 0.3s ease;
+        }
+
+            .social-icons a:hover {
+                color: var(--link-hover-color); /* Link hover for social icons */
+            }
+
+        .app-badges .btn {
+            background-color: var(--main-text-color) !important; /* Dark charcoal for app badges */
+            color: var(--button-text-color) !important;
+            border-color: var(--main-text-color) !important;
+            font-weight: 600;
+            padding: 10px 20px;
+        }
+
+            .app-badges .btn:hover {
+                background-color: var(--secondary-text-color) !important; /* Muted olive on hover */
+                border-color: var(--secondary-text-color) !important;
+            }
+
+        .footer-divider {
+            border-color: var(--border-color);
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-copyright p {
+            color: var(--secondary-text-color);
+            font-size: 0.85em;
+            margin: 0;
+        }
+
+        /* Default Footer for Authenticated users */
+        .footer.text-muted {
+            background-color: var(--primary-bg-light); /* Light background for default footer */
+            color: var(--secondary-text-color) !important;
+            border-top: 1px solid var(--border-color);
+            padding: 15px 0;
+            text-align: center;
+            margin-top: auto; /* Ensure it's at the bottom */
+        }
+
+            .footer.text-muted a {
+                color: var(--link-color) !important;
+                text-decoration: none;
+            }
+
+                .footer.text-muted a:hover {
+                    color: var(--link-hover-color) !important;
+                    text-decoration: underline;
+                }
+
+
+        /* Adjustments for Bootstrap responsiveness if needed for smaller screens */
+        @media (max-width: 991.98px) { /* Bootstrap's lg breakpoint for navbar-expand-lg */
+            .navbar-collapse
+
+        {
+            background-color: var(--navbar-bg); /* Ensure dropdown menu has background */
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .navbar-nav .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 10px 15px !important;
+        }
+
+        .navbar-brand img {
+            height: 60px; /* Smaller logo on mobile */
+        }
+
+        .footer-header-section {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-dropdowns {
+            margin-top: 20px;
+            margin-left: 0 !important; /* Remove ms-2 */
+            display: flex; /* Keep dropdowns side-by-side */
+        }
+
+        .footer-links-section .col-md-2,
+        .footer-links-section .col-md-4 {
+            width: 50%; /* Make columns stack better on small screens */
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .footer-social-app {
+            text-align: center;
+            width: 100%;
+        }
+
+        .social-icons, .app-badges {
+            justify-content: center;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+            .app-badges .btn {
+                width: 150px; /* Adjust button width */
+                font-size: 0.9em;
+            }
+
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -174,8 +449,6 @@
         </main>
     </div>
 
-    ---
-
     @* FOOTER REMAINS THE SAME *@
     @if (!User.Identity.IsAuthenticated)
     {
@@ -268,7 +541,7 @@
                 </div>
                 <hr class="footer-divider" />
                 <div class="footer-copyright text-center">
-                    <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners. 2008-@(DateTime.Now.Year) © Health_Insurance™ Ltd. All rights reserved.</p>
+                    <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners. 2008-@(DateTime.Now.Year) &copy; Health_Insurance™ Ltd. All rights reserved.</p>
                 </div>
             </div>
         </footer>
