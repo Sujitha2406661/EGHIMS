@@ -4,6 +4,251 @@
     ViewData["Title"] = "Policies"; // Changed title for better context
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f8f9fa; /* Original light background */
+        --danger-red: #dc3545; /* Standard danger red */
+        --danger-red-hover: #c82333; /* Darker red for hover */
+    }
+
+    /* General body and dashboard container styles (consistent across views) */
+    body {
+        background-color: var(--neutral-light-bg);
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 30px 20px; /* Increased padding */
+        background-color: rgba(178, 201, 173, 0.1); /* Very light green tint */
+        border-bottom: 1px solid var(--primary-green-light); /* Lightest green border */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center; /* Center align for h1 within header */
+    }
+
+        .dashboard-header h1 {
+            margin: 0;
+            color: var(--primary-green-dark); /* Darkest green */
+            font-size: 2.2em; /* Larger font size */
+            font-weight: 600;
+        }
+
+    /* Dashboard Card (main content container) */
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 12px; /* Slightly more rounded corners */
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); /* More pronounced shadow for cards */
+        margin: 0 auto; /* Center the card horizontally */
+        max-width: 1000px; /* Limit width for readability */
+        overflow: hidden;
+        border: 1px solid var(--primary-green-light); /* Subtle border for definition */
+    }
+
+    .dashboard-card-header {
+        padding: 20px 25px; /* Increased padding */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Separator for header */
+        background-color: var(--primary-green-medium-light); /* Medium light green for the header within the card */
+    }
+
+    .dashboard-card-title {
+        margin: 0;
+        font-size: 1.5em;
+        color: var(--primary-green-dark); /* Darkest green */
+        font-weight: 500;
+    }
+
+    .dashboard-card-body {
+        padding: 20px;
+    }
+
+    /* Table Specific Styles */
+    .dashboard-table {
+        width: 100%;
+        margin-bottom: 0; /* Remove default table margin */
+        border-collapse: separate; /* Allows border-radius on cells in some browsers */
+        border-spacing: 0;
+    }
+
+        .dashboard-table thead th {
+            background-color: var(--primary-green-medium-light); /* Medium light green for header */
+            color: var(--primary-green-dark); /* Darkest green for header text */
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary-green-light); /* Lightest green border */
+            padding: 15px 20px; /* More padding */
+            vertical-align: middle;
+            text-align: left;
+        }
+
+            .dashboard-table thead th:first-child {
+                border-top-left-radius: 8px; /* Rounded top-left */
+            }
+
+            .dashboard-table thead th:last-child {
+                border-top-right-radius: 8px; /* Rounded top-right */
+            }
+
+
+        .dashboard-table tbody tr {
+            border-bottom: 1px solid var(--primary-green-light); /* Lightest green row separator */
+            transition: background-color 0.2s ease;
+        }
+
+            .dashboard-table tbody tr:last-child {
+                border-bottom: none; /* No border for the last row */
+            }
+
+        .dashboard-table tbody td {
+            padding: 12px 20px; /* Consistent padding */
+            vertical-align: middle;
+            color: var(--neutral-dark-text); /* Standard text color */
+        }
+
+        .dashboard-table.table-hover tbody tr:hover {
+            background-color: rgba(178, 201, 173, 0.2); /* Lightest green with opacity on hover */
+        }
+
+        /* Actions column alignment */
+        .dashboard-table .text-center {
+            text-align: center;
+        }
+
+    /* Primary "Create New Policy" button */
+    .dashboard-btn-primary {
+        background-color: var(--primary-green-dark); /* Darkest green */
+        border-color: var(--primary-green-dark);
+        color: #fff;
+        padding: 10px 20px; /* Larger padding for main action */
+        font-size: 1em;
+        border-radius: 8px; /* Consistent border radius */
+        transition: all 0.3s ease; /* Smooth transitions */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: var(--primary-green-medium-dark); /* Medium dark green on hover */
+            border-color: var(--primary-green-medium-dark);
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 4px 8px rgba(75, 89, 69, 0.2); /* Subtle shadow tinted with darkest green */
+        }
+
+        .dashboard-btn-primary i {
+            margin-right: 8px;
+        }
+
+    /* MODERN ACTION BUTTONS (Edit, Details, Delete) */
+    .modern-action-btn {
+        padding: 8px 12px; /* Slightly more padding */
+        font-size: 0.85em;
+        border-radius: 8px; /* Consistent border radius */
+        transition: all 0.3s ease; /* Smooth transitions for hover effects */
+        margin: 0 4px; /* Space between buttons */
+        display: inline-flex; /* Align icon and text vertically */
+        align-items: center;
+        justify-content: center;
+        background-color: transparent; /* Ensure transparent background for outline */
+        color: var(--primary-green-medium-dark); /* Medium dark green text */
+        border: 1px solid var(--primary-green-medium-dark); /* Medium dark green border */
+    }
+
+        /* Hover effect: fill the button with its color */
+        .modern-action-btn.btn-outline-info:hover {
+            background-color: var(--primary-green-dark); /* Darkest green on hover */
+            color: #fff;
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: 0 4px 8px rgba(75, 89, 69, 0.2); /* Subtle shadow */
+        }
+
+        .modern-action-btn.btn-outline-secondary:hover {
+            background-color: var(--primary-green-light); /* Lightest green background on hover */
+            color: var(--primary-green-dark); /* Darkest green text */
+            border-color: var(--primary-green-dark); /* Darkest green border */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(178, 201, 173, 0.2);
+        }
+
+        .modern-action-btn.btn-outline-danger {
+            color: var(--danger-red); /* Keep standard red for danger */
+            border-color: var(--danger-red);
+        }
+
+            .modern-action-btn.btn-outline-danger:hover {
+                background-color: var(--danger-red); /* Fill with red on hover */
+                color: #fff;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+            }
+
+        /* Icon spacing for action buttons */
+        .modern-action-btn i {
+            margin-right: 5px;
+        }
+
+    /* Empty table message */
+    .table-responsive .text-muted {
+        color: #6c757d !important;
+        font-style: italic;
+    }
+
+    /* Responsive Adjustments */
+    @@media (max-width: 768px) {
+        .dashboard-header {
+            flex-direction: column; /* Stack header elements */
+            align-items: flex-start;
+            padding: 20px 15px;
+        }
+
+            .dashboard-header h1 {
+                margin-bottom: 15px;
+            }
+
+        .dashboard-btn-primary {
+            width: 100%; /* Full width button */
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dashboard-card {
+            margin: 0 15px; /* Add side margin */
+            border-radius: 0; /* Remove border-radius on small screens for full width look */
+        }
+
+        .dashboard-card-header, .dashboard-card-body {
+            padding: 15px; /* Adjust padding */
+        }
+
+        .dashboard-table thead th,
+        .dashboard-table tbody td {
+            padding: 10px 12px; /* Smaller padding for table cells */
+            font-size: 0.9em; /* Smaller font size */
+        }
+
+        .modern-action-btn {
+            padding: 6px 8px; /* Smaller button padding */
+            font-size: 0.8em; /* Smaller button font */
+            margin: 2px; /* Reduce margin between buttons */
+        }
+        /* Stack buttons if they become too cramped */
+        .dashboard-table tbody td:last-child {
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap */
+            justify-content: center;
+            gap: 5px; /* Small gap between wrapped buttons */
+        }
+    }
+</style>
+
 <div class="dashboard-header">
     <h1>@ViewData["Title"]</h1>
     <p>
@@ -69,140 +314,3 @@
 
 @section Scripts {
 }
-
-<style>
-    /* General body and dashboard container styles (from previous suggestion) */
-    body {
-        background-color: #f4f7f6; /* Light gray background */
-        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Example font */
-    }
-
-    .dashboard-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-        .dashboard-header h1 {
-            margin: 0;
-            color: #343a40;
-            font-size: 2em;
-            font-weight: 600;
-        }
-
-    .dashboard-card {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
-        overflow: hidden;
-    }
-
-    .dashboard-card-header {
-        padding: 20px;
-        border-bottom: 1px solid #e9ecef;
-        background-color: #f8f9fa;
-    }
-
-    .dashboard-card-title {
-        margin: 0;
-        font-size: 1.5em;
-        color: #343a40;
-    }
-
-    .dashboard-card-body {
-        padding: 20px;
-    }
-
-    .dashboard-table thead th {
-        background-color: #e2e6ea;
-        color: #495057;
-        font-weight: 600;
-        border-bottom: 2px solid #dee2e6;
-        padding: 12px 15px;
-        vertical-align: middle;
-    }
-
-    .dashboard-table tbody tr {
-        border-bottom: 1px solid #dee2e6;
-    }
-
-        .dashboard-table tbody tr:last-child {
-            border-bottom: none;
-        }
-
-    .dashboard-table tbody td {
-        padding: 12px 15px;
-        vertical-align: middle;
-    }
-
-    .dashboard-table.table-hover tbody tr:hover {
-        background-color: #f0f3f6;
-    }
-
-    /* Primary "Create New Policy" button */
-    .dashboard-btn-primary {
-        background-color: #28a745; /* Success green */
-        border-color: #28a745;
-        color: #fff;
-        padding: 8px 15px;
-        font-size: 0.9em;
-        border-radius: 5px;
-        transition: all 0.3s ease; /* Smooth transitions */
-    }
-
-        .dashboard-btn-primary:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-            transform: translateY(-2px); /* Slight lift on hover */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .dashboard-btn-primary i {
-            margin-right: 8px;
-        }
-
-    /* MODERN ACTION BUTTONS (Edit, Details, Delete) */
-    .modern-action-btn {
-        padding: 8px 12px; /* Slightly more padding */
-        font-size: 0.85em;
-        border-radius: 5px; /* Rounded corners */
-        transition: all 0.3s ease; /* Smooth transitions for hover effects */
-        margin: 0 4px; /* Space between buttons */
-        display: inline-flex; /* Align icon and text vertically */
-        align-items: center;
-        justify-content: center;
-    }
-
-        /* Hover effect: fill the button with its color */
-        .modern-action-btn.btn-outline-info:hover {
-            background-color: #17a2b8; /* Bootstrap info color */
-            color: #fff;
-            transform: translateY(-1px); /* Slight lift */
-            box-shadow: 0 2px 6px rgba(23, 162, 184, 0.3); /* Subtle shadow */
-        }
-
-        .modern-action-btn.btn-outline-secondary:hover {
-            background-color: #6c757d; /* Bootstrap secondary color */
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);
-        }
-
-        .modern-action-btn.btn-outline-danger:hover {
-            background-color: #dc3545; /* Bootstrap danger color */
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
-        }
-
-        /* Icon spacing for action buttons */
-        .modern-action-btn i {
-            margin-right: 5px;
-        }
-</style>

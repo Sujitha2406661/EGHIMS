@@ -5,15 +5,125 @@
     ViewData["Title"] = "Delete Employee";
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f8f9fa; /* Original light background */
+        --subtle-border: #e9ecef; /* Original subtle border */
+    }
+
+    /* General Body & Typography */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: var(--neutral-light-bg);
+        color: var(--neutral-dark-text);
+        line-height: 1.6;
+    }
+
+    /* Headings */
+    h1 {
+        /* text-danger class already handles red color, keeping it for emphasis */
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    h3 {
+        color: var(--primary-green-dark); /* Dark green for consistency */
+        font-weight: 500;
+        margin-bottom: 1.5rem; /* Added margin-bottom */
+    }
+
+    h4 {
+        color: var(--primary-green-dark); /* Dark green for consistency */
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    /* Container for details */
+    .dl-horizontal-card {
+        background-color: #ffffff; /* White background for the card-like display */
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        padding: 25px;
+        margin-top: 20px;
+        margin-bottom: 20px; /* Spacing below the card */
+    }
+
+    /* Horizontal Rule */
+    hr {
+        border-top: 1px solid var(--primary-green-medium-light); /* Medium light green for HR */
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Definition List Styling */
+    .dl-horizontal .col-sm-3 { /* For display names */
+        font-weight: 600;
+        color: var(--primary-green-medium-dark); /* Medium dark green for labels */
+        margin-bottom: 0.75rem; /* Space between dt/dd rows */
+    }
+
+    .dl-horizontal .col-sm-9 { /* For display values */
+        color: var(--neutral-dark-text);
+        margin-bottom: 0.75rem; /* Space between dt/dd rows */
+    }
+
+    /* Delete Button */
+    .btn-danger {
+        background-color: #dc3545; /* Standard Bootstrap red for danger */
+        border-color: #dc3545;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333; /* Darker red on hover */
+            border-color: #bd2130;
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2); /* Subtle shadow */
+        }
+
+    /* Back to List Link */
+    .form-group-actions a { /* Adjusting selector for the link */
+        color: var(--primary-green-medium-dark); /* Medium dark green for link text */
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease, text-decoration 0.3s ease;
+        margin-left: 1rem; /* Space after the button */
+    }
+
+        .form-group-actions a:hover {
+            color: var(--primary-green-dark); /* Darkest green on hover */
+            text-decoration: underline;
+        }
+
+    /* Adjusting layout for the form actions */
+    .form-actions {
+        margin-top: 1.5rem;
+        display: flex;
+        align-items: center;
+    }
+</style>
+
 <h1 class="mb-4 text-danger">Delete Employee</h1> @* Highlight delete heading in danger color *@
 
 <h3 class="mb-3">Are you sure you want to delete this?</h3> @* Added margin-bottom *@
 
-<div>
-    <h4>Employee</h4>
+<div class="dl-horizontal-card">
+    @* Custom class for card-like styling around details *@
+    <h4>Employee Details</h4> @* Added a title for the details section *@
     <hr />
     @* Use Bootstrap row and column for layout and display classes *@
-    <dl class="row">
+    <dl class="row dl-horizontal">
+        @* Added dl-horizontal class for dt/dd styling *@
         @* Use dl, dt, dd with row/col for definition list layout *@
         @* Displaying properties of the Employee to be deleted *@
         <dt class="col-sm-3">
@@ -56,14 +166,13 @@
     </dl>
 
     @* Form for confirming deletion. Posts to the DeleteConfirmed action. *@
-    <form asp-action="Delete" class="mt-3">
-        @* Added margin-top to form *@
+    <form asp-action="Delete" class="mt-3 form-group-actions">
+        @* Added margin-top to form and custom class for styling *@
         @* Hidden field to pass the EmployeeId to the DeleteConfirmed action *@
         <input type="hidden" asp-for="EmployeeId" />
         @* Use Bootstrap button classes *@
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" class="btn btn-danger" />
         @* Link back to the Employee Index page *@
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
-

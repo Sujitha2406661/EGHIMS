@@ -3,6 +3,172 @@
     ViewData["Title"] = "Edit HR";
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f8f9fa; /* Original light background */
+        --subtle-border: #e9ecef; /* Original subtle border */
+    }
+
+    /* General Body & Typography - Basic setup for a clean look */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: var(--neutral-light-bg); /* Light background for the whole page */
+        color: var(--neutral-dark-text); /* Darker text for readability */
+        line-height: 1.6;
+    }
+
+    /* Dashboard Header - For the main page title */
+    .dashboard-header {
+        background-color: rgba(178, 201, 173, 0.1); /* Very light green tint */
+        padding: 30px 20px;
+        border-bottom: 1px solid var(--primary-green-light); /* Lightest green border */
+        margin-bottom: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+        .dashboard-header h1 {
+            font-size: 2.2em;
+            color: var(--primary-green-dark); /* Darkest green */
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+
+    /* Dashboard Card - The container for the form */
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 12px; /* Softly rounded corners */
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); /* A more pronounced, subtle shadow */
+        margin: 0 auto; /* Center the card */
+        max-width: 800px; /* Limit width for readability */
+        overflow: hidden;
+        border: 1px solid var(--primary-green-light); /* Gentle border in lightest green */
+    }
+
+    .dashboard-card-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+        background-color: var(--primary-green-medium-light); /* Medium light green for the header within the card */
+    }
+
+    .dashboard-card-title {
+        font-size: 1.5em;
+        color: var(--primary-green-dark); /* Darkest green */
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+
+    .dashboard-card-body {
+        padding: 30px 25px; /* Ample internal padding for the form */
+    }
+
+    /* Form specific adjustments */
+    .form-group label.control-label {
+        font-weight: 600; /* Make labels slightly bolder */
+        color: var(--primary-green-medium-dark); /* Medium dark green for labels */
+        margin-bottom: 5px; /* Small space below label */
+    }
+
+    .form-control {
+        border-radius: 8px; /* Match button/card radius */
+        border: 1px solid #ced4da;
+        padding: 10px 15px; /* More comfortable padding */
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03); /* Subtle inner shadow */
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-green-medium-dark); /* Medium dark green on focus */
+            box-shadow: 0 0 0 0.25rem rgba(102, 120, 95, 0.25); /* Custom green focus ring */
+            outline: 0;
+        }
+
+    .text-danger {
+        font-size: 0.875em; /* Smaller font for validation messages */
+    }
+
+    /* Button Styling - Reusing patterns from previous views */
+    .button-group-spacing {
+        display: flex; /* Flexbox for consistent button layout */
+        gap: 15px; /* Space between buttons */
+        justify-content: flex-start;
+        margin-top: 20px; /* Adjust top margin for button group */
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease; /* Smooth transitions for hover effects */
+    }
+
+        .btn i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+    /* Primary Button (Save Changes) */
+    .dashboard-btn-primary {
+        background-color: var(--primary-green-dark); /* Darkest green */
+        border-color: var(--primary-green-dark);
+        color: #fff;
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: var(--primary-green-medium-dark); /* Medium dark green on hover */
+            border-color: var(--primary-green-medium-dark);
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(75, 89, 69, 0.2); /* Subtle shadow tinted with darkest green */
+        }
+
+    /* Outline Button (Back to List) */
+    .modern-action-btn {
+        background-color: transparent;
+        color: var(--primary-green-medium-dark); /* Medium dark green text */
+        border: 1px solid var(--primary-green-medium-dark); /* Medium dark green border */
+    }
+
+        .modern-action-btn:hover {
+            background-color: var(--primary-green-light); /* Lightest green background on hover */
+            color: var(--primary-green-dark); /* Darkest green text */
+            border-color: var(--primary-green-dark); /* Darkest green border */
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(178, 201, 173, 0.2); /* Subtle shadow tinted with lightest green */
+        }
+
+    /* Responsive Adjustments */
+    @@media (max-width: 576px) {
+        .dashboard-card {
+            margin: 0 15px; /* Add some side margin on small screens */
+            border-radius: 0; /* Less rounded or no rounded corners for full width */
+        }
+
+        .dashboard-header {
+            padding: 20px 15px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card-header,
+        .dashboard-card-body {
+            padding: 20px 15px; /* Reduce padding on smaller screens */
+        }
+
+        .button-group-spacing {
+            flex-direction: column; /* Stack buttons vertically on small screens */
+            gap: 10px; /* Adjust gap for vertical stacking */
+        }
+
+        .btn {
+            width: 100%; /* Full width buttons on small screens */
+        }
+    }
+</style>
+
 <div class="dashboard-header">
     <h1>@ViewData["Title"]</h1>
 </div>
@@ -49,7 +215,9 @@
                     </div>
 
                     <div class="form-group button-group-spacing">
-                        <input type="submit" value="Save Changes" class="btn btn-primary dashboard-btn-primary" />
+                        <button type="submit" value="Save Changes" class="btn btn-primary dashboard-btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
                         <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn ms-2">
                             <i class="fas fa-arrow-left"></i> Back to List
                         </a>
@@ -65,135 +233,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-<style>
-    /* General body and dashboard container styles (consistent across views) */
-    body {
-        background-color: #f4f7f6;
-        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    }
-
-    .dashboard-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-        .dashboard-header h1 {
-            margin: 0;
-            color: #343a40;
-            font-size: 2em;
-            font-weight: 600;
-        }
-
-    .dashboard-card {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
-        overflow: hidden;
-    }
-
-    .dashboard-card-header {
-        padding: 20px;
-        border-bottom: 1px solid #e9ecef;
-        background-color: #f8f9fa;
-    }
-
-    .dashboard-card-title {
-        margin: 0;
-        font-size: 1.5em;
-        color: #343a40;
-    }
-
-    .dashboard-card-body {
-        padding: 20px;
-    }
-
-    /* Form specific adjustments */
-    .form-group label {
-        font-weight: 500;
-        color: #495057;
-        margin-bottom: 5px;
-    }
-
-    .form-control {
-        border-radius: 5px;
-        border: 1px solid #ced4da;
-        padding: 10px 15px;
-    }
-
-        .form-control:focus {
-            border-color: #80bdff;
-            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-        }
-
-    /* Primary "Save Changes" button (using Bootstrap's primary blue) */
-    .dashboard-btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        font-size: 1em;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-        .dashboard-btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .dashboard-btn-primary i {
-            margin-right: 8px;
-        }
-
-    /* MODERN ACTION BUTTONS (for 'Back to List') */
-    .modern-action-btn {
-        padding: 8px 12px;
-        font-size: 0.9em;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-        .modern-action-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);
-            background-color: #6c757d;
-            color: #fff;
-        }
-
-        .modern-action-btn i {
-            margin-right: 5px;
-        }
-
-    /* Spacing for buttons at the bottom of the form */
-    .button-group-spacing {
-        margin-top: 20px;
-    }
-
-    /* Bootstrap's default margin-bottom for form-group was mb-3, but adding it explicitly */
-    .mb-3 {
-        margin-bottom: 1rem !important;
-    }
-
-    .mb-4 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    .ms-2 {
-        margin-left: 0.5rem !important;
-    }
-</style>

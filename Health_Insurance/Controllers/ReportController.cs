@@ -85,7 +85,7 @@ namespace Health_Insurance.Controllers
                         contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                         break;
                     case "pdf":
-                        contentType = "application/pdf"
+                        contentType = "application/pdf";
                         break;
                     default:
                         return BadRequest("Unsupported format.");

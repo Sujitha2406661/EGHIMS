@@ -5,13 +5,184 @@
     ViewData["Title"] = "Available Policies for Enrollment";
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f8f9fa; /* Original light background */
+        --subtle-border: #e9ecef; /* Original subtle border */
+    }
+
+    /* General Body & Typography */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: var(--neutral-light-bg);
+        color: var(--neutral-dark-text);
+        line-height: 1.6;
+    }
+
+    /* Main Heading */
+    h1 {
+        color: var(--primary-green-dark); /* Darkest green for main heading */
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Subheading for Policies */
+    h2 {
+        color: var(--primary-green-dark); /* Darkest green for main heading */
+        font-weight: 600;
+        margin-bottom: 1rem;
+        margin-top: 2rem; /* Added margin-top for separation */
+    }
+
+    /* Employee Selection Section */
+    .employee-selection-card {
+        background-color: rgba(178, 201, 173, 0.1); /* Very light green tint for the card */
+        border: 1px solid var(--primary-green-light); /* Lightest green border */
+        border-radius: 10px; /* More rounded corners for the card */
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow */
+    }
+
+        .employee-selection-card h4 {
+            color: var(--primary-green-dark); /* Darkest green for card heading */
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .employee-selection-card .form-label {
+            font-weight: 500;
+            color: var(--primary-green-medium-dark); /* Medium dark green for label */
+        }
+
+    #employeeMultiSelect {
+        border-color: var(--primary-green-light); /* Lightest green border for select */
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.03); /* Subtle inset shadow */
+        min-height: 80px; /* Ensure it looks like a multi-select */
+    }
+
+        #employeeMultiSelect:focus {
+            border-color: var(--primary-green-medium-dark);
+            box-shadow: 0 0 0 0.25rem rgba(102, 120, 95, 0.25); /* Focus shadow */
+        }
+
+    /* Table Styling */
+    .table {
+        background-color: #ffffff; /* White background for the table itself */
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 0; /* Adjusted from original as h2 is above */
+        border: 1px solid var(--primary-green-light); /* Lightest green outer border */
+        border-radius: 8px; /* Rounded corners for the table */
+        overflow: hidden; /* Ensures rounded corners apply to content */
+    }
+
+        .table thead.table-dark { /* Specificity for thead */
+            background-color: var(--primary-green-medium-dark); /* Medium dark green for table header */
+            color: #fff;
+        }
+
+        .table th {
+            color: #fff; /* White text for header */
+            font-weight: 600;
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2); /* Slightly transparent white border for header cells */
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid var(--primary-green-light); /* Lightest green border between rows */
+        }
+
+            .table tbody tr:last-child {
+                border-bottom: none; /* No border for the last row */
+            }
+
+        .table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+            color: var(--neutral-dark-text);
+        }
+
+    /* Striped rows */
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(178, 201, 173, 0.1); /* Very light green tint for odd rows */
+    }
+
+    /* Hover effect for rows */
+    .table-hover tbody tr:hover {
+        background-color: var(--primary-green-light); /* Lightest green on hover */
+        cursor: pointer;
+    }
+
+    /* Enroll Button */
+    .btn-success { /* Overriding Bootstrap default success green */
+        background-color: var(--primary-green-dark); /* Darkest green for enroll button */
+        border-color: var(--primary-green-dark);
+        color: #fff;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background-color: var(--primary-green-medium-dark); /* Medium dark green on hover */
+            border-color: var(--primary-green-medium-dark);
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(75, 89, 69, 0.2); /* Subtle shadow tinted with darkest green */
+        }
+
+    /* Message Display Area */
+    #enrollmentMessages .alert {
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+
+    #enrollmentMessages .alert-success {
+        background-color: #e0ffe0; /* Lighter custom green for success */
+        color: #336633; /* Darker custom green for success text */
+        border-color: #b3ffb3;
+    }
+
+    #enrollmentMessages .alert-warning {
+        background-color: #fff3cd; /* Bootstrap warning default */
+        color: #856404;
+        border-color: #ffeeba;
+    }
+
+    #enrollmentMessages .alert-danger {
+        background-color: #f8d7da; /* Bootstrap danger default */
+        color: #721c24;
+        border-color: #f5c6cb;
+    }
+
+    /* No Policies Available Alert */
+    .alert-info {
+        background-color: #d1ecf1; /* Bootstrap info default */
+        color: #0c5460;
+        border-color: #bee5eb;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+    }
+</style>
+
 <h1 class="mb-4">Available Policies</h1>
 
 @* Anti-Forgery Token for AJAX POSTs *@
 @Html.AntiForgeryToken()
 
 @* Employee Selection Section - Conditional based on role - PLACED ABOVE TABLE *@
-<div class="mb-4 p-3 border rounded bg-light">
+<div class="mb-4 p-3 employee-selection-card">
+    @* Custom class for styling *@
     @if (ViewBag.IsEmployee != null && ViewBag.IsEmployee)
     {
         <h4>Your Employee Profile</h4>
@@ -36,7 +207,6 @@
 
 @* Message display area for AJAX responses *@
 <div id="enrollmentMessages" class="mt-3">
-    <!-- Success or error messages from AJAX enrollments will appear here -->
 </div>
 
 

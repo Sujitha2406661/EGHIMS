@@ -2,32 +2,167 @@
     ViewData["Title"] = "Reports Dashboard";
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f4f7f6; /* Consistent light background */
+        --accent-blue: #007bff; /* Keep original accent colors for specific semantic meanings if desired, or replace */
+        --accent-success: #28a745;
+        --accent-info: #17a2b8;
+        --accent-danger: #dc3545;
+    }
+
+    body {
+        background-color: var(--neutral-light-bg);
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        color: var(--neutral-dark-text);
+    }
+
+    /* Main Dashboard Header */
+    h1 {
+        color: var(--primary-green-dark); /* Darkest green for main title */
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 20px !important; /* Adjusted margin for consistency */
+    }
+
+    .lead {
+        color: var(--primary-green-medium-dark); /* Medium dark green for lead text */
+        font-size: 1.2em;
+        margin-bottom: 40px !important; /* Increased margin below lead text */
+    }
+
+    /* Dashboard Card (similar to other views for consistency) */
+    .dashboard-card-reports {
+        background-color: #ffffff;
+        border-radius: 12px; /* Slightly more rounded corners */
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); /* More pronounced shadow */
+        margin: 0 auto; /* Center the card */
+        max-width: 800px; /* Limit width for readability */
+        overflow: hidden;
+        border: 1px solid var(--primary-green-light); /* Subtle border for definition */
+    }
+
+    /* List group styling within the dashboard card */
+    .list-group {
+        border-radius: 12px; /* Match card border-radius */
+        overflow: hidden; /* Ensure inner items respect border-radius */
+    }
+
+    .custom-report-item {
+        padding: 20px 25px; /* Ample padding */
+        border-bottom: 1px solid var(--primary-green-light) !important; /* Lightest green border for separation */
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .custom-report-item:last-child {
+            border-bottom: none !important; /* No border for the last item */
+        }
+
+        .custom-report-item:hover {
+            background-color: rgba(178, 201, 173, 0.2); /* Lightest green with opacity on hover */
+            border-color: var(--primary-green-medium-dark) !important; /* Medium dark green border on hover */
+        }
+
+        .custom-report-item h5 {
+            color: var(--primary-green-dark); /* Darkest green for report titles */
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3em;
+        }
+
+            .custom-report-item h5 i {
+                color: var(--primary-green-medium-dark); /* Medium dark green for icons */
+                font-size: 1.1em;
+            }
+
+        .custom-report-item p {
+            color: #6c757d; /* Muted color for descriptions */
+            margin-bottom: 0;
+            font-size: 0.95em;
+        }
+
+        /* Specific text colors for report items - optional, if you want different shades for each type */
+        /* If you want all h5s to be the same dark green, remove these */
+        .custom-report-item .text-primary {
+            color: var(--primary-green-dark) !important;
+        }
+
+        .custom-report-item .text-success {
+            color: var(--primary-green-dark) !important;
+        }
+
+        .custom-report-item .text-info {
+            color: var(--primary-green-dark) !important;
+        }
+
+        .custom-report-item .text-danger {
+            color: var(--primary-green-dark) !important;
+        }
+
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        h1 {
+            font-size: 2em;
+            margin-bottom: 15px !important;
+        }
+
+        .lead {
+            font-size: 1em;
+            margin-bottom: 30px !important;
+        }
+
+        .dashboard-card-reports {
+            margin: 0 15px; /* Add side margin on small screens */
+            border-radius: 0; /* No rounded corners for full width on small screens */
+        }
+
+        .custom-report-item {
+            padding: 15px 20px;
+        }
+
+            .custom-report-item h5 {
+                font-size: 1.1em;
+            }
+
+            .custom-report-item p {
+                font-size: 0.9em;
+            }
+    }
+</style>
+
 <h1 class="mb-4 text-center">Reports Dashboard</h1>
 
 <p class="lead text-center mb-5">Select a report to view or export data.</p>
 
 <div class="row justify-content-center">
-    
     <div class="col-lg-8 col-md-12">
-        
-        <div class="list-group shadow-sm rounded-3">
-           
-            <a asp-action="GenerateEmployeeReport" class="list-group-item list-group-item-action custom-report-item border-0 border-bottom">
-                
-                <h5 class="mb-1 text-primary">Employee Report <i class="fas fa-file-alt float-end"></i></h5> 
+        <div class="list-group shadow-sm rounded-3 dashboard-card-reports">
+            <a asp-action="GenerateEmployeeReport" class="list-group-item list-group-item-action custom-report-item">
+                <h5 class="mb-1">Employee Report <i class="fas fa-file-alt float-end"></i></h5>
                 <p class="mb-1 text-muted">View details of all employees, including their associated organizations.</p>
             </a>
-            <a asp-action="GeneratePolicyReport" class="list-group-item list-group-item-action custom-report-item border-0 border-bottom">
-                <h5 class="mb-1 text-success">Policy Report <i class="fas fa-shield-alt float-end"></i></h5> 
+            <a asp-action="GeneratePolicyReport" class="list-group-item list-group-item-action custom-report-item">
+                <h5 class="mb-1">Policy Report <i class="fas fa-shield-alt float-end"></i></h5>
                 <p class="mb-1 text-muted">View details of all available insurance policies.</p>
             </a>
-            <a asp-action="GenerateEnrollmentReport" class="list-group-item list-group-item-action custom-report-item border-0 border-bottom">
-                <h5 class="mb-1 text-info">Enrollment Report <i class="fas fa-clipboard-list float-end"></i></h5>
+            <a asp-action="GenerateEnrollmentReport" class="list-group-item list-group-item-action custom-report-item">
+                <h5 class="mb-1">Enrollment Report <i class="fas fa-clipboard-list float-end"></i></h5>
                 <p class="mb-1 text-muted">View details of all policy enrollments, including employee and policy information.</p>
             </a>
-            <a asp-action="GenerateClaimReport" class="list-group-item list-group-item-action custom-report-item border-0">
-                
-                <h5 class="mb-1 text-danger">Claim Report <i class="fas fa-file-invoice-dollar float-end"></i></h5> 
+            <a asp-action="GenerateClaimReport" class="list-group-item list-group-item-action custom-report-item">
+                <h5 class="mb-1">Claim Report <i class="fas fa-file-invoice-dollar float-end"></i></h5>
                 <p class="mb-1 text-muted">View details of all submitted claims, including related employee and policy information.</p>
             </a>
             @* Add more report links here as needed *@

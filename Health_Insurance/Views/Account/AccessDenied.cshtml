@@ -2,6 +2,55 @@
     ViewData["Title"] = "Access Denied";
 }
 
+<head>
+    <style>
+        /* Styles for the Access Denied Page */
+        body {
+            background-color: #eef4f7; /* Consistent light background */
+            font-family: 'Montserrat', sans-serif;
+            color: #34495e; /* Darker text for general content */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            margin: 0;
+            text-align: center;
+        }
+
+        h1.text-danger {
+            color: #c0392b !important; /* A strong, clear red for danger */
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        p.text-danger {
+            color: #e74c3c !important; /* A slightly lighter red for warning messages */
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        a {
+            color: #34889C; /* Primary teal color for links */
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border: 2px solid #34889C;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+            a:hover {
+                background-color: #34889C;
+                color: #ffffff;
+                text-decoration: none;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+    </style>
+</head>
+
 <h1 class="text-danger">Access Denied</h1>
 <p class="text-danger">You do not have permission to view this resource.</p>
 <p>

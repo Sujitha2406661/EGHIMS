@@ -10,7 +10,7 @@
         /* --- LOGIN PAGE STYLES --- */
         /* This replaces your .login-wrapper styles for centering and overall background */
         .container-fluid.min-vh-100 {
-            background-color: #f8f8fc; /* Overall subtle page background */
+            background-color: #eef4f7; /* Overall subtle page background - Light Blue-Grey */
             /* Ensure no conflicting margin on body or html for full-height effect */
         }
 
@@ -21,18 +21,18 @@
             border: none;
             overflow: hidden; /* Crucial for rounded corners when using background images */
             border-radius: 15px; /* Consistent rounded corners */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* General shadow for the whole card */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* General shadow for the whole card - Softer */
         }
 
         /* Left Half: Welcome Section with Background Image and Overlay */
         .login-welcome-section {
             /* The cityscape background image (ensure you have city-background.jpg in wwwroot/images/) */
-            background-image: url('/images/city-background.jpg');
+            background-image: url('/images/city-background.jpg'); /* Keep your image */
             background-size: cover; /* Cover the entire area */
             background-position: center; /* Center the image */
             background-repeat: no-repeat;
-            /* Your purple overlay color */
-            background-color: rgba(118, 0, 188, 0.50); /* Purple overlay with higher opacity for welcome section */
+            /* New primary accent color with opacity */
+            background-color: rgba(69, 137, 147, 0.75); /* Deep Teal-Blue with higher opacity */
             /* Blend mode to combine the background color and image */
             background-blend-mode: multiply;
             color: #fff; /* White text on dark background */
@@ -70,7 +70,7 @@
             .login-welcome-section .welcome-icons i {
                 font-size: 2.5em;
                 margin: 0 10px;
-                color: #ffc107; /* Gold color for stars, re-used here for icons */
+                color: #ffc107; /* Gold color for stars, re-used here for icons - Kept original */
                 transition: transform 0.2s ease-in-out;
                 /* Add border-radius to curve the icons by making them circular */
                 border-radius: 50%; /* Makes the background of the icon circular */
@@ -110,6 +110,7 @@
         .form-control {
             border-radius: 12px; /* Increased border-radius for more curve on inputs */
             padding: 12px 15px; /* Add more padding to inputs */
+            border: 1px solid #cce0eb; /* Lighter, subtle border for inputs */
         }
 
         /* Add more space between input groups */
@@ -131,35 +132,38 @@
 
         /* Colors for login buttons - customize as needed */
         .btn-primary.btn-login {
-            background-color: rgba(118, 0, 188, 0.70); /* Primary blue for Admin, slightly brighter */
-            border-color: rgba(20,20,20);
+            background-color: #34889C; /* Primary blue for Admin - Muted Teal */
+            border-color: #34889C;
+            color: #ffffff;
         }
 
             .btn-primary.btn-login:hover {
-                background-color: rgba(118, 0, 188, 0.50);
-                border-color:rgba(20,20,20);
+                background-color: #2a6e7e; /* Darker Teal on hover */
+                border-color: #2a6e7e;
                 transform: translateY(-2px); /* Slight lift on hover */
             }
 
         .btn-success.btn-login {
-            background-color: #28a745; /* Green for Employee */
-            border-color: #28a745;
+            background-color: #4CAF50; /* Green for Employee - Standard Green */
+            border-color: #4CAF50;
+            color: #ffffff;
         }
 
             .btn-success.btn-login:hover {
-                background-color: #218838;
-                border-color: #218838;
+                background-color: #45a049; /* Darker Green on hover */
+                border-color: #45a049;
                 transform: translateY(-2px);
             }
 
         .btn-info.btn-login {
-            background-color: #17a2b8; /* Cyan for HR */
-            border-color: #17a2b8;
+            background-color: #00BCD4; /* Cyan for HR - Bright Cyan */
+            border-color: #00BCD4;
+            color: #ffffff;
         }
 
             .btn-info.btn-login:hover {
-                background-color: #138496;
-                border-color: #138496;
+                background-color: #00a2b8; /* Darker Cyan on hover */
+                border-color: #00a2b8;
                 transform: translateY(-2px);
             }
 
@@ -168,17 +172,24 @@
             border-radius: 10px 10px 0 0; /* Slightly curved top corners for tabs */
             font-family: 'Montserrat', sans-serif;
             font-weight: 500;
-            color: #495057;
+            color: #6c757d; /* Softer tab text color */
             margin-right: 5px;
             border: 1px solid transparent;
             border-bottom-color: #dee2e6;
             padding: 10px 20px;
+            transition: all 0.2s ease;
         }
 
             .nav-tabs .nav-link.active {
                 background-color: #ffffff;
-                border-color: #dee2e6 #dee2e6 #fff;
-                color: #007bff; /* Active tab color */
+                border-color: #dee2e6 #dee2e6 #ffffff; /* Active tab border */
+                color: #34889C; /* Active tab color - Muted Teal */
+                font-weight: 600;
+            }
+
+            .nav-tabs .nav-link:hover:not(.active) {
+                color: #4CAF50; /* Hover color for inactive tabs - Green accent */
+                border-bottom-color: #cce0eb; /* Lighter border on hover */
             }
 
         .nav-tabs {
@@ -196,7 +207,6 @@
     <div class="login-page-card card shadow-lg rounded-3">
         <div class="row g-0">
             <div class="col-md-6 login-welcome-section d-flex flex-column justify-content-center align-items-center p-5 text-center">
-                @* You can add a small logo or icon here if desired, ensure it contrasts with the background *@
                 <img src="~/images/logo_primeProtect.png" alt="Welcome" class="img-fluid mb-4 welcome-image">
 
                 <h2 class="welcome-heading">Welcome to PrimeProtect!</h2>

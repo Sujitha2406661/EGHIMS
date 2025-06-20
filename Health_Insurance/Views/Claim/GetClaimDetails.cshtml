@@ -6,19 +6,33 @@
 }
 
 <style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f8f9fa; /* Original light background */
+        --subtle-border: #e9ecef; /* Original subtle border */
+        --card-shadow-color: rgba(0, 0, 0, 0.08); /* Original shadow */
+        --secondary-grey-text: #6c757d; /* Original secondary grey */
+        --secondary-grey-border: #6c757d; /* Original secondary grey */
+    }
+
     /* General Body & Typography */
     body {
         font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-        background-color: #f8f9fa; /* Light background for the whole page */
-        color: #343a40; /* Darker text for readability */
+        background-color: var(--neutral-light-bg); /* Light background for the whole page */
+        color: var(--neutral-dark-text); /* Darker text for readability */
         line-height: 1.6;
     }
 
     /* Dashboard Header - For the main page title */
     .dashboard-header {
-        background-color: #ffffff;
+        background-color: #ffffff; /* Keeping white for header background to keep it clean */
         padding: 30px 20px;
-        border-bottom: 1px solid #e9ecef;
+        border-bottom: 1px solid var(--subtle-border);
         margin-bottom: 30px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         text-align: center;
@@ -26,7 +40,7 @@
 
         .dashboard-header h1 {
             font-size: 2.2em;
-            color: #212529;
+            color: var(--primary-green-dark); /* Main title in darkest green */
             margin-bottom: 0;
             font-weight: 600;
         }
@@ -35,25 +49,25 @@
     .dashboard-card {
         background-color: #ffffff;
         border-radius: 12px; /* Softly rounded corners */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* A nice, subtle shadow */
+        box-shadow: 0 4px 12px var(--card-shadow-color); /* A nice, subtle shadow */
         margin: 0 auto; /* Center the card */
         max-width: 800px; /* Limit width for readability */
         overflow: hidden;
-        border: 1px solid #e0e0e0; /* Gentle border */
+        border: 1px solid var(--primary-green-light); /* Gentle border using light green */
     }
 
     .dashboard-card-header {
         padding: 20px 25px;
-        border-bottom: 1px solid #dee2e6;
-        background-color: #f8f9fa; /* Light background for the header within the card */
-        display: flex; /* For aligning elements if you add more */
+        border-bottom: 1px solid var(--primary-green-light); /* Border in light green */
+        background-color: var(--primary-green-medium-light); /* Light green background for the header within the card */
+        display: flex;
         align-items: center;
         justify-content: space-between;
     }
 
     .card-title-custom { /* For the title within the card header */
         font-size: 1.5em;
-        color: #343a40;
+        color: var(--primary-green-dark); /* Card title in dark green */
         margin-bottom: 0;
         font-weight: 500;
     }
@@ -71,7 +85,7 @@
         .detail-list > dd {
             padding-top: 10px; /* Space between rows */
             padding-bottom: 10px;
-            border-bottom: 1px dashed #e9ecef; /* Subtle dashed line for separation */
+            border-bottom: 1px dashed var(--primary-green-light); /* Subtle dashed line using light green */
             margin-bottom: 0; /* Remove default margin */
         }
 
@@ -82,70 +96,70 @@
 
     .detail-label {
         font-weight: 600; /* Slightly bolder labels */
-        color: #495057; /* Slightly darker than body text */
+        color: var(--primary-green-medium-dark); /* Labels in medium dark green */
         text-align: left; /* Ensure labels align left */
     }
 
     .detail-value {
-        color: #212529; /* Stronger color for values */
+        color: var(--primary-green-dark); /* Stronger color for values in dark green */
         font-weight: 500; /* Slightly less bold than label */
     }
 
     /* Button Group Spacing */
     .button-group-spacing {
-        display: flex; /* Use flexbox for consistent button spacing */
-        gap: 15px; /* Space between buttons */
-        justify-content: flex-start; /* Align buttons to the left */
-        margin-top: 30px; /* Space above the button group */
+        display: flex;
+        gap: 15px;
+        justify-content: flex-start;
+        margin-top: 30px;
     }
 
     /* Base Button Styles */
     .btn {
-        padding: 10px 20px; /* More padding for a solid feel */
-        border-radius: 8px; /* Slightly more rounded buttons */
-        font-weight: 500; /* Medium font weight */
-        transition: all 0.3s ease; /* Smooth transitions for hover effects */
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
     }
 
         .btn i {
-            margin-right: 8px; /* Space between icon and text */
+            margin-right: 8px;
         }
 
     /* Primary Button (Update Status) */
     .dashboard-btn-primary { /* Custom primary button style */
-        background-color: #007bff; /* Bootstrap primary blue */
-        border-color: #007bff;
-        color: #fff;
+        background-color: var(--primary-green-dark); /* Darkest green for primary button */
+        border-color: var(--primary-green-dark);
+        color: #fff; /* White text on dark green */
     }
 
         .dashboard-btn-primary:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-            border-color: #004085;
-            transform: translateY(-2px); /* Slight lift effect */
-            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Subtle shadow on hover */
+            background-color: var(--primary-green-medium-dark); /* Medium dark green on hover */
+            border-color: var(--primary-green-medium-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(75, 89, 69, 0.2); /* Shadow with primary green tint */
         }
 
     /* Outline Button (Back to List) */
     .modern-action-btn { /* Custom outline button style */
         background-color: transparent;
-        color: #6c757d; /* Bootstrap secondary grey */
-        border: 1px solid #6c757d;
+        color: var(--primary-green-medium-dark); /* Text in medium dark green */
+        border: 1px solid var(--primary-green-medium-dark); /* Border in medium dark green */
     }
 
         .modern-action-btn:hover {
-            background-color: #e9ecef; /* Light grey background on hover */
-            color: #495057;
-            border-color: #495057;
-            transform: translateY(-2px); /* Slight lift effect */
+            background-color: var(--primary-green-light); /* Light green background on hover */
+            color: var(--primary-green-dark); /* Dark green text on hover */
+            border-color: var(--primary-green-dark); /* Dark green border on hover */
+            transform: translateY(-2px);
         }
 
     /* Responsive Adjustments */
-    @@media (max-width: 576px) {
+    @media (max-width: 576px) {
         .dashboard-card
 
     {
-        margin: 0 15px; /* Add some side margin on small screens */
-        border-radius: 0; /* Less rounded or no rounded corners for full width */
+        margin: 0 15px;
+        border-radius: 0;
     }
 
     .dashboard-header {
@@ -155,16 +169,16 @@
 
     .dashboard-card-header,
     .dashboard-card-body {
-        padding: 20px 15px; /* Reduce padding on smaller screens */
+        padding: 20px 15px;
     }
 
     .button-group-spacing {
-        flex-direction: column; /* Stack buttons vertically on small screens */
-        gap: 10px; /* Adjust gap for vertical stacking */
+        flex-direction: column;
+        gap: 10px;
     }
 
     .btn {
-        width: 100%; /* Full width buttons on small screens */
+        width: 100%;
     }
 
     .detail-list > dt,

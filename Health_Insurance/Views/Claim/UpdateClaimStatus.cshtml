@@ -5,6 +5,183 @@
     ViewData["Title"] = "Update Claim Status";
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40;
+        --neutral-light-bg: #f4f7f6; /* Original light gray background */
+        --subtle-border: #e9ecef;
+    }
+
+    /* General body and dashboard container styles */
+    body {
+        background-color: var(--neutral-light-bg);
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        color: var(--neutral-dark-text);
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+        .dashboard-header h1 {
+            margin: 0;
+            color: var(--primary-green-dark); /* Styled with darkest green */
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+        overflow: hidden;
+        border: 1px solid var(--primary-green-light); /* Styled with lightest green border */
+    }
+
+    .dashboard-card-header {
+        padding: 20px;
+        border-bottom: 1px solid var(--primary-green-light); /* Styled with lightest green border */
+        background-color: var(--primary-green-medium-light); /* Styled with medium light green background */
+    }
+
+    .dashboard-card-title {
+        margin: 0;
+        font-size: 1.5em;
+        color: var(--primary-green-dark); /* Styled with darkest green */
+    }
+
+    .dashboard-card-body {
+        padding: 20px;
+    }
+
+    /* Form specific styles */
+    .form-group .form-label {
+        font-weight: 600;
+        color: var(--primary-green-medium-dark); /* Labels styled with medium dark green */
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid var(--primary-green-light); /* Border in light green */
+        padding: 10px 15px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-green-medium-dark); /* Medium dark green on focus */
+            box-shadow: 0 0 0 0.25rem rgba(102, 120, 95, 0.25); /* Subtle shadow tint from medium dark green */
+            outline: 0;
+        }
+
+    /* Styling for disabled form controls */
+    fieldset:disabled .form-control {
+        background-color: rgba(178, 201, 173, 0.3); /* Lighter green with transparency for disabled inputs */
+        border-color: var(--primary-green-light);
+        color: var(--primary-green-dark); /* Dark green text for disabled inputs */
+        opacity: 1; /* Ensure full opacity for text readability */
+        cursor: not-allowed;
+    }
+
+    hr {
+        border-top: 1px solid var(--primary-green-light); /* Styled the HR with light green */
+    }
+
+    /* Primary "Update Status" button */
+    .dashboard-btn-primary {
+        background-color: var(--primary-green-dark); /* Darkest green for update button */
+        border-color: var(--primary-green-dark);
+        color: #fff;
+        padding: 8px 15px;
+        font-size: 0.9em;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+        .dashboard-btn-primary:hover {
+            background-color: var(--primary-green-medium-dark); /* Medium dark green on hover */
+            border-color: var(--primary-green-medium-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(75, 89, 69, 0.2); /* Shadow tinted with darkest green */
+        }
+
+        .dashboard-btn-primary i {
+            margin-right: 8px;
+        }
+
+    /* MODERN ACTION BUTTONS (Back to List, Back to Details) */
+    .modern-action-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        margin: 0 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent; /* Ensure transparent background by default */
+    }
+
+        /* Specific colors for outline buttons */
+        .modern-action-btn.btn-outline-secondary {
+            color: var(--primary-green-medium-dark); /* Text in medium dark green */
+            border: 1px solid var(--primary-green-medium-dark); /* Border in medium dark green */
+        }
+
+        .modern-action-btn.btn-outline-info {
+            color: var(--primary-green-medium-dark); /* Using medium dark green for 'info' button text */
+            border: 1px solid var(--primary-green-medium-dark); /* Using medium dark green for 'info' button border */
+        }
+
+        /* Hover effect: fill the button with its color */
+        .modern-action-btn.btn-outline-secondary:hover {
+            background-color: var(--primary-green-medium-dark); /* Medium dark green background on hover */
+            color: #fff; /* White text on hover */
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(102, 120, 95, 0.3); /* Shadow tinted with medium dark green */
+        }
+
+        .modern-action-btn.btn-outline-info:hover {
+            background-color: var(--primary-green-dark); /* Darker green for 'info' button hover */
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(75, 89, 69, 0.3); /* Shadow tinted with darkest green */
+        }
+
+        /* Icon spacing for action buttons */
+        .modern-action-btn i {
+            margin-right: 5px;
+        }
+
+    /* Spacing for button group */
+    .button-group-spacing .btn {
+        margin-right: 10px;
+    }
+
+        .button-group-spacing .btn:last-child {
+            margin-right: 0;
+        }
+
+    /* Validation summary and messages */
+    .text-danger {
+        color: #dc3545 !important; /* Keep standard red for validation messages */
+    }
+</style>
+
 <div class="dashboard-header">
     <h1>@ViewData["Title"]</h1>
 </div>
@@ -90,123 +267,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-<style>
-    /* General body and dashboard container styles */
-    body {
-        background-color: #f4f7f6; /* Light gray background */
-        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Example font */
-    }
-
-    .dashboard-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-        .dashboard-header h1 {
-            margin: 0;
-            color: #343a40;
-            font-size: 2em;
-            font-weight: 600;
-        }
-
-    .dashboard-card {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
-        overflow: hidden;
-    }
-
-    .dashboard-card-header {
-        padding: 20px;
-        border-bottom: 1px solid #e9ecef;
-        background-color: #f8f9fa;
-    }
-
-    .dashboard-card-title {
-        margin: 0;
-        font-size: 1.5em;
-        color: #343a40;
-    }
-
-    .dashboard-card-body {
-        padding: 20px;
-    }
-
-    /* Primary "Update Status" button */
-    .dashboard-btn-primary {
-        background-color: #007bff; /* Primary blue for update */
-        border-color: #007bff;
-        color: #fff;
-        padding: 8px 15px;
-        font-size: 0.9em;
-        border-radius: 5px;
-        transition: all 0.3s ease; /* Smooth transitions */
-    }
-
-        .dashboard-btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-            transform: translateY(-2px); /* Slight lift on hover */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .dashboard-btn-primary i {
-            margin-right: 8px;
-        }
-
-    /* MODERN ACTION BUTTONS (Back to List, Back to Details) */
-    .modern-action-btn {
-        padding: 8px 12px; /* Slightly more padding */
-        font-size: 0.85em;
-        border-radius: 5px; /* Rounded corners */
-        transition: all 0.3s ease; /* Smooth transitions for hover effects */
-        margin: 0 4px; /* Space between buttons */
-        display: inline-flex; /* Align icon and text vertically */
-        align-items: center;
-        justify-content: center;
-    }
-
-        /* Hover effect: fill the button with its color */
-        .modern-action-btn.btn-outline-info:hover {
-            background-color: #17a2b8; /* Bootstrap info color */
-            color: #fff;
-            transform: translateY(-1px); /* Slight lift */
-            box-shadow: 0 2px 6px rgba(23, 162, 184, 0.3); /* Subtle shadow */
-        }
-
-        .modern-action-btn.btn-outline-secondary:hover {
-            background-color: #6c757d; /* Bootstrap secondary color */
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);
-        }
-
-        /* Icon spacing for action buttons */
-        .modern-action-btn i {
-            margin-right: 5px;
-        }
-
-    /* Styling for disabled form controls */
-    fieldset:disabled .form-control {
-        background-color: #e9ecef; /* Lighter background for disabled inputs */
-        opacity: 1; /* Ensure full opacity for text readability */
-        cursor: not-allowed;
-    }
-
-    /* Spacing for button group */
-    .button-group-spacing .btn {
-        margin-right: 10px; /* Space between buttons */
-    }
-
-        .button-group-spacing .btn:last-child {
-            margin-right: 0;
-        }
-</style>

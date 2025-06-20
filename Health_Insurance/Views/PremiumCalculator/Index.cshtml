@@ -1,15 +1,153 @@
-﻿﻿@* Views/PremiumCalculator/Index.cshtml *@
+﻿@* Views/PremiumCalculator/Index.cshtml *@
 @{
     ViewData["Title"] = "Premium Calculator";
 }
+
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f4f7f6; /* Consistent light background */
+    }
+
+    body {
+        background-color: var(--neutral-light-bg);
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        color: var(--neutral-dark-text);
+        padding: 20px; /* Add some overall padding */
+    }
+
+    h1 {
+        color: var(--primary-green-dark); /* Darkest green for main title */
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .lead {
+        color: var(--primary-green-medium-dark); /* Medium dark green for lead text */
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    /* Form and Input Styling */
+    .form-label {
+        color: var(--primary-green-dark); /* Darkest green for labels */
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border: 1px solid var(--primary-green-light); /* Lightest green border */
+        border-radius: 8px;
+        padding: 10px 15px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-green-medium-light); /* Medium light green on focus */
+            box-shadow: 0 0 0 0.25rem rgba(145, 172, 143, 0.25); /* Soft green glow */
+            outline: none;
+        }
+
+    /* Button Styling */
+    .btn-primary {
+        background-color: var(--primary-green-medium-dark); /* Medium dark green */
+        color: #ffffff;
+        border: 1px solid var(--primary-green-medium-dark);
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .btn-primary:hover {
+            background-color: var(--primary-green-dark); /* Darker green on hover */
+            border-color: var(--primary-green-dark);
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    /* Premium Result Container */
+    #premiumResultContainer {
+        background-color: #ffffff;
+        border: 1px solid var(--primary-green-light); /* Lightest green border */
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+        margin-top: 30px;
+        padding: 25px;
+        text-align: center;
+    }
+
+        #premiumResultContainer h4 {
+            color: var(--primary-green-dark); /* Darkest green for heading */
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+    #calculatedPremiumAmount {
+        color: var(--primary-green-medium-dark); /* Medium dark green for the amount */
+        font-size: 1.8em;
+        font-weight: 700;
+    }
+
+    /* Error Message Alert */
+    #errorMessage {
+        background-color: var(--primary-green-light); /* Lightest green background for alert */
+        color: var(--primary-green-dark); /* Darkest green text */
+        border-color: var(--primary-green-medium-dark); /* Medium dark green border */
+        text-align: center;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        h1 {
+            font-size: 2em;
+        }
+
+        .lead {
+            font-size: 1em;
+        }
+
+        .form-control {
+            padding: 8px 12px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+        }
+
+        #premiumResultContainer {
+            padding: 20px;
+        }
+
+        #calculatedPremiumAmount {
+            font-size: 1.5em;
+        }
+    }
+</style>
 
 <h1 class="mb-4">Premium Calculator</h1>
 
 <p class="lead">Select an employee and a policy to calculate the estimated premium.</p>
 
-<div class="row">
-    <div class="col-md-6">
-        <form id="premiumCalculatorForm">
+<div class="row justify-content-center">
+    @* Centering the form for better layout *@
+    <div class="col-lg-6 col-md-8">
+        @* Adjusting column width for better presentation *@
+        <form id="premiumCalculatorForm" class="p-4 rounded shadow-sm" style="background-color: #ffffff; border: 1px solid var(--primary-green-light);">
+            @* Added form card styling *@
             @* Employee Selection (Conditional based on role) *@
             <div class="form-group mb-3">
                 <label for="employeeId" class="form-label">Employee:</label>
@@ -36,7 +174,8 @@
                 </select>
             </div>
 
-            <div class="form-group mt-3">
+            <div class="form-group mt-4 text-center">
+                @* Center the button *@
                 <button type="button" id="calculatePremiumBtn" class="btn btn-primary">Calculate Premium</button>
             </div>
         </form>
@@ -44,12 +183,11 @@
         @* Display area for the calculated premium *@
         <div class="mt-4 p-3 border rounded" id="premiumResultContainer" style="display:none;">
             <h4>Calculated Premium:</h4>
-            <p class="lead text-success" id="calculatedPremiumAmount"></p>
+            <p class="lead" id="calculatedPremiumAmount"></p>
         </div>
 
         @* Error message display *@
-        <div class="mt-3 alert alert-danger" role="alert" id="errorMessage" style="display:none;">
-            <!-- Error messages will be displayed here -->
+        <div class="mt-3 alert" role="alert" id="errorMessage" style="display:none;">
         </div>
     </div>
 </div>
@@ -110,9 +248,12 @@
                                 errorMessage = "You do not have permission to perform this calculation for the selected employee.";
                             } else if (errorResponse && errorResponse.title) {
                                 errorMessage = errorResponse.title; // For HTTP errors from controller, e.g., BadRequest
+                            } else if (errorResponse && errorResponse.detail) { // Check for detail property (common in ProblemDetails)
+                                errorMessage = errorResponse.detail;
                             }
                         } catch (e) {
                             // If response is not JSON, use generic message
+                            console.error("Error parsing JSON response: ", e);
                         }
                         $('#errorMessage').text(errorMessage).show();
                     }

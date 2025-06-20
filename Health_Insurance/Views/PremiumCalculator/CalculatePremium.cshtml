@@ -2,35 +2,178 @@
     ViewData["Title"] = "Calculate Premium";
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f4f7f6; /* Consistent light background */
+    }
+
+    body {
+        background-color: var(--neutral-light-bg);
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        color: var(--neutral-dark-text);
+        padding: 20px; /* Add some overall padding */
+    }
+
+    h1 {
+        color: var(--primary-green-dark); /* Darkest green for main title */
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    p.lead { /* Targeting the lead paragraph specifically */
+        color: var(--primary-green-medium-dark); /* Medium dark green for lead text */
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    /* Form Container Styling */
+    .form-container {
+        background-color: #ffffff;
+        border: 1px solid var(--primary-green-light); /* Lightest green border */
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Subtle shadow */
+        padding: 30px; /* Ample padding */
+        max-width: 500px; /* Limit width for better readability */
+        margin: 0 auto; /* Center the form container */
+    }
+
+    /* Form Group and Input Styling */
+    .form-label {
+        color: var(--primary-green-dark); /* Darkest green for labels */
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border: 1px solid var(--primary-green-light); /* Lightest green border */
+        border-radius: 8px;
+        padding: 10px 15px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-green-medium-light); /* Medium light green on focus */
+            box-shadow: 0 0 0 0.25rem rgba(145, 172, 143, 0.25); /* Soft green glow */
+            outline: none;
+        }
+
+    /* Button Styling */
+    .btn-primary {
+        background-color: var(--primary-green-medium-dark); /* Medium dark green */
+        color: #ffffff;
+        border: 1px solid var(--primary-green-medium-dark);
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: block; /* Make button full width of its container */
+        width: 100%; /* Ensure it takes full width */
+    }
+
+        .btn-primary:hover {
+            background-color: var(--primary-green-dark); /* Darker green on hover */
+            border-color: var(--primary-green-dark);
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    /* Alert Styling (for results and errors) */
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-weight: 500;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .alert-success {
+        background-color: var(--primary-green-light); /* Lightest green for success background */
+        color: var(--primary-green-dark); /* Darkest green for success text */
+        border-color: var(--primary-green-medium-dark); /* Medium dark green border */
+    }
+
+    .alert-danger {
+        background-color: var(--primary-green-light); /* Lightest green for danger background */
+        color: var(--primary-green-dark); /* Darkest green for danger text */
+        border-color: var(--primary-green-medium-dark); /* Medium dark green border */
+    }
+
+    /* Specific style for calculated premium amount */
+    #calculatedPremiumAmount {
+        font-size: 1.2em;
+        font-weight: 700;
+        color: var(--primary-green-medium-dark); /* Medium dark green for the amount */
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        h1 {
+            font-size: 2em;
+        }
+
+        p.lead {
+            font-size: 1em;
+        }
+
+        .form-container {
+            padding: 20px;
+            margin: 0 15px; /* Add side margin on small screens */
+        }
+
+        .form-control {
+            padding: 8px 12px;
+        }
+
+        .btn-primary {
+            padding: 10px;
+        }
+
+        .alert {
+            font-size: 0.9em;
+        }
+
+        #calculatedPremiumAmount {
+            font-size: 1.1em;
+        }
+    }
+</style>
+
 <h1 class="mb-4">Calculate Premium</h1>
 
-<p>Enter Employee and Policy details to calculate the premium.</p>
+<p class="lead">Enter Employee and Policy details to calculate the premium.</p>
 
-@* Form for manual input of Employee ID and Policy ID - submitted via AJAX *@
-<form id="premiumCalculationForm" asp-controller="PremiumCalculator" asp-action="CalculatePremium" method="post">
-    @* Add a hidden field for CSRF protection if needed for form posts *@
-    @* @Html.AntiForgeryToken() *@
+<div class="form-container">
+    @* Form for manual input of Employee ID and Policy ID - submitted via AJAX *@
+    <form id="premiumCalculationForm" asp-controller="PremiumCalculator" asp-action="CalculatePremium" method="post">
+        @* Add a hidden field for CSRF protection if needed for form posts *@
+        @* @Html.AntiForgeryToken() *@
 
-    @* Input fields with Bootstrap form-group and form-control *@
-    <div class="form-group mb-3">
-        @* Added margin-bottom *@
-        <label for="employeeId" class="form-label">Employee ID:</label> @* Use form-label for Bootstrap styling *@
-        @* Input field for Employee ID. Name attribute is important for model binding. *@
-        <input type="number" id="employeeId" name="employeeId" class="form-control" required />
+        @* Input fields with Bootstrap form-group and form-control *@
+        <div class="form-group mb-3">
+            <label for="employeeId" class="form-label">Employee ID:</label>
+            <input type="number" id="employeeId" name="employeeId" class="form-control" required />
+        </div>
+        <div class="form-group mb-3">
+            <label for="policyId" class="form-label">Policy ID:</label>
+            <input type="number" id="policyId" name="policyId" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Calculate Premium</button>
+    </form>
+
+    @* Display area for the calculated premium - updated by AJAX JavaScript *@
+    <div id="premiumResult" class="alert mt-3" style="display: none;">
+        <strong>Calculated Premium:</strong> <span id="calculatedPremiumAmount"></span>
     </div>
-    <div class="form-group mb-3">
-        @* Added margin-bottom *@
-        <label for="policyId" class="form-label">Policy ID:</label> @* Use form-label for Bootstrap styling *@
-        @* Input field for Policy ID. Name attribute is important for model binding. *@
-        <input type="number" id="policyId" name="policyId" class="form-control" required />
-    </div>
-    <button type="submit" class="btn btn-primary mt-3">Calculate Premium</button> @* Added margin-top to button, use Bootstrap button class *@
-</form>
-
-@* Display area for the calculated premium - updated by AJAX JavaScript *@
-@* Use Bootstrap alert classes and initially hide *@
-<div id="premiumResult" class="alert alert-success mt-3" style="display: none;">
-    <strong>Calculated Premium:</strong> <span id="calculatedPremiumAmount"></span>
 </div>
 
 @section Scripts {
@@ -57,16 +200,16 @@
                 var employeeId = $('#employeeId').val();
                 var policyId = $('#policyId').val();
 
-                // Basic validation (optional, server-side validation is also important)
-                if (!employeeId || !policyId) {
-                    // Use Bootstrap alert styling for simple client-side validation message
-                    premiumResultDiv.removeClass('alert-success').addClass('alert-danger').text('Please enter both Employee ID and Policy ID.').show();
-                    return; // Stop the function if validation fails
-                }
-
                 // Hide previous results and clear the amount
                 premiumResultDiv.hide().removeClass('alert-success alert-danger').text(''); // Clear text and classes
                 calculatedPremiumSpan.text(''); // Clear the specific amount span
+
+                // Basic validation (optional, server-side validation is also important)
+                if (!employeeId || !policyId) {
+                    // Use Bootstrap alert styling for simple client-side validation message
+                    premiumResultDiv.addClass('alert-danger').html('<strong>Error:</strong> Please enter both Employee ID and Policy ID.').show();
+                    return; // Stop the function if validation fails
+                }
 
                 // Perform the AJAX POST request
                 $.ajax({
@@ -79,24 +222,42 @@
                         // This function is called if the AJAX request is successful
                         if (response && response.premium !== undefined) {
                             // Display the calculated premium
-                            calculatedPremiumSpan.text('$' + response.premium.toFixed(2)); // Format to 2 decimal places
-                            premiumResultDiv.removeClass('alert-danger').addClass('alert-success').show(); // Show success alert
+                            calculatedPremiumSpan.text('$' + parseFloat(response.premium).toFixed(2)); // Format to 2 decimal places
+                            premiumResultDiv.removeClass('alert-danger').addClass('alert-success').html('<strong>Calculated Premium:</strong> <span id="calculatedPremiumAmount">' + calculatedPremiumSpan.text() + '</span>').show(); // Show success alert
                         } else {
                             // Handle unexpected response format
-                            premiumResultDiv.removeClass('alert-success').addClass('alert-danger').text('Could not calculate premium.'); // Show error alert directly in the div
+                            premiumResultDiv.removeClass('alert-success').addClass('alert-danger').html('<strong>Error:</strong> Could not calculate premium. Invalid response from server.'); // Show error alert directly in the div
                         }
                     },
                     error: function (xhr, status, error) {
                         // This function is called if the AJAX request fails
-                        console.error("AJAX Error:", status, error);
-                        premiumResultDiv.removeClass('alert-success').addClass('alert-danger').text('Error calculating premium. Please try again.'); // Show error alert directly in the div
+                        console.error("AJAX Error:", status, error, xhr.responseText);
+                        let errorMessage = '<strong>Error:</strong> An unknown error occurred. Please try again.';
+
+                        if (xhr.responseJSON && xhr.responseJSON.title) {
+                            errorMessage = '<strong>Error:</strong> ' + xhr.responseJSON.title; // For HTTP errors from controller, e.g., BadRequest
+                        } else if (xhr.responseText) {
+                            try {
+                                const errorData = JSON.parse(xhr.responseText);
+                                if (errorData.errors) {
+                                    // Handle ASP.NET Core validation errors
+                                    errorMessage = '<strong>Validation Error:</strong><br>';
+                                    for (const key in errorData.errors) {
+                                        errorMessage += errorData.errors[key].join('<br>') + '<br>';
+                                    }
+                                } else if (errorData.title) {
+                                    errorMessage = '<strong>Error:</strong> ' + errorData.title;
+                                }
+                            } catch (e) {
+                                // Fallback to generic message if response is not JSON
+                                errorMessage = '<strong>Error:</strong> ' + xhr.responseText;
+                            }
+                        }
+
+                        premiumResultDiv.removeClass('alert-success').addClass('alert-danger').html(errorMessage).show();
                     }
                 });
             });
         });
     </script>
 }
-
-
-
-

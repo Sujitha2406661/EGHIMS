@@ -5,6 +5,159 @@
     ViewData["Title"] = "Employee List";
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f8f9fa; /* Original light background */
+        --subtle-border: #e9ecef; /* Original subtle border */
+    }
+
+    /* General Body & Typography */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: var(--neutral-light-bg);
+        color: var(--neutral-dark-text);
+        line-height: 1.6;
+    }
+
+    /* Main Heading */
+    h1 {
+        color: var(--primary-green-dark); /* Darkest green for main heading */
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Create New Button */
+    .btn-primary {
+        background-color: var(--primary-green-dark); /* Darkest green for primary button */
+        border-color: var(--primary-green-dark);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: var(--primary-green-medium-dark); /* Medium dark green on hover */
+            border-color: var(--primary-green-medium-dark);
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(75, 89, 69, 0.2); /* Subtle shadow tinted with darkest green */
+        }
+
+    /* Table Styling */
+    .table {
+        background-color: #ffffff; /* White background for the table itself */
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1.5rem;
+        border: 1px solid var(--primary-green-light); /* Lightest green outer border */
+        border-radius: 8px; /* Rounded corners for the table */
+        overflow: hidden; /* Ensures rounded corners apply to content */
+    }
+
+        .table thead {
+            background-color: var(--primary-green-medium-light); /* Medium light green for table header */
+        }
+
+        .table th {
+            color: var(--primary-green-dark); /* Darkest green for header text */
+            font-weight: 600;
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--primary-green-light); /* Lightest green border for header cells */
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid var(--primary-green-light); /* Lightest green border between rows */
+        }
+
+            .table tbody tr:last-child {
+                border-bottom: none; /* No border for the last row */
+            }
+
+        .table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+            color: var(--neutral-dark-text);
+        }
+
+    /* Striped rows */
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(178, 201, 173, 0.1); /* Very light green tint for odd rows */
+    }
+
+    /* Hover effect for rows */
+    .table-hover tbody tr:hover {
+        background-color: var(--primary-green-light); /* Lightest green on hover */
+        cursor: pointer;
+    }
+
+    /* Action Buttons (Edit, Details, Delete) */
+    .btn-sm {
+        padding: 6px 10px;
+        font-size: 0.85em;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+        margin-right: 5px; /* Space between action buttons */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn-sm i {
+            margin-right: 5px; /* Space between icon and text */
+        }
+
+    /* Outline buttons for actions */
+    .btn-outline-info { /* Used for Edit button */
+        color: var(--primary-green-medium-dark);
+        border-color: var(--primary-green-medium-dark);
+    }
+
+        .btn-outline-info:hover {
+            background-color: var(--primary-green-medium-dark);
+            color: #fff;
+            border-color: var(--primary-green-medium-dark);
+        }
+
+    .btn-outline-secondary { /* Used for Details button */
+        color: var(--primary-green-dark); /* Slightly darker green for secondary */
+        border-color: var(--primary-green-dark);
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--primary-green-dark);
+            color: #fff;
+            border-color: var(--primary-green-dark);
+        }
+
+    .btn-outline-danger { /* Used for Delete button */
+        color: #dc3545; /* Keep standard red */
+        border-color: #dc3545;
+    }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: #fff;
+            border-color: #dc3545;
+        }
+
+    /* Error Message */
+    .alert-danger {
+        background-color: #f8d7da; /* Light red background */
+        color: #721c24; /* Dark red text */
+        border-color: #f5c6cb; /* Red border */
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+    }
+</style>
+
 @* Use Bootstrap heading and margin utility *@
 <h1 class="mb-4">Employee List</h1>
 
@@ -60,7 +213,7 @@
                 <td>@(item.CreateDate.ToString("yyyy-MM-dd"))</td>
                 <td>
                     @* Apply Bootstrap button classes to links *@
-                    <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i>Edit</a>
+                    <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i> Edit</a>
                     <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-outline-secondary"><i class="fas fa-info-circle"></i> Details</a>
                     <a asp-action="Delete" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</a>
                 </td>
@@ -76,4 +229,3 @@
         @ViewBag.ErrorMessage
     </div>
 }
-

@@ -283,45 +283,6 @@ body {
 }
 
 
-/* --- Responsive adjustments for overall Login Page Layout --- */
-/* This media query block was duplicated and needs to be combined or removed if the above is sufficient.
-   I've updated the one above to be comprehensive for login layout. This one seems to be a redundant copy.
-   I'm commenting it out as it's a duplicate of the one directly above for login styles.
-*/
-/*
-@media (max-width: 768px) {
-    .login-page-card {
-        width: 95%;
-    }
-
-    .login-welcome-section {
-        border-radius: 15px 15px 0 0;
-        padding: 2rem !important;
-    }
-
-    .login-form-right-half {
-        border-radius: 0 0 15px 15px;
-    }
-
-    .login-welcome-section .welcome-heading {
-        font-size: 1.8em;
-    }
-
-    .login-welcome-section .welcome-message {
-        font-size: 1em;
-    }
-
-    .login-welcome-section .welcome-icons i {
-        font-size: 2em;
-    }
-
-    .col-md-6.p-5 {
-        padding: 2rem !important;
-    }
-}
-*/
-
-
 /* --- NAVBAR STYLES --- */
 /* Custom background for the Navbar */
 .custom-navbar-bg {
@@ -338,7 +299,7 @@ body {
     display: flex;
     align-items: center; /* Vertically align the icon and text */
     white-space: nowrap;
-    color: #254D70 floralwhite !important; /* Corrected: Only one color, floralwhite */
+    color: floralwhite !important; /* Corrected: Only one color, floralwhite */
     font-weight: 500;
     font-size: 1.2rem;
     text-decoration: none;
@@ -504,14 +465,6 @@ body {
 }
 
 /*FOOTER SECTION STYLES END HERE*/
-
-
-
-
-
-
-
-
 
 
 /* Reports Dashboard Specific Styles */

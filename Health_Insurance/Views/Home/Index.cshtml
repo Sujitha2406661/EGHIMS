@@ -1,40 +1,57 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
+
+    // Define colors as local variables for convenience, matching the palette
+    // from _Layout.cshtml. In a real app, these would ideally be centralized
+    // or passed via a model if you didn't want to repeat hex codes.
+    string primaryBgLight = "#F0F2ED"; // Very light, almost off-white with a hint of green
+    string mainTextColor = "#3C4538"; // A slightly darker, warm charcoal
+    string headingColor = "#4B5945"; // Your deepest green
+    string secondaryTextColor = "#66785F"; // Your muted olive green
+    string accentColor = "#A3A67C"; // Warm, slightly golden-olive
+    string buttonTextColor = "#FFFFFF"; // Pure White
+    string linkColor = "#91AC8F"; // Your soft sage green
+    string linkHoverColor = "#66785F"; // Muted olive green for hover (though not directly applicable inline)
+    string borderColor = "#D1D8C7"; // Very light, cool green-gray
+    string successColor = "#7FB88A"; // Slightly brighter, friendly green
+    string cardBgColor = "#FFFFFF"; // White for card backgrounds
+    string tableHeaderBg = "#91AC8F"; // Soft sage for table headers
+    string tableHeaderText = "#FFFFFF"; // White for table header text
+    string tableRowEvenBg = "#F8FAF6"; // Slightly off-white for even rows
+    string tableBorder = "#B2C9AD"; // Light desaturated green for table borders
 }
 
 @if (!User.Identity.IsAuthenticated)
 {
-
-    <div class="top-header-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-4 col-md-6 text-md-start text-center mb-3 mb-md-0">
-                    <p class="slogan-text">
-                        <strong>PrimeProtect</strong> is one of India's leading <br> digital insurance platform
+    <div class="top-header-section" style="background-color: @accentColor; color: @buttonTextColor; padding: 40px 0; text-align: center;">
+        <div class="container" style="max-width: 1100px; margin-left: auto; margin-right: auto; padding-left: 15px; padding-right: 15px;">
+            <div class="row align-items-center" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
+                <div class="col-lg-4 col-md-6" style="flex: 0 0 auto; width: 33.333333%; text-align: left; margin-bottom: 20px;">
+                    <p class="slogan-text" style="font-size: 1.8em; line-height: 1.3; font-weight: 500; color: @buttonTextColor; margin-bottom: 10px;">
+                        <strong style="font-weight: 700;">PrimeProtect</strong> is one of India's leading <br style="display: block;"> digital insurance platform
                     </p>
-                    <div class="star-rating text-center text-md-start mt-2">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <small class="ms-2 text-muted"><sup>*</sup>Source - Google Review Rating</small>
+                    <div class="star-rating" style="text-align: left; margin-top: 10px;">
+                        <i class="fas fa-star" style="color: gold; font-size: 1.2em;"></i>
+                        <i class="fas fa-star" style="color: gold; font-size: 1.2em;"></i>
+                        <i class="fas fa-star" style="color: gold; font-size: 1.2em;"></i>
+                        <i class="fas fa-star" style="color: gold; font-size: 1.2em;"></i>
+                        <i class="fas fa-star-half-alt" style="color: gold; font-size: 1.2em;"></i>
+                        <small style="margin-left: 10px; color: rgba(255, 255, 255, 0.7);"><sup>*</sup>Source - Google Review Rating</small>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-6">
-                    <div class="row text-center">
-                        <div class="col-4 stat-item">
-                            <div class="stat-number">9.7 crore</div>
-                            <div class="stat-label">Registered Consumers</div>
+                <div class="col-lg-8 col-md-6" style="flex: 0 0 auto; width: 66.666667%;">
+                    <div class="row" style="display: flex; flex-wrap: wrap; text-align: center; justify-content: center;">
+                        <div class="col-4 stat-item" style="flex: 0 0 auto; width: 33.333333%; padding: 15px;">
+                            <div class="stat-number" style="font-size: 2.2em; font-weight: 700; color: @buttonTextColor; margin-bottom: 5px;">9.7 crore</div>
+                            <div class="stat-label" style="font-size: 0.9em; color: rgba(255, 255, 255, 0.8);">Registered Consumers</div>
                         </div>
-                        <div class="col-4 stat-item">
-                            <div class="stat-number">51</div>
-                            <div class="stat-label">Insurance Partners</div>
+                        <div class="col-4 stat-item" style="flex: 0 0 auto; width: 33.333333%; padding: 15px;">
+                            <div class="stat-number" style="font-size: 2.2em; font-weight: 700; color: @buttonTextColor; margin-bottom: 5px;">51</div>
+                            <div class="stat-label" style="font-size: 0.9em; color: rgba(255, 255, 255, 0.8);">Insurance Partners</div>
                         </div>
-                        <div class="col-4 stat-item">
-                            <div class="stat-number">4.9 crore</div>
-                            <div class="stat-label">Policies Sold</div>
+                        <div class="col-4 stat-item" style="flex: 0 0 auto; width: 33.333333%; padding: 15px;">
+                            <div class="stat-number" style="font-size: 2.2em; font-weight: 700; color: @buttonTextColor; margin-bottom: 5px;">4.9 crore</div>
+                            <div class="stat-label" style="font-size: 0.9em; color: rgba(255, 255, 255, 0.8);">Policies Sold</div>
                         </div>
                     </div>
                 </div>
@@ -42,112 +59,111 @@
         </div>
     </div>
 
-    <div class="main-content-section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="main-heading">
-                    Why PrimeProtect is the preferred choice for <br> <span>55 Lakh+ people like you</span>
+    <div class="main-content-section" style="background-color: @primaryBgLight; padding: 60px 0;">
+        <div class="container" style="max-width: 1100px; margin-left: auto; margin-right: auto; padding-left: 15px; padding-right: 15px;">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h2 class="main-heading" style="color: @headingColor; font-size: 2.5em; margin-bottom: 15px; line-height: 1.3;">
+                    Why PrimeProtect is the preferred choice for <br style="display: block;"> <span style="color: @accentColor; font-weight: 700;">55 Lakh+ people like you</span>
                 </h2>
             </div>
 
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-6 mb-4">
-                    <div class="feature-card">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="card-icon-wrapper me-3">
+            <div class="row justify-content-center" style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <div class="col-lg-5 col-md-6" style="flex: 0 0 auto; width: 41.666667%; margin-bottom: 25px;">
+                    <div class="feature-card" style="background-color: @cardBgColor; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); border: 1px solid @borderColor; height: 100%;">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <div class="card-icon-wrapper" style="background-color: @accentColor; color: @buttonTextColor; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; font-size: 1.5em; margin-right: 15px;">
                                 <i class="fas fa-indian-rupee-sign"></i>
                             </div>
-                            <h4>Affordable options</h4>
+                            <h4 style="color: @headingColor; font-size: 1.5em; margin: 0;">Affordable options</h4>
                         </div>
-                        <p>We help you find health insurance plans with affordable premiums, uncover discounts and monthly payment options provided by our insurance partners.</p>
+                        <p style="color: @mainTextColor; font-size: 1.05em; line-height: 1.6;">We help you find health insurance plans with affordable premiums, uncover discounts and monthly payment options provided by our insurance partners.</p>
                     </div>
                 </div>
 
-                <div class="col-lg-1 d-none d-lg-block"></div>
+                <div class="col-lg-1 d-none d-lg-block" style="flex: 0 0 auto; width: 8.333333%;"></div>
 
-                <div class="col-lg-5 col-md-6 mb-4">
-                    <div class="feature-card">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="card-icon-wrapper me-3">
+                <div class="col-lg-5 col-md-6" style="flex: 0 0 auto; width: 41.666667%; margin-bottom: 25px;">
+                    <div class="feature-card" style="background-color: @cardBgColor; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); border: 1px solid @borderColor; height: 100%;">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <div class="card-icon-wrapper" style="background-color: @accentColor; color: @buttonTextColor; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; font-size: 1.5em; margin-right: 15px;">
                                 <i class="fas fa-award"></i>
                             </div>
-                            <h4>Platinum insurance partner</h4>
+                            <h4 style="color: @headingColor; font-size: 1.5em; margin: 0;">Platinum insurance partner</h4>
                         </div>
-                        <p>PrimeProtect is one of the largest partners for most health insurance companies. Our dedicated claims team works with the insurance companies to help you answer insurer queries and track your claim settlement.</p>
+                        <p style="color: @mainTextColor; font-size: 1.05em; line-height: 1.6;">PrimeProtect is one of the largest partners for most health insurance companies. Our dedicated claims team works with the insurance companies to help you answer insurer queries and track your claim settlement.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-6 mb-4">
-                    <div class="feature-card">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="card-icon-wrapper me-3">
+            <div class="row justify-content-center" style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <div class="col-lg-5 col-md-6" style="flex: 0 0 auto; width: 41.666667%; margin-bottom: 25px;">
+                    <div class="feature-card" style="background-color: @cardBgColor; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); border: 1px solid @borderColor; height: 100%;">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <div class="card-icon-wrapper" style="background-color: @accentColor; color: @buttonTextColor; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; font-size: 1.5em; margin-right: 15px;">
                                 <i class="fas fa-clock"></i>
                             </div>
-                            <h4>30 minute claim support<sup>*</sup></h4>
+                            <h4 style="color: @headingColor; font-size: 1.5em; margin: 0;">30 minute claim support<sup style="font-size: 0.7em;">*</sup></h4>
                         </div>
-                        <p>Our claim specialists will reach your hospital or home in 30 minutes to support your health insurance claim.</p>
+                        <p style="color: @mainTextColor; font-size: 1.05em; line-height: 1.6;">Our claim specialists will reach your hospital or home in 30 minutes to support your health insurance claim.</p>
                     </div>
                 </div>
 
-                <div class="col-lg-1 d-none d-lg-block"></div>
+                <div class="col-lg-1 d-none d-lg-block" style="flex: 0 0 auto; width: 8.333333%;"></div>
 
-                <div class="col-lg-5 col-md-6 mb-4">
-                    <div class="feature-card">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="card-icon-wrapper me-3">
+                <div class="col-lg-5 col-md-6" style="flex: 0 0 auto; width: 41.666667%; margin-bottom: 25px;">
+                    <div class="feature-card" style="background-color: @cardBgColor; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); border: 1px solid @borderColor; height: 100%;">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <div class="card-icon-wrapper" style="background-color: @accentColor; color: @buttonTextColor; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; font-size: 1.5em; margin-right: 15px;">
                                 <i class="fas fa-headset"></i>
                             </div>
-                            <h4>Dedicated Customer Support</h4>
+                            <h4 style="color: @headingColor; font-size: 1.5em; margin: 0;">Dedicated Customer Support</h4>
                         </div>
-                        <p>Our expert team is available 24/7 to assist you with any queries or issues regarding your health insurance plan.</p>
+                        <p style="color: @mainTextColor; font-size: 1.05em; line-height: 1.6;">Our expert team is available 24/7 to assist you with any queries or issues regarding your health insurance plan.</p>
                     </div>
                 </div>
-
-                <div class="col-lg-5 d-none d-lg-block"></div>
             </div>
+            <div class="col-lg-5 d-none d-lg-block" style="width: 41.666667%; flex: 0 0 auto;"></div>
         </div>
     </div>
 
-    <div class="container my-5">
-        <div class="card shadow-sm">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped custom-features-table">
+    <div class="container my-5" style="max-width: 1100px; margin-top: 50px; margin-bottom: 50px; margin-left: auto; margin-right: auto; padding-left: 15px; padding-right: 15px;">
+        <div class="card shadow-sm" style="background-color: @cardBgColor; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); border: 1px solid @borderColor; overflow: hidden;">
+            <div class="table-responsive" style="width: 100%; overflow-x: auto;">
+                <table class="table table-bordered table-striped custom-features-table" style="width: 100%; margin-bottom: 0; border-collapse: collapse;">
                     <thead>
-                        <tr>
-                            <th>Key Features</th>
-                            <th>Benefits</th>
+                        <tr style="background-color: @tableHeaderBg; color: @tableHeaderText;">
+                            <th style="padding: 15px; border: 1px solid @tableBorder; font-weight: 600; text-align: left;">Key Features</th>
+                            <th style="padding: 15px; border: 1px solid @tableBorder; font-weight: 600; text-align: left;">Benefits</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Cashless Hospital Network</td>
-                            <td>16000+ across India</td>
+                        <tr style="background-color: @cardBgColor; color: @mainTextColor;">
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Cashless Hospital Network</td>
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">16000+ across India</td>
                         </tr>
-                        <tr>
-                            <td>Tax Savings</td>
-                            <td>Upto ₹ 1 lac*****</td>
+                        <tr style="background-color: @tableRowEvenBg; color: @mainTextColor;">
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Tax Savings</td>
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Upto ₹ 1 lac*****</td>
                         </tr>
-                        <tr>
-                            <td>Renewal Benefit</td>
-                            <td>Free Health Check-up within 60 Days of Renewal</td>
+                        <tr style="background-color: @cardBgColor; color: @mainTextColor;">
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Renewal Benefit</td>
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Free Health Check-up within 60 Days of Renewal</td>
                         </tr>
-                        <tr>
-                            <td>Claim Settlement Rate</td>
-                            <td>2 Claims/Minute*</td>
+                        <tr style="background-color: @tableRowEvenBg; color: @mainTextColor;">
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Claim Settlement Rate</td>
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">2 Claims/Minute*</td>
                         </tr>
-                        <tr>
-                            <td>Claim Approval</td>
-                            <td>Within 30* ~ Minutes</td>
+                        <tr style="background-color: @cardBgColor; color: @mainTextColor;">
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Claim Approval</td>
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Within 30* ~ Minutes</td>
                         </tr>
-                        <tr>
-                            <td>Coverage</td>
-                            <td>Hospitalization Expenses, Day Care Treatments, Home Treatments, AYUSH Treatment, Organ Donor Expenses</td>
+                        <tr style="background-color: @tableRowEvenBg; color: @mainTextColor;">
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Coverage</td>
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Hospitalization Expenses, Day Care Treatments, Home Treatments, AYUSH Treatment, Organ Donor Expenses</td>
                         </tr>
-                        <tr>
-                            <td>Pre & Post Hospitalization</td>
-                            <td>Covers Expenses upto 60 days of admission & 180 days post discharge</td>
+                        <tr style="background-color: @cardBgColor; color: @mainTextColor;">
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Pre & Post Hospitalization</td>
+                            <td style="padding: 15px; border: 1px solid @tableBorder; vertical-align: top;">Covers Expenses upto 60 days of admission & 180 days post discharge</td>
                         </tr>
                     </tbody>
                 </table>
@@ -155,41 +171,35 @@
         </div>
     </div>
 
-    @if (!User.Identity.IsAuthenticated)
-    {
-        // ... (Your existing top-header-section, main-content-section, and table HTML here) ...
+    <div class="know-more-section py-5" style="background-color: @primaryBgLight; padding-top: 50px; padding-bottom: 50px;">
+        <div class="container" style="max-width: 1100px; margin-left: auto; margin-right: auto; padding-left: 15px; padding-right: 15px;">
+            <h2 class="section-title" style="color: @headingColor; text-align: center; margin-bottom: 40px; font-size: 2.2em;">Know More about Health Insurance</h2>
 
-        <div class="know-more-section py-5">
-            <div class="container">
-                <h2 class="section-title text-center mb-4">Know More about Health Insurance</h2>
-
-                <div class="info-block">
-                    <h3 class="info-block-title">Health Insurance</h3>
-                    <p>Health insurance takes care of your medical expenses and ensures that out-of-pocket expenses are curtailed up to the Sum insured.</p>
-                </div>
-
-                <div class="info-block">
-                    <p>A health insurance policy ensures that you can avail cashless treatment at a network hospital, typically covering 30 days and 60 days pre and post hospitalization, respectively, in most of the Health Insurance plans.</p>
-                </div>
-
-                <div class="info-block">
-                    <p>One can add value to the Base Health Insurance Plan by complementing them with additional benefits such as Personal Accident (PA) Cover, Critical Illness (CI) Cover, etc. These products are available at a very nominal cost adding benefits, which are not a part of the Base Health Insurance plan. For Example, A PA plan helps by providing coverage for disability, which is typically not covered under the basic health insurance plan. An individual needs not go through any waiting period and medical checkups for a PA cover.</p>
-                </div>
-
-                <div class="info-block">
-                    <p>One can also invest on one of the popular senior citizen health insurance policies and ensure comprehensive security for their elderly parents or secure their old age that often brings along several ailments that require expensive medical treatment.</p>
-                </div>
-
-                <div class="info-block">
-                    <p>Almost all the health insurance plans include Coronavirus treatment cover. As per the IRDAI guidelines, insurers have also launched COVID-19 specific best health insurance.</p>
-                </div>
-
-                <div class="info-block">
-                    <p>Two special COVID health insurance policies namely, Corona Rakshak policy and Corona Kavach policy also introduced that provide lump sum payment upon diagnosis and also pay for the cost of consumable items like PPE Kits, Masks, Gloves, etc.</p>
-                </div>
-
+            <div class="info-block" style="background-color: @cardBgColor; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border: 1px solid @borderColor;">
+                <h3 class="info-block-title" style="color: @accentColor; font-size: 1.6em; margin-bottom: 15px;">Health Insurance</h3>
+                <p style="color: @mainTextColor; line-height: 1.7; font-size: 1.05em;">Health insurance takes care of your medical expenses and ensures that out-of-pocket expenses are curtailed up to the Sum insured.</p>
             </div>
-        </div>
 
-    }
+            <div class="info-block" style="background-color: @cardBgColor; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border: 1px solid @borderColor;">
+                <p style="color: @mainTextColor; line-height: 1.7; font-size: 1.05em;">A health insurance policy ensures that you can avail cashless treatment at a network hospital, typically covering 30 days and 60 days pre and post hospitalization, respectively, in most of the Health Insurance plans.</p>
+            </div>
+
+            <div class="info-block" style="background-color: @cardBgColor; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border: 1px solid @borderColor;">
+                <p style="color: @mainTextColor; line-height: 1.7; font-size: 1.05em;">One can add value to the Base Health Insurance Plan by complementing them with additional benefits such as Personal Accident (PA) Cover, Critical Illness (CI) Cover, etc. These products are available at a very nominal cost adding benefits, which are not a part of the Base Health Insurance plan. For Example, A PA plan helps by providing coverage for disability, which is typically not covered under the basic health insurance plan. An individual needs not go through any waiting period and medical checkups for a PA cover.</p>
+            </div>
+
+            <div class="info-block" style="background-color: @cardBgColor; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border: 1px solid @borderColor;">
+                <p style="color: @mainTextColor; line-height: 1.7; font-size: 1.05em;">One can also invest on one of the popular senior citizen health insurance policies and ensure comprehensive security for their elderly parents or secure their old age that often brings along several ailments that require expensive medical treatment.</p>
+            </div>
+
+            <div class="info-block" style="background-color: @cardBgColor; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border: 1px solid @borderColor;">
+                <p style="color: @mainTextColor; line-height: 1.7; font-size: 1.05em;">Almost all the health insurance plans include Coronavirus treatment cover. As per the IRDAI guidelines, insurers have also launched COVID-19 specific best health insurance.</p>
+            </div>
+
+            <div class="info-block" style="background-color: @cardBgColor; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border: 1px solid @borderColor;">
+                <p style="color: @mainTextColor; line-height: 1.7; font-size: 1.05em;">Two special COVID health insurance policies namely, Corona Rakshak policy and Corona Kavach policy also introduced that provide lump sum payment upon diagnosis and also pay for the cost of consumable items like PPE Kits, Masks, Gloves, etc.</p>
+            </div>
+
+        </div>
+    </div>
 }

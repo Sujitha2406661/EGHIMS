@@ -5,6 +5,128 @@
     ViewData["Title"] = "Your Enrolled Policies";
 }
 
+<style>
+    /* Color Palette Variables */
+    :root {
+        --primary-green-dark: #4B5945; /* Darkest Green */
+        --primary-green-medium-dark: #66785F; /* Medium Dark Green */
+        --primary-green-medium-light: #91AC8F; /* Medium Light Green */
+        --primary-green-light: #B2C9AD; /* Lightest Green */
+        --neutral-dark-text: #343a40; /* Original dark text, good contrast */
+        --neutral-light-bg: #f8f9fa; /* Original light background */
+        --subtle-border: #e9ecef; /* Original subtle border */
+    }
+
+    /* General Body & Typography */
+    body {
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: var(--neutral-light-bg);
+        color: var(--neutral-dark-text);
+        line-height: 1.6;
+    }
+
+    /* Headings */
+    h1 {
+        color: var(--primary-green-dark); /* Darkest green for main heading */
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    h4 {
+        color: var(--primary-green-dark); /* Darkest green for employee name */
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Table Styling */
+    .table {
+        background-color: #ffffff; /* White background for the table itself */
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1.5rem;
+        border: 1px solid var(--primary-green-light); /* Lightest green outer border */
+        border-radius: 8px; /* Rounded corners for the table */
+        overflow: hidden; /* Ensures rounded corners apply to content */
+    }
+
+        .table thead {
+            background-color: var(--primary-green-medium-light); /* Medium light green for table header */
+        }
+
+        .table th {
+            color: var(--primary-green-dark); /* Darkest green for header text */
+            font-weight: 600;
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--primary-green-light); /* Lightest green border for header cells */
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid var(--primary-green-light); /* Lightest green border between rows */
+        }
+
+            .table tbody tr:last-child {
+                border-bottom: none; /* No border for the last row */
+            }
+
+        .table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+            color: var(--neutral-dark-text);
+        }
+
+    /* Striped rows */
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(178, 201, 173, 0.1); /* Very light green tint for odd rows */
+    }
+
+    /* Hover effect for rows */
+    .table-hover tbody tr:hover {
+        background-color: var(--primary-green-light); /* Lightest green on hover */
+        cursor: pointer;
+    }
+
+    /* Cancel Button */
+    .btn-danger {
+        background-color: #dc3545; /* Standard Bootstrap red for danger */
+        border-color: #dc3545;
+        color: #fff;
+        padding: 8px 15px; /* Adjust padding for sm button */
+        border-radius: 5px; /* Adjust border-radius for sm button */
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333; /* Darker red on hover */
+            border-color: #bd2130;
+            transform: translateY(-1px); /* Slight lift effect */
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2); /* Subtle shadow */
+        }
+
+    /* Error Message */
+    .alert-danger {
+        background-color: #f8d7da; /* Light red background */
+        color: #721c24; /* Dark red text */
+        border-color: #f5c6cb; /* Red border */
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+    }
+
+    /* Link at the bottom */
+    .mt-3 a {
+        color: var(--primary-green-medium-dark); /* Medium dark green for link text */
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease, text-decoration 0.3s ease;
+    }
+
+        .mt-3 a:hover {
+            color: var(--primary-green-dark); /* Darkest green on hover */
+            text-decoration: underline;
+        }
+</style>
+
 @* Use Bootstrap heading and margin utility *@
 <h1 class="mb-4">Your Enrolled Policies</h1>
 
@@ -13,7 +135,6 @@
 {
     <h4 class="mb-3">Employee: @ViewBag.EmployeeName</h4> @* Added margin-bottom *@
 }
-
 
 @* Apply Bootstrap table classes for styling *@
 <table class="table table-striped table-bordered table-hover">
@@ -80,6 +201,3 @@
     @* Link back to the list of available policies *@
     <a asp-action="Index">View Available Policies</a>
 </div>
-
-
-
