@@ -39,7 +39,7 @@ namespace Health_Insurance.Models // Ensure this namespace is correct based on y
 
         // Navigation property to the related Organization
         [ForeignKey("OrganizationId")] // Specifies the foreign key property
-        [BindNever] // ADD THIS ATTRIBUTE! Tells model binder to ignore this property from form data
+        [BindNever] 
         public virtual Organization? Organization { get; set; }
 
         // --- Authentication Fields for Employee Login ---

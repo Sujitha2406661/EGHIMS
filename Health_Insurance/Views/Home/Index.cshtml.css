@@ -1,0 +1,228 @@
+﻿/* --- HOME PAGE STYLES --- */
+
+/* Custom background colors */
+body {
+    background-color: #f8f8fc; /* A very light grey/purple tint */
+}
+
+/* Specific background for the top header section */
+.top-header-section {
+    background-color: #e6f0ff; /* Light blue from the design */
+    padding: 30px 0;
+}
+
+/* Styles for the main content area background */
+.main-content-section {
+    background-color: #f8f8fc; /* Same as body for seamless transition */
+    padding: 40px 0;
+}
+
+/* Card styling */
+.feature-card {
+    background-color: #fff;
+    border-radius: 15px; /* Rounded corners */
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+    height: 100%; /* Ensures cards in a row have equal height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes content and icon to ends */
+}
+
+    .feature-card:hover {
+        transform: translateY(-5px); /* Lift effect on hover */
+    }
+
+.card-icon-wrapper {
+    background-color: #f4e8ff; /* Light purple for icon background */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Space between icon and text */
+}
+
+    .card-icon-wrapper i {
+        font-size: 28px;
+        color: #9258d4; /* Purple color for icons */
+    }
+
+.feature-card h4 {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333; /* Darker text for headings */
+    font-family: 'Montserrat', sans-serif; /* Consistent font */
+}
+
+.feature-card p {
+    color: #666; /* Lighter text for paragraphs */
+    font-size: 15px;
+    line-height: 1.6;
+    font-family: 'Montserrat', sans-serif; /* Consistent font */
+}
+
+/* Specific styling for the top header numbers/text */
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.2em; /* Larger font for numbers */
+    font-weight: 700;
+    color: #0056b3; /* Blue color for numbers */
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif; /* Consistent font */
+}
+
+.stat-label {
+    font-size: 1.1em;
+    color: #555;
+    font-family: 'Montserrat', sans-serif; /* Consistent font */
+}
+
+/* Slogan and ratings styles */
+.slogan-text {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Montserrat', sans-serif; /* Consistent font */
+}
+
+.star-rating .fas {
+    color: #ffc107; /* Gold color for stars */
+    font-size: 1.3em;
+}
+
+/* Main heading below the top bar */
+.main-heading {
+    font-size: 2.8em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 40px;
+    font-family: 'Montserrat', sans-serif; /* Consistent font */
+}
+
+    .main-heading span {
+        color: #0056b3; /* Blue for "55 Lakh+ people like you" */
+    }
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .main-heading {
+        font-size: 2em;
+    }
+
+    .top-header-section {
+        padding: 20px 0;
+    }
+
+    .stat-number {
+        font-size: 1.8em;
+    }
+
+    .stat-label {
+        font-size: 0.9em;
+    }
+
+    .feature-card {
+        margin-bottom: 20px; /* Add space between cards on small screens */
+    }
+}
+
+
+/* Table Styles */
+.custom-features-table thead th {
+    background-color: rgba(0, 86, 179, 0.70) !important; /* Your specified header color with opacity */
+    color: #fff; /* Changed to white for better contrast on blue */
+    font-weight: 600; /* Slightly bolder text */
+    text-align: left;
+    vertical-align: middle;
+    padding: 1rem;
+    border-color: rgba(0, 0, 0, 0.1); /* Lighter border for header */
+    font-size: 1.15rem; /* Slightly larger font size for headers */
+    font-family: 'Montserrat', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Stylish font */
+}
+
+.custom-features-table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    color: #555;
+    border-color: rgba(0, 0, 0, 0.08); /* Lighter border for body cells */
+    font-size: 0.95rem; /* Slightly smaller font size for body text */
+    font-family: 'Montserrat', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Consistent font with header */
+}
+
+
+/* --- Know More Section Styles --- */
+.know-more-section {
+    background-color: #f0f4f7; /* A light, soft background color */
+    padding: 60px 0; /* Ample padding */
+}
+
+    .know-more-section .section-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.5em;
+        font-weight: 700;
+        color: #0056b3; /* Your primary blue color */
+        margin-bottom: 50px;
+        position: relative;
+    }
+
+        .know-more-section .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #7600bc; /* Your purple accent color */
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+.info-block {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .info-block:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+.info-block-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #7600bc; /* Your purple accent color */
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(118, 0, 188, 0.2); /* Light purple underline */
+    padding-bottom: 10px;
+}
+
+.info-block p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05em; /* Slightly larger for readability */
+    line-height: 1.7;
+    color: #444; /* Darker text for good readability */
+}
+
+/* Responsive adjustments for smaller screens for Know More Section */
+@media (max-width: 768px) {
+    .know-more-section .section-title {
+        font-size: 2em;
+    }
+
+    .info-block-title {
+        font-size: 1.5em;
+    }
+
+    .info-block {
+        padding: 20px;
+    }
+}

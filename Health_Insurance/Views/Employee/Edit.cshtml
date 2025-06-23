@@ -4,108 +4,81 @@
     ViewData["Title"] = "Edit Employee";
 }
 
-<h1 class="mb-4">Edit Employee</h1>
-
-<h4>Employee</h4>
-<hr />
-@* Use Bootstrap row and column for layout *@
-<div class="row">
-    <div class="col-md-6">
-        @* Use a column to limit the form width *@
-        @* Form for editing an employee. Posts data to the Edit action. *@
-        <form asp-action="Edit">
-            @* Hidden input for the EmployeeId, needed to identify which employee is being edited *@
-            <input type="hidden" asp-for="EmployeeId" />
-            @* This adds a hidden field for security (CSRF prevention) *@
-            @Html.AntiForgeryToken() @* Ensure this is present for [ValidateAntiForgeryToken] *@
-
-            @* Validation summary with Bootstrap text-danger class *@
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div> @* Added margin-bottom *@
-
-            @* Input fields for other properties with Bootstrap form-group and form-control *@
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="Name" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                <input asp-for="Name" class="form-control" />
-                @* Displays validation errors for the Name field with Bootstrap text-danger *@
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="Email" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="Phone" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="Address" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="Designation" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                <input asp-for="Designation" class="form-control" />
-                <span asp-validation-for="Designation" class="text-danger"></span>
-            </div>
-
-            @* Dropdown for selecting Organization with Bootstrap form-group and form-control *@
-            <div class="form-group mb-3">
-                @* Added margin-bottom *@
-                <label asp-for="OrganizationId" class="form-label"></label> @* Use form-label for Bootstrap styling *@
-                @* The asp-items tag helper populates the dropdown using the SelectList from ViewBag *@
-                @* ViewBag.OrganizationId accesses ViewData["OrganizationId"] *@
-                @* The selected value is automatically set based on the Employee.OrganizationId model property because asp-for="OrganizationId" is used *@
-                <select asp-for="OrganizationId" class="form-control" asp-items="ViewBag.OrganizationId">
-                    <option value="">-- Select Organization --</option> @* Optional: Add a default empty option *@
-                </select>
-                <span asp-validation-for="OrganizationId" class="text-danger"></span>
-            </div>
-
-            @* --- Username Field --- *@
-            <div class="form-group mb-3">
-                <label asp-for="Username" class="form-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            @* --- End Username Field --- *@
-
-            @* --- Password Field (allowing optional change) --- *@
-            @* CRITICAL FIX: Add data-val="false" to explicitly disable client-side validation for this field *@
-            <div class="form-group mb-3">
-                <label asp-for="Password" class="form-label"></label> @* Label now comes from DisplayName attribute *@
-                <input asp-for="Password" type="password" class="form-control" placeholder="Enter new password (optional)" data-val="false" /> @* Added data-val="false" *@
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            @* --- End Password Field --- *@
-
-            <div class="form-group mt-3">
-                @* Added margin-top to button *@
-                <input type="submit" value="Save" class="btn btn-primary" /> @* Use Bootstrap button class *@
-            </div>
-        </form>
-    </div>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
 </div>
 
-<div class="mt-3">
-    @* Added margin-top *@
-    @* Link back to the Employee Index page *@
-    <a asp-action="Index">Back to List</a>
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">Edit Employee Details</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="EmployeeId" />
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Designation" class="control-label"></label>
+                        <input asp-for="Designation" class="form-control" />
+                        <span asp-validation-for="Designation" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="OrganizationId" class="control-label"></label>
+                        <select asp-for="OrganizationId" class="form-control" asp-items="ViewBag.OrganizationId">
+                            <option value="">-- Select Organization --</option>
+                        </select>
+                        <span asp-validation-for="OrganizationId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter new password (optional)" data-val="false" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group button-group-spacing">
+                        <input type="submit" value="Save Changes" class="btn btn-primary dashboard-btn-primary" />
+                        <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn ms-2">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     @{
-        // Keep this line, as we are now handling the specific field validation with data-val="false"
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-
-
-

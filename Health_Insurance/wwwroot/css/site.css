@@ -1,6 +1,9 @@
-/* Base HTML and Body styles (keep these as they are) */
+/* --- 1. Base HTML and Body Styles --- */
+/* These are fundamental for responsive typography and layout */
 html {
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -9,273 +12,399 @@ html {
     }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+body {
+    margin-bottom: 60px; /* Space for a fixed footer */
+    background-color: #f4f7f6; /* Light gray dashboard background */
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Consistent body font */
+    color: #333; /* Default text color for body, adjustable via variables */
+}
+
+/* Bootstrap default focus rings - adjust if necessary */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
+
+/* --- 2. Global Color Variables (CSS Custom Properties) --- */
+/* Single, authoritative source for all colors in your application */
+:root {
+    /* Main Palette Colors */
+    --color-deep-teal: #006D77; /* Primary brand color, dark */
+    --color-mint-green: #83C5BE; /* A lighter accent from the palette */
+    --color-light-blue: #EDF6F9; /* Very light, almost white, often for backgrounds/light text */
+    --color-pale-peach: #FFDDD2; /* Soft, warm secondary accent */
+    --color-terra-cotta: #E29578; /* Stronger, warm secondary accent */
+    /* Semantic Color Roles (using the palette colors) */
+    --primary-color: var(--color-deep-teal);
+    --secondary-color: var(--color-terra-cotta); /* The warm accent */
+    --accent-color-light: var(--color-mint-green);
+    /* Text Colors */
+    --text-color-dark: #343a40; /* Dark gray for general text/headings */
+    --text-color-light: var(--color-light-blue); /* For text on dark backgrounds */
+    --text-color-muted: #ccc; /* Lighter gray for taglines, small text */
+    --text-color-link-default: floralwhite; /* Specific for navbar links, might adjust based on palette */
+    /* Backgrounds */
+    --bg-light-gray: #f4f7f6; /* Body background */
+    --bg-white: #ffffff; /* Card backgrounds, header backgrounds */
+    --bg-light-header-footer: #f8f9fa; /* Lighter background for headers/footers within cards */
+    --bg-table-header: #e2e6ea; /* Table header background */
+    /* Borders & Shadows */
+    --border-light: #e9ecef;
+    --border-medium: #dee2e6;
+    --shadow-sm: rgba(0, 0, 0, 0.05);
+    --shadow-md: rgba(0, 0, 0, 0.08);
+    --shadow-lg: rgba(0, 0, 0, 0.1);
+    --shadow-xl: rgba(0, 0, 0, 0.15); /* More prominent shadow for danger hover */
+    /* Button Specific Colors (integrating with palette where possible) */
+    --btn-success-bg: #28a745;
+    --btn-success-hover-bg: #218838;
+    --btn-info-bg: #17a2b8;
+    --btn-info-hover-bg: #138496; /* Darker info hover */
+    --btn-secondary-bg: #6c757d;
+    --btn-secondary-hover-bg: #5a6268; /* Darker secondary hover */
+    --btn-danger-bg: #dc3545;
+    --btn-danger-hover-bg: #c82333;
+    /* Specific overrides/adjustments for navbar login/logout buttons */
+    --nav-btn-border: white;
+    --nav-btn-text: white;
+    --nav-btn-hover-bg: white;
+    --nav-btn-hover-text: var(--primary-color); /* Changed from #7600bc to deep teal for palette consistency */
 }
 
-body {
-    margin-bottom: 60px;
+
+/* --- 3. NAVBAR STYLES --- */
+
+.custom-navbar-bg {
+    background-color: var(--primary-color) !important; /* Use main brand color */
+    border-bottom: 1px solid var(--shadow-sm);
+    box-shadow: 0 4px 12px var(--shadow-md);
+    padding-top: 0.1rem !important;
+    padding-bottom: 0.1rem !important;
 }
 
-
-/* --- HOME PAGE STYLES --- */
-
-/* Custom background colors */
-body {
-    background-color: #f8f8fc; /* A very light grey/purple tint */
+/* Navbar brand/logo link */
+.custom-nav-link {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    color: var(--text-color-link-default) !important; /* floralwhite */
+    font-weight: 500;
+    font-size: 1.2rem;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    padding: 1rem !important;
 }
 
-/* Specific background for the top header section */
-.top-header-section {
-    background-color: #e6f0ff; /* Light blue from the design */
-    padding: 30px 0;
+/* Navbar normal links (e.g., Home, About, etc.) */
+.custom-navbar-bg .nav-link {
+    color: var(--text-color-link-default) !important;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease-in-out;
 }
 
-/* Styles for the main content area background */
-.main-content-section {
-    background-color: #f8f8fc; /* Same as body for seamless transition */
-    padding: 40px 0;
+    .custom-navbar-bg .nav-link:hover {
+        color: var(--secondary-color) !important; /* Terra Cotta on hover */
+    }
+
+/* Logo and Tagline Styling within .navbar-brand */
+.navbar-brand .fa-shield-halved {
+    font-size: 2.8rem;
+    color: var(--navbar-icon-color); /* Light blue from palette */
+    margin-right: 10px;
 }
 
-/* Card styling */
-.feature-card {
-    background-color: #fff;
-    border-radius: 15px; /* Rounded corners */
-    padding: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-    transition: transform 0.3s ease; /* Smooth hover effect */
-    height: 100%; /* Ensures cards in a row have equal height */
+.navbar-brand .logo-text-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Pushes content and icon to ends */
+    align-items: flex-start;
 }
 
-    .feature-card:hover {
-        transform: translateY(-5px); /* Lift effect on hover */
+.navbar-brand .tagline {
+    font-size: 0.8rem;
+    color: var(--text-color-muted);
+    margin-top: 0; /* Reduced gap */
+    white-space: nowrap;
+}
+
+.navbar-brand .logo-name {
+    font-size: 2rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+    .navbar-brand .logo-name span:last-child {
+        color: var(--logo-x-color); /* Terra Cotta for the 'X' */
     }
 
-.card-icon-wrapper {
-    background-color: #f4e8ff; /* Light purple for icon background */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
+/* Login/Logout Buttons Styling */
+.custom-login-btn,
+.custom-logout-btn {
+    border-color: var(--nav-btn-border) !important;
+    color: var(--nav-btn-text) !important;
+    background-color: transparent !important;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+}
+
+    .custom-login-btn:hover,
+    .custom-logout-btn:hover {
+        background-color: var(--secondary-color) !important; /* Use Terra Cotta for hover background */
+        color: var(--text-color-light) !important; /* Changed to light blue text on hover */
+        border-color: var(--secondary-color) !important; /* Consistent border */
+    }
+
+
+/* --- 4. DASHBOARD GENERAL STYLES --- */
+.dashboard-header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px; /* Space between icon and text */
-}
-
-    .card-icon-wrapper i {
-        font-size: 28px;
-        color: #9258d4; /* Purple color for icons */
-    }
-
-.feature-card h4 {
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #333; /* Darker text for headings */
-    font-family: 'Montserrat', sans-serif; /* Consistent font */
-}
-
-.feature-card p {
-    color: #666; /* Lighter text for paragraphs */
-    font-size: 15px;
-    line-height: 1.6;
-    font-family: 'Montserrat', sans-serif; /* Consistent font */
-}
-
-/* Specific styling for the top header numbers/text */
-.stat-item {
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 2.2em; /* Larger font for numbers */
-    font-weight: 700;
-    color: #0056b3; /* Blue color for numbers */
-    margin-bottom: 5px;
-    font-family: 'Montserrat', sans-serif; /* Consistent font */
-}
-
-.stat-label {
-    font-size: 1.1em;
-    color: #555;
-    font-family: 'Montserrat', sans-serif; /* Consistent font */
-}
-
-/* Slogan and ratings styles */
-.slogan-text {
-    font-size: 1.2em;
-    font-weight: 500;
-    color: #333;
-    font-family: 'Montserrat', sans-serif; /* Consistent font */
-}
-
-.star-rating .fas {
-    color: #ffc107; /* Gold color for stars */
-    font-size: 1.3em;
-}
-
-/* Main heading below the top bar */
-.main-heading {
-    font-size: 2.8em;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 40px;
-    font-family: 'Montserrat', sans-serif; /* Consistent font */
-}
-
-    .main-heading span {
-        color: #0056b3; /* Blue for "55 Lakh+ people like you" */
-    }
-
-/* Adjustments for smaller screens */
-@media (max-width: 768px) {
-    .main-heading {
-        font-size: 2em;
-    }
-
-    .top-header-section {
-        padding: 20px 0;
-    }
-
-    .stat-number {
-        font-size: 1.8em;
-    }
-
-    .stat-label {
-        font-size: 0.9em;
-    }
-
-    .feature-card {
-        margin-bottom: 20px; /* Add space between cards on small screens */
-    }
-}
-
-
-/* Table Styles */
-.custom-features-table thead th {
-    background-color: rgba(0, 86, 179, 0.70) !important; /* Your specified header color with opacity */
-    color: #fff; /* Changed to white for better contrast on blue */
-    font-weight: 600; /* Slightly bolder text */
-    text-align: left;
-    vertical-align: middle;
-    padding: 1rem;
-    border-color: rgba(0, 0, 0, 0.1); /* Lighter border for header */
-    font-size: 1.15rem; /* Slightly larger font size for headers */
-    font-family: 'Montserrat', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Stylish font */
-}
-
-.custom-features-table tbody td {
-    padding: 1rem;
-    vertical-align: middle;
-    color: #555;
-    border-color: rgba(0, 0, 0, 0.08); /* Lighter border for body cells */
-    font-size: 0.95rem; /* Slightly smaller font size for body text */
-    font-family: 'Montserrat', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Consistent font with header */
-}
-
-
-/* --- Know More Section Styles --- */
-.know-more-section {
-    background-color: #f0f4f7; /* A light, soft background color */
-    padding: 60px 0; /* Ample padding */
-}
-
-    .know-more-section .section-title {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 2.5em;
-        font-weight: 700;
-        color: #0056b3; /* Your primary blue color */
-        margin-bottom: 50px;
-        position: relative;
-    }
-
-        .know-more-section .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: #7600bc; /* Your purple accent color */
-            margin: 15px auto 0;
-            border-radius: 2px;
-        }
-
-.info-block {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 30px;
     margin-bottom: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Soft shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    background-color: var(--bg-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--shadow-sm);
 }
 
-    .info-block:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-    }
-
-.info-block-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.8em;
-    font-weight: 600;
-    color: #7600bc; /* Your purple accent color */
-    margin-bottom: 15px;
-    border-bottom: 2px solid rgba(118, 0, 188, 0.2); /* Light purple underline */
-    padding-bottom: 10px;
-}
-
-.info-block p {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.05em; /* Slightly larger for readability */
-    line-height: 1.7;
-    color: #444; /* Darker text for good readability */
-}
-
-/* Responsive adjustments for smaller screens for Know More Section */
-@media (max-width: 768px) {
-    .know-more-section .section-title {
+    .dashboard-header h1 {
+        margin: 0;
+        color: var(--text-color-dark);
         font-size: 2em;
+        font-weight: 600;
     }
 
-    .info-block-title {
-        font-size: 1.5em;
-    }
+.dashboard-card {
+    background-color: var(--bg-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--shadow-sm);
+    margin-bottom: 30px;
+    overflow: hidden;
+}
 
-    .info-block {
-        padding: 20px;
-    }
+.dashboard-card-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-light);
+    background-color: var(--bg-light-header-footer);
+}
+
+.dashboard-card-title {
+    margin: 0;
+    font-size: 1.5em;
+    color: var(--text-color-dark);
+}
+
+.dashboard-card-body {
+    padding: 20px;
 }
 
 
+/* --- 5. TABLE STYLES --- */
+.dashboard-table thead th {
+    background-color: var(--bg-table-header);
+    color: var(--text-color-dark);
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-medium);
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+.dashboard-table tbody tr {
+    border-bottom: 1px solid var(--border-medium);
+}
+
+    .dashboard-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+.dashboard-table tbody td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+.dashboard-table.table-hover tbody tr:hover {
+    background-color: var(--bg-light-header-footer);
+}
 
 
+/* --- 6. FORM SPECIFIC STYLES --- */
+.form-group label {
+    font-weight: 500;
+    color: var(--text-color-dark);
+    margin-bottom: 5px;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: 1px solid var(--border-medium);
+    padding: 10px 15px;
+}
+
+    .form-control:focus {
+        border-color: var(--primary-color); /* Use primary color for focus */
+        box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.25); /* Need RGB variable if using this */
+    }
+
+
+/* --- 7. BUTTON STYLES --- */
+
+/* Primary Dashboard Button (e.g., Create New) */
+.dashboard-btn-primary {
+    background-color: var(--btn-success-bg); /* Success green */
+    border-color: var(--btn-success-bg);
+    color: var(--text-color-light); /* White text */
+    padding: 10px 20px; /* Larger padding for main action */
+    font-size: 1em;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .dashboard-btn-primary:hover {
+        background-color: var(--btn-success-hover-bg);
+        border-color: var(--btn-success-hover-bg);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-md);
+    }
+
+    .dashboard-btn-primary i {
+        margin-right: 8px;
+    }
+
+/* Modern Action Buttons (Edit, Details, Delete - in tables or for 'Back to List') */
+.modern-action-btn {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    margin: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    /* Specific hover effects for outlined modern action buttons */
+    .modern-action-btn.btn-outline-info:hover {
+        background-color: var(--btn-info-bg);
+        color: var(--text-color-light);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px var(--shadow-sm);
+    }
+
+    .modern-action-btn.btn-outline-secondary:hover {
+        background-color: var(--btn-secondary-bg);
+        color: var(--text-color-light);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px var(--shadow-sm);
+    }
+
+    .modern-action-btn.btn-outline-danger:hover {
+        background-color: var(--btn-danger-bg);
+        color: var(--text-color-light);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px var(--shadow-xl); /* More prominent shadow for danger */
+    }
+
+/* Primary Delete Button (on delete confirmation pages) */
+.dashboard-btn-danger {
+    background-color: var(--btn-danger-bg);
+    border-color: var(--btn-danger-bg);
+    color: var(--text-color-light);
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .dashboard-btn-danger:hover {
+        background-color: var(--btn-danger-hover-bg);
+        border-color: var(--btn-danger-hover-bg);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-xl);
+    }
+
+    .dashboard-btn-danger i {
+        margin-right: 8px;
+    }
+
+.modern-action-btn i {
+    margin-right: 5px;
+}
+
+/* Spacing for button groups */
+.button-group-spacing {
+    margin-top: 20px;
+}
+
+
+/* --- 8. DETAILS SUMMARY CARD (for details/delete pages) --- */
+.details-summary-card {
+    background-color: var(--bg-light-header-footer); /* Lighter background for details box */
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+    .details-summary-card h4 {
+        color: var(--text-color-dark);
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .details-summary-card hr {
+        border-top: 1px solid var(--border-medium);
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+.detail-list-custom dt {
+    font-weight: 500;
+    color: var(--text-color-dark);
+    padding-bottom: 8px;
+}
+
+.detail-list-custom dd {
+    padding-bottom: 8px;
+}
+
+
+/* --- 9. Tab Navigation Styles (if used for dashboards/reports) --- */
 .nav-tabs .nav-link {
-    color: #495057;
+    color: var(--text-color-dark); /* Default tab text color */
     border: none;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    font-family: 'Montserrat', sans-serif; /* Apply stylish font */
+    font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     transition: color 0.2s ease, border-bottom-color 0.2s ease;
 }
 
     .nav-tabs .nav-link.active {
-        color: #0056b3; /* Active tab color - Primary blue */
-        border-bottom-color: #0056b3; /* Active tab underline color */
+        color: var(--primary-color); /* Active tab color - using deep teal */
+        border-bottom-color: var(--primary-color); /* Active tab underline color */
         font-weight: 600;
     }
 
     .nav-tabs .nav-link:hover:not(.active) {
-        color: #7600bc; /* Hover color for inactive tabs */
-        border-bottom-color: rgba(118, 0, 188, 0.4); /* Subtle hover underline */
+        color: var(--secondary-color); /* Hover color for inactive tabs (terra cotta) */
+        border-bottom-color: rgba(226, 149, 120, 0.4); /* Subtle hover underline using RGBA of terra cotta */
     }
 
 .tab-content {
@@ -283,107 +412,52 @@ body {
 }
 
 
-/* --- Responsive adjustments for overall Login Page Layout --- */
-/* This media query block was duplicated and needs to be combined or removed if the above is sufficient.
-   I've updated the one above to be comprehensive for login layout. This one seems to be a redundant copy.
-   I'm commenting it out as it's a duplicate of the one directly above for login styles.
-*/
-/*
-@media (max-width: 768px) {
-    .login-page-card {
-        width: 95%;
-    }
-
-    .login-welcome-section {
-        border-radius: 15px 15px 0 0;
-        padding: 2rem !important;
-    }
-
-    .login-form-right-half {
-        border-radius: 0 0 15px 15px;
-    }
-
-    .login-welcome-section .welcome-heading {
-        font-size: 1.8em;
-    }
-
-    .login-welcome-section .welcome-message {
-        font-size: 1em;
-    }
-
-    .login-welcome-section .welcome-icons i {
-        font-size: 2em;
-    }
-
-    .col-md-6.p-5 {
-        padding: 2rem !important;
-    }
+/* --- 10. Reports Dashboard Specific Styles --- */
+.custom-report-item {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    padding: 1.25rem 1.5rem;
+    border-color: var(--border-medium) !important;
 }
-*/
 
+    .custom-report-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.5rem 1rem var(--shadow-lg) !important;
+        background-color: var(--bg-light-header-footer);
+        z-index: 1;
+    }
 
-/* --- NAVBAR STYLES --- */
-/* Custom background for the Navbar */
-.custom-navbar-bg {
-    background-color: rgba(118, 0, 188, 0.80) !important; /* Changed to 0.95 for stronger color, matches original intent */
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Subtle bottom border */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    padding-top: 0.1rem !important;
-    padding-bottom: 0.1rem !important;
+    .custom-report-item h5 {
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .custom-report-item p {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+.list-group.rounded-3 .list-group-item:last-child {
+    border-bottom-left-radius: 0.5rem !important;
+    border-bottom-right-radius: 0.5rem !important;
+}
+
+.list-group.rounded-3 .list-group-item:first-child {
+    border-top-left-radius: 0.5rem !important;
+    border-top-right-radius: 0.5rem !important;
 }
 
 
-/* Custom link color for Navbar links and brand */
-.custom-nav-link {
-    display: flex;
-    align-items: center; /* Vertically align the icon and text */
-    white-space: nowrap;
-    color: #254D70 floralwhite !important; /* Corrected: Only one color, floralwhite */
-    font-weight: 500;
-    font-size: 1.2rem;
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif; /* Consistent font */
-}
-
-/* Optional: Hover effect for links in the custom navbar */
-.custom-navbar-bg .nav-link:hover {
-    color: white !important; /* A slightly lighter white on hover */
-}
-
-/* Styling for the Login/Logout buttons in the navbar */
-.custom-login-btn,
-.custom-logout-btn {
-    border-color: #fff !important; /* White border for buttons */
-    color: #fff !important; /* White text for buttons */
-    background-color: transparent !important; /* Transparent background */
-    padding: 0.375rem 0.75rem; /* Bootstrap button default padding */
-    border-radius: 0.375rem; /* Bootstrap button default border-radius */
-    transition: all 0.2s ease-in-out; /* Smooth transition on hover */
-    font-family: 'Montserrat', sans-serif; /* Consistent font */
-}
-
-    .custom-login-btn:hover,
-    .custom-logout-btn:hover {
-        background-color: #fff !important; /* White background on hover */
-        color: #7600bc !important; /* Your purple color on hover */
-        border-color: #fff !important;
-    }
-
-/* --- END NAVBAR STYLES --- */
-
-
-
-/*FOOTER SECTION STYLES HERE*/
-
-/* --- NEW FOOTER STYLES (for unauthenticated users) --- */
+/* --- 11. FOOTER STYLES --- */
 .footer-custom {
-    background-color: #f8f8fc;
+    background-color: #f8f8fc; /* Could use a variable here too */
     padding: 3rem 0;
     border-top: 1px solid #e0e0e0;
     color: #4a4a4a;
     font-size: 0.9rem;
     line-height: 1.5;
-    margin-top: auto; /* Pushes the footer to the bottom */
+    margin-top: auto;
 }
 
 .footer-header-section {
@@ -449,7 +523,7 @@ body {
     }
 
         .footer-links-section ul li a:hover {
-            color: #004d40;
+            color: var(--primary-color); /* Hover color using deep teal */
             text-decoration: underline;
         }
 
@@ -461,7 +535,7 @@ body {
 }
 
     .footer-social-app .social-icons a:hover {
-        color: #004d40;
+        color: var(--primary-color); /* Hover color using deep teal */
     }
 
 .footer-social-app .app-badges .app-badge {
@@ -481,6 +555,297 @@ body {
     color: #888;
     font-size: 0.85rem;
 }
+
+
+
+/* --- 12. LOGIN PAGE STYLES --- */
+/* Overall page background for the login view */
+.container-fluid.min-vh-100.login-page-wrapper {
+    background-color: var(--bg-light-gray); /* Overall subtle page background, consistent with dashboard body */
+}
+
+/* Outer Card for the entire login layout (encompassing both halves) */
+.login-page-card {
+    max-width: 1200px; /* Max width for the entire card */
+    width: 100%; /* Responsive width */
+    border: none;
+    overflow: hidden; /* Crucial for rounded corners when using background images */
+    border-radius: 15px; /* Consistent rounded corners */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Stronger shadow for the whole card */
+}
+
+/* Left Half: Welcome Section with Background Image and Overlay */
+.login-welcome-section {
+    background-image: url('/images/city-background.jpg'); /* Ensure this image exists! */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Use RGBA for the overlay color to control opacity for better image visibility */
+    background-color: rgba(var(--primary-color-rgb), 0.9); /* Deep Teal overlay with 90% opacity */
+    background-blend-mode: multiply; /* Blends the color and image */
+    color: var(--text-color-light); /* White text on dark background */
+    padding: 3rem; /* Ample padding for content */
+    border-radius: 15px 0 0 15px; /* Rounded corners only on the left side */
+    display: flex; /* Make it a flex container */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Align text within this section */
+}
+
+    .login-welcome-section .welcome-heading {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 1.2;
+    }
+
+    .login-welcome-section .welcome-message {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.1em;
+        font-weight: 400;
+        line-height: 1.5;
+    }
+
+    .login-welcome-section .welcome-message-sub {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95em;
+        opacity: 0.9;
+    }
+
+    .login-welcome-section .welcome-icons i {
+        font-size: 2.5em;
+        margin: 0 10px;
+        color: var(--secondary-color); /* Using Terra Cotta from your palette for icons */
+        transition: transform 0.2s ease-in-out;
+        border-radius: 50%;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.2); /* Subtle background for visibility */
+    }
+
+        .login-welcome-section .welcome-icons i:hover {
+            transform: scale(1.1);
+        }
+
+/* Right Half: Contains the Login Form Card */
+.login-form-right-half {
+    background-color: var(--bg-white); /* Explicitly white background for this half */
+    border-radius: 0 15px 15px 0; /* Rounded corners on the right side */
+    padding: 3rem; /* Consistent padding for the form section */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Existing Login Container Styles (Adapted) */
+.login-container {
+    /* Removed redundant background-color and box-shadow, handled by parent */
+    padding: 0; /* Remove padding as it's now handled by .login-form-right-half */
+    border-radius: 15px;
+    width: 100%;
+    max-width: none;
+}
+
+    .login-container h2 {
+        margin-bottom: 30px;
+        text-align: center;
+        color: var(--text-color-dark); /* Dark text color */
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+    }
+
+/* Form control styles for login page (can be general or specific) */
+.form-control {
+    border-radius: 8px; /* Slightly less rounded than full pill, more modern form look */
+    padding: 12px 15px;
+    border: 1px solid var(--border-medium);
+}
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* You might need a --primary-color-rgb variable if you want to use the primary color directly in rgba */
+    }
+
+/* Adjust tab button styles for consistency on login page */
+.nav-tabs .nav-link {
+    border-radius: 8px 8px 0 0; /* Consistent rounded top corners for tabs */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color: var(--text-color-dark);
+    margin-right: 5px;
+    border: 1px solid var(--border-medium);
+    border-bottom-color: transparent; /* Initially transparent bottom border for inactive */
+    padding: 10px 20px;
+    transition: all 0.2s ease;
+}
+
+    .nav-tabs .nav-link.active {
+        background-color: var(--bg-white);
+        border-color: var(--border-medium) var(--border-medium) var(--bg-white); /* Active tab has white bottom border to blend with content */
+        color: var(--primary-color); /* Active tab color */
+        font-weight: 600;
+    }
+
+    .nav-tabs .nav-link:hover:not(.active) {
+        color: var(--secondary-color); /* Hover color for inactive tabs */
+        border-color: var(--border-medium) var(--border-medium) var(--secondary-color); /* Subtle hover underline */
+    }
+
+.nav-tabs {
+    border-bottom: 1px solid var(--border-medium);
+    margin-bottom: 20px; /* Space below the tabs */
+}
+
+.tab-content {
+    padding-top: 20px; /* Space above the tab content */
+}
+
+
+/* Login Buttons */
+.btn-login {
+    border-radius: 50px; /* Pill-shaped buttons */
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-top: 15px; /* Space above buttons */
+    transition: all 0.3s ease;
+}
+
+/* Colors for login buttons - using palette variables */
+.btn-primary.btn-login {
+    background-color: var(--primary-color); /* Admin: Deep Teal */
+    border-color: var(--primary-color);
+}
+
+    .btn-primary.btn-login:hover {
+        background-color: var(--btn-success-hover-bg); /* Darker green on hover for admin button */
+        border-color: var(--btn-success-hover-bg);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+.btn-success.btn-login {
+    background-color: var(--btn-success-bg); /* Employee: Success green */
+    border-color: var(--btn-success-bg);
+}
+
+    .btn-success.btn-login:hover {
+        background-color: var(--btn-success-hover-bg);
+        border-color: var(--btn-success-hover-bg);
+        transform: translateY(-2px);
+    }
+
+.btn-info.btn-login {
+    background-color: var(--btn-info-bg); /* HR: Info Cyan */
+    border-color: var(--btn-info-bg);
+}
+
+    .btn-info.btn-login:hover {
+        background-color: var(--btn-info-hover-bg);
+        border-color: var(--btn-info-hover-bg);
+        transform: translateY(-2px);
+    }
+
+/* Utility classes for spacing */
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+/* Responsive adjustments for login page */
+@media (max-width: 767px) {
+    .login-page-card .row.g-0 {
+        flex-direction: column; /* Stack columns vertically on small screens */
+    }
+
+    .login-welcome-section {
+        border-radius: 15px 15px 0 0; /* Rounded top corners on small screens */
+        padding: 2rem !important;
+    }
+
+    .login-form-right-half {
+        border-radius: 0 0 15px 15px; /* Rounded bottom corners on small screens */
+        padding: 2rem !important;
+    }
+
+    .login-welcome-section .welcome-heading {
+        font-size: 2em;
+    }
+
+    .login-welcome-section .welcome-message {
+        font-size: 1em;
+    }
+
+    .login-welcome-section .welcome-icons i {
+        font-size: 2em;
+        margin: 0 8px;
+    }
+}
+/* --- Responsive adjustments for overall Login Page Layout --- */
+/* This media query block was duplicated and needs to be combined or removed if the above is sufficient.
+   I've updated the one above to be comprehensive for login layout. This one seems to be a redundant copy.
+   I'm commenting it out as it's a duplicate of the one directly above for login styles.
+*/
+/*
+@media (max-width: 768px) {
+    .login-page-card {
+        width: 95%;
+    }
+
+    .login-welcome-section {
+        border-radius: 15px 15px 0 0;
+        padding: 2rem !important;
+    }
+
+    .login-form-right-half {
+        border-radius: 0 0 15px 15px;
+    }
+
+    .login-welcome-section .welcome-heading {
+        font-size: 1.8em;
+    }
+
+    .login-welcome-section .welcome-message {
+        font-size: 1em;
+    }
+
+    .login-welcome-section .welcome-icons i {
+        font-size: 2em;
+    }
+
+    .col-md-6.p-5 {
+        padding: 2rem !important;
+    }
+}
+*/
+
+
+
+/* Ensure a primary-color-rgb variable if you want to use it in rgba() functions */
+:root {
+    --primary-color-rgb: 0, 109, 119; /* RGB values for #006D77 */
+    --secondary-color-rgb: 226, 149, 120; /* RGB values for #E29578 */
+}
+
+
+
+
+
+
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 767px) {
@@ -502,53 +867,3 @@ body {
             width: 100%;
         }
 }
-
-/*FOOTER SECTION STYLES END HERE*/
-
-
-
-
-
-
-
-
-
-
-/* Reports Dashboard Specific Styles */
-.custom-report-item {
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition for hover effects */
-    padding: 1.25rem 1.5rem; /* Increase padding for a more spacious look */
-    border-color: #dee2e6 !important; /* Ensure subtle border color */
-}
-
-    .custom-report-item:hover {
-        transform: translateY(-3px); /* Lifts the item slightly on hover */
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* More pronounced shadow on hover */
-        background-color: #f8f9fa; /* Light background change on hover */
-        z-index: 1; /* Ensures hover shadow is on top */
-    }
-
-    .custom-report-item h5 {
-        font-weight: 600; /* Make headings a bit bolder */
-        display: flex; /* Use flexbox for icon alignment */
-        justify-content: space-between; /* Pushes icon to the right */
-        align-items: center; /* Vertically centers icon */
-    }
-
-    .custom-report-item p {
-        font-size: 0.95rem; /* Slightly smaller text for description */
-        line-height: 1.4;
-    }
-
-/* Ensure the last item of the list group has rounded bottom corners */
-.list-group.rounded-3 .list-group-item:last-child {
-    border-bottom-left-radius: 0.5rem !important;
-    border-bottom-right-radius: 0.5rem !important;
-}
-
-/* Ensure the first item has rounded top corners */
-.list-group.rounded-3 .list-group-item:first-child {
-    border-top-left-radius: 0.5rem !important;
-    border-top-right-radius: 0.5rem !important;
-}
-/*reports section end*/

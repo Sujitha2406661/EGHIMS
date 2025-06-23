@@ -32,7 +32,7 @@
             background-position: center; /* Center the image */
             background-repeat: no-repeat;
             /* Your purple overlay color */
-            background-color: rgba(118, 0, 188, 0.50); /* Purple overlay with higher opacity for welcome section */
+            background-color: var(--navbar-bg-color); /* Purple overlay with higher opacity for welcome section */
             /* Blend mode to combine the background color and image */
             background-blend-mode: multiply;
             color: #fff; /* White text on dark background */
@@ -131,12 +131,12 @@
 
         /* Colors for login buttons - customize as needed */
         .btn-primary.btn-login {
-            background-color: rgba(118, 0, 188, 0.70); /* Primary blue for Admin, slightly brighter */
+            background-color: var(--navbar-bg-color); /* Primary blue for Admin, slightly brighter */
             border-color: rgba(20,20,20);
         }
 
             .btn-primary.btn-login:hover {
-                background-color: rgba(118, 0, 188, 0.50);
+                background-color: var(--navbar-bg-color);
                 border-color:rgba(20,20,20);
                 transform: translateY(-2px); /* Slight lift on hover */
             }
@@ -197,9 +197,20 @@
         <div class="row g-0">
             <div class="col-md-6 login-welcome-section d-flex flex-column justify-content-center align-items-center p-5 text-center">
                 @* You can add a small logo or icon here if desired, ensure it contrasts with the background *@
-                <img src="~/images/logo_primeProtect.png" alt="Welcome" class="img-fluid mb-4 welcome-image">
+                
+                <a class="navbar-brand custom-nav-link p-4" asp-area="" asp-controller="Account" asp-action="Dashboard"
+                   style="text-decoration: none; display: flex; align-items: center;">
 
-                <h2 class="welcome-heading">Welcome to PrimeProtect!</h2>
+                    <i class="fa-solid fa-shield-halved" style="font-size: 2.8rem; color: #EDF6F9; margin-right: 10px;"></i>
+
+                    <div style="display: flex;">
+                        <span style="font-size: 2rem; font-weight: bold; white-space: nowrap;">
+                            <span style="color: #EDF6F9;">Insura</span><span style="color: #E29578;">X</span>
+                        </span>
+                        
+                    </div>
+                </a>
+                <h2 class="welcome-heading">Welcome to InsuraX!</h2>
                 <p class="welcome-message mb-3">Your trusted partner in health insurance management.</p>
                 <p class="welcome-message-sub">Manage your policies, claims, and benefits with ease and confidence.</p>
 
@@ -288,6 +299,289 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Define your color variables (or ensure they are loaded from _Layout if _Layout's <style> isn't removed) */
+    :root {
+        --color-deep-teal: #006D77;
+        --color-mint-green: #83C5BE;
+        --color-light-blue: #EDF6F9;
+        --color-pale-peach: #FFDDD2;
+        --color-terra-cotta: #E29578;
+        --primary-color: var(--color-deep-teal);
+        --secondary-color: var(--color-terra-cotta);
+        --text-color-light: var(--color-light-blue); /* For text on dark backgrounds */
+        --text-color-dark: #343a40; /* Dark gray for general text/headings */
+        --text-color-muted: #ccc;
+        --bg-light-gray: #f4f7f6;
+        --bg-white: #ffffff;
+        --bg-light-header-footer: #f8f9fa;
+        --border-light: #e9ecef;
+        --border-medium: #dee2e6;
+        --shadow-sm: rgba(0, 0, 0, 0.05);
+        --shadow-md: rgba(0, 0, 0, 0.08);
+        --shadow-lg: rgba(0, 0, 0, 0.1);
+        --shadow-xl: rgba(0, 0, 0, 0.15);
+        --btn-success-bg: #28a745;
+        --btn-success-hover-bg: #218838;
+        --btn-info-bg: #17a2b8;
+        --btn-info-hover-bg: #138496;
+        /* RGB values for rgba() usage */
+        --primary-color-rgb: 0, 109, 119;
+        --secondary-color-rgb: 226, 149, 120;
+    }
+
+    /* Set body background specific to this page */
+    body {
+        background-color: var(--bg-light-gray); /* Overall subtle page background */
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Consistent body font */
+        color: #333; /* Default text color */
+    }
+
+    /* Ensure min-height is applied to the container for centering */
+    .container-fluid.min-vh-100.d-flex.align-items-center.justify-content-center {
+        padding-top: 50px; /* Adjust padding if navbar is fixed */
+        padding-bottom: 50px; /* Adjust padding for bottom spacing */
+    }
+
+
+    /* Outer Card for the entire login layout (encompassing both halves) */
+    .login-page-card {
+        max-width: 1200px;
+        width: 100%;
+        border: none;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Left Half: Welcome Section with Background Image and Overlay */
+    .login-welcome-section {
+        background-image: url('/images/city-background.jpg'); /* Ensure this image exists! */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: rgba(var(--primary-color-rgb), 0.9); /* Deep Teal overlay with 90% opacity */
+        background-blend-mode: multiply;
+        color: var(--text-color-light);
+        padding: 3rem;
+        border-radius: 15px 0 0 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+        .login-welcome-section .welcome-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .login-welcome-section .welcome-message {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1em;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .login-welcome-section .welcome-message-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .login-welcome-section .welcome-icons i {
+            font-size: 2.5em;
+            margin: 0 10px;
+            color: var(--secondary-color);
+            transition: transform 0.2s ease-in-out;
+            border-radius: 50%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+            .login-welcome-section .welcome-icons i:hover {
+                transform: scale(1.1);
+            }
+
+    /* Right Half: Contains the Login Form Card */
+    .login-form-right-half {
+        background-color: var(--bg-white);
+        border-radius: 0 15px 15px 0;
+        padding: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Existing Login Container Styles (Adapted) */
+    .login-container {
+        padding: 0;
+        border-radius: 15px;
+        width: 100%;
+        max-width: none;
+    }
+
+        .login-container h2 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--text-color-dark);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+    /* Form control styles for login page */
+    .form-group label { /* Added for consistency */
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 12px 15px;
+        border: 1px solid var(--border-medium);
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.25);
+        }
+
+    /* Adjust tab button styles for consistency on login page */
+    .nav-tabs .nav-link {
+        border-radius: 8px 8px 0 0;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        color: var(--text-color-dark);
+        margin-right: 5px;
+        border: 1px solid var(--border-medium);
+        border-bottom-color: transparent;
+        padding: 10px 20px;
+        transition: all 0.2s ease;
+    }
+
+        .nav-tabs .nav-link.active {
+            background-color: var(--bg-white);
+            border-color: var(--border-medium) var(--border-medium) var(--bg-white);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .nav-tabs .nav-link:hover:not(.active) {
+            color: var(--secondary-color);
+            border-color: var(--border-medium) var(--border-medium) var(--secondary-color);
+        }
+
+    .nav-tabs {
+        border-bottom: 1px solid var(--border-medium);
+        margin-bottom: 20px;
+    }
+
+    .tab-content {
+        padding-top: 20px;
+    }
+
+    /* Login Buttons */
+    .btn-login {
+        border-radius: 50px;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        width: 100%;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        margin-top: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary.btn-login {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+        .btn-primary.btn-login:hover {
+            background-color: var(--btn-success-hover-bg); /* Use darker green on hover */
+            border-color: var(--btn-success-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    .btn-success.btn-login {
+        background-color: var(--btn-success-bg);
+        border-color: var(--btn-success-bg);
+    }
+
+        .btn-success.btn-login:hover {
+            background-color: var(--btn-success-hover-bg);
+            border-color: var(--btn-success-hover-bg);
+            transform: translateY(-2px);
+        }
+
+    .btn-info.btn-login {
+        background-color: var(--btn-info-bg);
+        border-color: var(--btn-info-bg);
+    }
+
+        .btn-info.btn-login:hover {
+            background-color: var(--btn-info-hover-bg);
+            border-color: var(--btn-info-hover-bg);
+            transform: translateY(-2px);
+        }
+
+    /* Utility classes for spacing */
+    .mb-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .mt-0 {
+        margin-top: 0 !important;
+    }
+
+    .p-0 {
+        padding: 0 !important;
+    }
+
+    /* Responsive adjustments for login page */
+@@media (max-width: 767px) {
+        .login-page-card .row.g-0
+
+    {
+        flex-direction: column;
+    }
+
+    .login-welcome-section {
+        border-radius: 15px 15px 0 0;
+        padding: 2rem !important;
+    }
+
+    .login-form-right-half {
+        border-radius: 0 0 15px 15px;
+        padding: 2rem !important;
+    }
+
+    .login-welcome-section .welcome-heading {
+        font-size: 2em;
+    }
+
+    .login-welcome-section .welcome-message {
+        font-size: 1em;
+    }
+
+    .login-welcome-section .welcome-icons i {
+        font-size: 2em;
+        margin: 0 8px;
+    }
+
+    }
+</style>
 
 @section Scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

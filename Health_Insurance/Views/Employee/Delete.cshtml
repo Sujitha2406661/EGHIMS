@@ -1,69 +1,81 @@
 ﻿@model Health_Insurance.Models.Employee
-@* Ensure the model namespace is correct based on your project name *@
 
 @{
     ViewData["Title"] = "Delete Employee";
 }
 
-<h1 class="mb-4 text-danger">Delete Employee</h1> @* Highlight delete heading in danger color *@
-
-<h3 class="mb-3">Are you sure you want to delete this?</h3> @* Added margin-bottom *@
-
-<div>
-    <h4>Employee</h4>
-    <hr />
-    @* Use Bootstrap row and column for layout and display classes *@
-    <dl class="row">
-        @* Use dl, dt, dd with row/col for definition list layout *@
-        @* Displaying properties of the Employee to be deleted *@
-        <dt class="col-sm-3">
-            @* Use column for label *@
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-9">
-            @* Use column for value *@
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Designation)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Designation)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Organization)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Organization.OrganizationName)
-        </dd>
-        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Username)</dt>
-        <dd class="col-sm-9">@Html.DisplayFor(model => model.Username)</dd>
-
-        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CreateDate)</dt> @* NEW ROW *@
-        <dd class="col-sm-9">@(Model.CreateDate.ToString("yyyy-MM-dd"))</dd>
-    </dl>
-
-    @* Form for confirming deletion. Posts to the DeleteConfirmed action. *@
-    <form asp-action="Delete" class="mt-3">
-        @* Added margin-top to form *@
-        @* Hidden field to pass the EmployeeId to the DeleteConfirmed action *@
-        <input type="hidden" asp-for="EmployeeId" />
-        @* Use Bootstrap button classes *@
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        @* Link back to the Employee Index page *@
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
 </div>
 
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">Confirm Deletion</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <h3 class="text-danger mb-4">Are you sure you want to delete this employee?</h3>
+
+        <div class="details-summary-card">
+            <h4>Employee Details</h4>
+            <hr />
+            <dl class="row detail-list-custom">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Phone)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Designation)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Designation)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Organization)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Organization.OrganizationName)
+                </dd>
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Username)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Username)</dd>
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CreateDate)</dt>
+                <dd class="col-sm-9">@(Model.CreateDate.ToString("yyyy-MM-dd"))</dd>
+            </dl>
+        </div>
+
+        <form asp-action="Delete" class="mt-4">
+            <input type="hidden" asp-for="EmployeeId" />
+            <button type="submit" class="btn btn-danger dashboard-btn-danger">
+                <i class="fas fa-trash-alt"></i> Delete
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn ms-2">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

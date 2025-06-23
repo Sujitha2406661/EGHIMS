@@ -1,55 +1,70 @@
-﻿﻿@* Views/PremiumCalculator/Index.cshtml *@
+﻿@* Views/PremiumCalculator/Index.cshtml *@
+@using Health_Insurance.Models;
+
 @{
     ViewData["Title"] = "Premium Calculator";
 }
 
-<h1 class="mb-4">Premium Calculator</h1>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
-<p class="lead">Select an employee and a policy to calculate the estimated premium.</p>
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">Select Details to Calculate Premium</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <p class="mb-4">Select an employee and a policy to calculate the estimated premium.</p>
 
-<div class="row">
-    <div class="col-md-6">
-        <form id="premiumCalculatorForm">
-            @* Employee Selection (Conditional based on role) *@
-            <div class="form-group mb-3">
-                <label for="employeeId" class="form-label">Employee:</label>
-                @if (ViewBag.IsEmployee != null && ViewBag.IsEmployee)
-                {
-                    @* For Employee role: Display their name and use a hidden input for ID *@
-                    <input type="text" class="form-control" value="@ViewBag.LoggedInEmployeeName" readonly />
-                    <input type="hidden" id="employeeId" name="employeeId" value="@ViewBag.LoggedInEmployeeId" />
-                }
-                else
-                {
-                    @* For Admin/HR: Show a dropdown to select an employee *@
-                    <select id="employeeId" name="employeeId" class="form-control" asp-items="ViewBag.EmployeeList" required>
-                        <option value="">-- Select Employee --</option>
-                    </select>
-                }
+        <div class="row">
+            <div class="col-md-6">
+                <form id="premiumCalculatorForm">
+                    @Html.AntiForgeryToken()
+
+                    @* Employee Selection (Conditional based on role) *@
+                    <div class="form-group mb-3">
+                        <label for="employeeId" class="control-label">Employee:</label>
+                        @if (ViewBag.IsEmployee != null && ViewBag.IsEmployee)
+                        {
+                            @* For Employee role: Display their name and use a hidden input for ID *@
+                            <input type="text" class="form-control" value="@ViewBag.LoggedInEmployeeName" readonly />
+                            <input type="hidden" id="employeeId" name="employeeId" value="@ViewBag.LoggedInEmployeeId" />
+                        }
+                        else
+                        {
+                            @* For Admin/HR: Show a dropdown to select an employee *@
+                            <select id="employeeId" name="employeeId" class="form-control" asp-items="ViewBag.EmployeeList" required>
+                                <option value="">-- Select Employee --</option>
+                            </select>
+                        }
+                    </div>
+
+                    @* Policy Selection (Always a dropdown) *@
+                    <div class="form-group mb-4">
+                        <label for="policyId" class="control-label">Policy:</label>
+                        <select id="policyId" name="policyId" class="form-control" asp-items="ViewBag.PolicyList" required>
+                            <option value="">-- Select Policy --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group button-group-spacing">
+                        <button type="button" id="calculatePremiumBtn" class="btn btn-primary dashboard-btn-primary">
+                            <i class="fas fa-calculator"></i> Calculate Premium
+                        </button>
+                    </div>
+                </form>
+
+                @* Display area for the calculated premium *@
+                <div class="details-summary-card mt-4" id="premiumResultContainer" style="display:none;">
+                    <h4>Calculated Premium:</h4>
+                    <p class="lead text-success" id="calculatedPremiumAmount"></p>
+                </div>
+
+                @* Error message display *@
+                <div class="mt-3 alert alert-danger" role="alert" id="errorMessage" style="display:none;">
+                    <!-- Error messages will be displayed here -->
+                </div>
             </div>
-
-            @* Policy Selection (Always a dropdown) *@
-            <div class="form-group mb-3">
-                <label for="policyId" class="form-label">Policy:</label>
-                <select id="policyId" name="policyId" class="form-control" asp-items="ViewBag.PolicyList" required>
-                    <option value="">-- Select Policy --</option>
-                </select>
-            </div>
-
-            <div class="form-group mt-3">
-                <button type="button" id="calculatePremiumBtn" class="btn btn-primary">Calculate Premium</button>
-            </div>
-        </form>
-
-        @* Display area for the calculated premium *@
-        <div class="mt-4 p-3 border rounded" id="premiumResultContainer" style="display:none;">
-            <h4>Calculated Premium:</h4>
-            <p class="lead text-success" id="calculatedPremiumAmount"></p>
-        </div>
-
-        @* Error message display *@
-        <div class="mt-3 alert alert-danger" role="alert" id="errorMessage" style="display:none;">
-            <!-- Error messages will be displayed here -->
         </div>
     </div>
 </div>
@@ -78,13 +93,10 @@
                 // Basic client-side validation for dropdowns
                 if (!employeeId) {
                     $('#errorMessage').text('Please select an employee.').show();
-                    // Optionally, highlight the invalid dropdown
-                    // $('#employeeId').addClass('is-invalid');
                     return;
                 }
                 if (!policyId) {
                     $('#errorMessage').text('Please select a policy.').show();
-                    // $('#policyId').addClass('is-invalid');
                     return;
                 }
 
@@ -92,6 +104,9 @@
                     url: '@Url.Action("CalculatePremium", "PremiumCalculator")', // Point to the POST action
                     type: 'POST',
                     data: { employeeId: employeeId, policyId: policyId },
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
                     success: function (response) {
                         if (response.premium !== undefined) {
                             $('#calculatedPremiumAmount').text('$' + parseFloat(response.premium).toFixed(2));

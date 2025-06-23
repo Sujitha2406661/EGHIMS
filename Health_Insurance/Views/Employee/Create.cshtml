@@ -5,85 +5,87 @@
     ViewData["Title"] = "Create Employee";
 }
 
-<h1 class="mb-4">Create Employee</h1>
-
-<h4>Employee</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Create">
-            @Html.AntiForgeryToken()
-
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-
-            <div class="form-group mb-3">
-                <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Phone" class="form-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Address" class="form-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Designation" class="form-label"></label>
-                <input asp-for="Designation" class="form-control" />
-                <span asp-validation-for="Designation" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="OrganizationId" class="form-label"></label>
-                <select asp-for="OrganizationId" class="form-control" asp-items="ViewBag.OrganizationId">
-                    <option value="">-- Select Organization --</option>
-                </select>
-                <span asp-validation-for="OrganizationId" class="text-danger"></span>
-            </div>
-
-            @* --- NEW: Username Field (Required) --- *@
-            <div class="form-group mb-3">
-                <label asp-for="Username" class="form-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            @* --- END NEW: Username Field --- *@
-
-            @* --- NEW: Password Field (Plain-text input, will be hashed in controller) --- *@
-            @* Note: PasswordHash property in Employee model is not [Required] now,
-                   but it's implicitly required for new user creation for login.
-                   The UI requires an input field for it. *@
-            <div class="form-group mb-3">
-                <label asp-for="PasswordHash" class="form-label">Password</label> @* Use a more user-friendly label *@
-                <input asp-for="PasswordHash" type="password" class="form-control" /> @* Type="password" for security *@
-                <span asp-validation-for="PasswordHash" class="text-danger"></span>
-            </div>
-            @* --- END NEW: Password Field --- *@
-
-            <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
 </div>
 
-<div class="mt-3">
-    <a asp-action="Index">Back to List</a>
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">New Employee Details</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Create">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label> 
+                        
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Designation" class="control-label"></label>
+                        <input asp-for="Designation" class="form-control" />
+                        <span asp-validation-for="Designation" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="OrganizationId" class="control-label"></label>
+                        <select asp-for="OrganizationId" class="form-control" asp-items="ViewBag.OrganizationId">
+                            <option value="">-- Select Organization --</option>
+                        </select>
+                        <span asp-validation-for="OrganizationId" class="text-danger"></span>
+                    </div>
+
+                    @* --- Username Field --- *@
+                    <div class="form-group mb-3">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    @* --- Password Field --- *@
+                    <div class="form-group mb-4">
+                        <label asp-for="PasswordHash" class="control-label">Password</label> 
+                        <input asp-for="PasswordHash" type="password" class="form-control" /> 
+                        <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group button-group-spacing"> 
+                        <input type="submit" value="Create Employee" class="btn btn-primary dashboard-btn-primary" />
+                        <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn ms-2">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit-id.js" crossorigin="anonymous"></script> *
 }
-
-

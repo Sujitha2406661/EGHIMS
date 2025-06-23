@@ -1,80 +1,95 @@
 ﻿@model IEnumerable<Health_Insurance.Models.Claim>
-@* Ensure the model namespace is correct based on your project name *@
 
 @{
     ViewData["Title"] = "All Claims";
 }
 
-@* Use Bootstrap heading and margin utility *@
-<h1 class="mb-4">All Claims</h1>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
+    <p>
+        <a asp-action="SubmitClaim" class="btn btn-success dashboard-btn-primary">
+            <i class="fas fa-plus-circle"></i> Submit New Claim
+        </a>
+    </p>
+</div>
 
-@* Use Bootstrap button class and margin utility *@
-<p>
-    @* Link to the Submit Claim page *@
-    <a asp-action="SubmitClaim" class="btn btn-primary mb-3">Submit New Claim</a>
-</p>
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">Claims List</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <div class="table-responsive">
+            <table class="table table-hover dashboard-table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClaimId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Enrollment)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClaimAmount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClaimReason)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClaimDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClaimStatus)
+                        </th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClaimId)
+                                </td>
+                                <td>
+                                    Enrollment ID: @Html.DisplayFor(modelItem => item.EnrollmentId)<br />
+                                    Policy: @Html.DisplayFor(modelItem => item.Enrollment.Policy.PolicyName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClaimAmount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClaimReason)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClaimDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClaimStatus)
+                                </td>
+                                <td class="text-center">
+                                    <a asp-action="GetClaimDetails" asp-route-id="@item.ClaimId" class="btn btn-sm btn-outline-secondary modern-action-btn" title="Details">
+                                        <i class="fas fa-info-circle"></i> Details
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No claims found. Click "Submit New Claim" to add one.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-@* Apply Bootstrap table classes for styling *@
-<table class="table table-striped table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ClaimId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enrollment) @* Display name for the navigation property *@
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClaimAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClaimReason)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClaimDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClaimStatus)
-            </th>
-            <th></th> @* Column for action links (Details, Update Status) *@
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClaimId)
-                </td>
-                <td>
-                    @* Display details from the related Enrollment and Policy *@
-                    Enrollment ID: @Html.DisplayFor(modelItem => item.EnrollmentId)<br />
-                    Policy: @Html.DisplayFor(modelItem => item.Enrollment.Policy.PolicyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClaimAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClaimReason)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClaimDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClaimStatus)
-                </td>
-                <td>
-                    @* Action links for each claim with Bootstrap button classes *@
-                    <a asp-action="GetClaimDetails" asp-route-id="@item.ClaimId" class="btn btn-sm btn-secondary">Details</a>
-                    
-                    @* You might add a Delete link here as well if needed *@
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@* Display error message with Bootstrap alert classes *@
 @if (ViewBag.ErrorMessage != null)
 {
     <div class="alert alert-danger mt-3">
@@ -82,4 +97,5 @@
     </div>
 }
 
-
+@section Scripts {
+}

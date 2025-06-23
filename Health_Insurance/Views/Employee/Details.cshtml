@@ -1,69 +1,73 @@
 ﻿@model Health_Insurance.Models.Employee
-@* Ensure the model namespace is correct based on your project name *@
 
 @{
     ViewData["Title"] = "Employee Details";
 }
 
-<h1 class="mb-4">Employee Details</h1>
-
-<div>
-    <h4>Employee</h4>
-    <hr />
-    @* Use Bootstrap row and column for layout and display classes *@
-    <dl class="row">
-        @* Use dl, dt, dd with row/col for definition list layout *@
-        @* Displaying each property of the Employee model *@
-        <dt class="col-sm-3">
-            @* Use column for label *@
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-9">
-            @* Use column for value *@
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Designation)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Designation)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Organization)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Organization.OrganizationName)
-        </dd>
-        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Username)</dt>
-        <dd class="col-sm-9">@Html.DisplayFor(model => model.Username)</dd>
-
-        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CreateDate)</dt> @* NEW ROW *@
-        <dd class="col-sm-9">@(Model.CreateDate.ToString("yyyy-MM-dd"))</dd>
-    </dl>
+<div class="dashboard-header">
+    <h1>@ViewData["Title"]</h1>
 </div>
-<div class="mt-3">
-    @* Added margin-top *@
-    @* Link to the Edit action, passing the current EmployeeId with Bootstrap button class *@
-    <a asp-action="Edit" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Edit</a> |
-    @* Link back to the Employee Index page *@
-    <a asp-action="Index">Back to List</a>
+
+<div class="dashboard-card">
+    <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">Employee Information</h2>
+    </div>
+    <div class="dashboard-card-body">
+        <div class="details-summary-card">
+            <h4>Details for: @Model?.Name</h4>
+            <hr />
+            <dl class="row detail-list-custom">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Phone)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Designation)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Designation)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Organization)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Organization.OrganizationName)
+                </dd>
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Username)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Username)</dd>
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CreateDate)</dt>
+                <dd class="col-sm-9">@(Model.CreateDate.ToString("yyyy-MM-dd"))</dd>
+            </dl>
+        </div>
+
+        <div class="button-group-spacing">
+            <a asp-action="Edit" asp-route-id="@Model.EmployeeId" class="btn btn-outline-info modern-action-btn">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary modern-action-btn ms-2">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
 </div>
 
