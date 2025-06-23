@@ -235,7 +235,7 @@ namespace Health_Insurance.Controllers
         }
 
         // POST: Employee/Delete/5
-        // Handles the deletion of an employee.
+        // Handles the deletion of an employee....
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
