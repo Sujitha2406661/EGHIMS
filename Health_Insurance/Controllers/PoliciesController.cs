@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization; // Add this using statement
+using Microsoft.AspNetCore.Authorization;
 
 namespace Health_Insurance.Controllers
 {

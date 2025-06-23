@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims; // Needed for User.FindFirst
-using System.Collections.Generic; // Needed for List<T>
-using System.Linq; // Required for LINQ methods like ToList(), Any()
+using System.Security.Claims;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Health_Insurance.Controllers
 {
@@ -17,7 +17,7 @@ namespace Health_Insurance.Controllers
     public class EnrollmentController : Controller
     {
         private readonly IEnrollmentService _enrollmentService;
-        private readonly IPremiumCalculatorService _premiumCalculatorService; // Keep if other Enrollment actions rely on it
+        private readonly IPremiumCalculatorService _premiumCalculatorService;
         private readonly ApplicationDbContext _context;
 
         public EnrollmentController(IEnrollmentService enrollmentService, IPremiumCalculatorService premiumCalculatorService, ApplicationDbContext context)

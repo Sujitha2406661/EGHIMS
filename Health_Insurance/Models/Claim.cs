@@ -2,9 +2,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Mvc.ModelBinding; // For [BindNever]
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Health_Insurance.Models // Ensure this namespace is correct
+namespace Health_Insurance.Models
 {
     public class Claim
     {
@@ -15,22 +15,18 @@ namespace Health_Insurance.Models // Ensure this namespace is correct
         public int EnrollmentId { get; set; }
 
         [ForeignKey("EnrollmentId")]
-        [BindNever] // Prevents model binding from the form, loaded separately
+        [BindNever]
         public virtual Enrollment? Enrollment { get; set; }
 
         [Required(ErrorMessage = "Claim amount is required.")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Claim amount must be greater than 0.")]
-        [Column(TypeName = "decimal(18, 2)")] // Specify decimal precision for SQL Server
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal ClaimAmount { get; set; }
 
         [Required(ErrorMessage = "Claim date is required.")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ClaimDate { get; set; }
-
-        // *** CRITICAL: ENSURE [Required] IS ABSOLUTELY REMOVED FROM THIS LINE ***
-        // If it's conditionally required (e.g., only for 'Rejected' claims),
-        // you would handle that logic in the controller or a separate ViewModel.
         [StringLength(500, ErrorMessage = "Claim reason cannot exceed 500 characters.")]
         public string ClaimReason { get; set; }
 

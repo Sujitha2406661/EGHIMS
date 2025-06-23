@@ -1,12 +1,12 @@
 ﻿// Controllers/ReportController.cs
-using Health_Insurance.Models; // Ensure this namespace is correct for your Models
-using Health_Insurance.Services; // Ensure this namespace is correct for IReportService
-using Microsoft.AspNetCore.Authorization; // For [Authorize]
+using Health_Insurance.Models;
+using Health_Insurance.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic; // For List<T>
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Health_Insurance.Controllers // Ensure this namespace is correct
+namespace Health_Insurance.Controllers
 {
     // Restrict all actions in this controller to users with the "Admin" or "HR" role.
     [Authorize(Roles = "Admin,HR")]
@@ -82,14 +82,10 @@ namespace Health_Insurance.Controllers // Ensure this namespace is correct
                         contentType = "text/csv";
                         break;
                     case "excel":
-                        contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; // Standard for .xlsx
-                        // Note: Full Excel export requires EPPlus or similar library to be integrated into ReportService.
-                        // Currently, ReportService.cs throws NotSupportedException for Excel.
+                        contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                         break;
                     case "pdf":
-                        contentType = "application/pdf";
-                        // Note: Full PDF export requires a PDF generation library.
-                        // Currently, ReportService.cs throws NotSupportedException for PDF.
+                        contentType = "application/pdf"
                         break;
                     default:
                         return BadRequest("Unsupported format.");

@@ -1,15 +1,15 @@
 ﻿// Controllers/PremiumCalculatorController.cs
 using Health_Insurance.Models;
-using Health_Insurance.Services; // Ensure this namespace is correct for IPremiumCalculatorService
-using Microsoft.AspNetCore.Authorization; // For [Authorize]
+using Health_Insurance.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering; // For SelectList
-using Microsoft.EntityFrameworkCore; // For ToListAsync
-using Health_Insurance.Data; // For ApplicationDbContext
-using System.Linq; // For LINQ queries
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Health_Insurance.Data;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Claims; // For User.FindFirst
-using System.Collections.Generic; // For List<T>
+using System.Security.Claims;
+using System.Collections.Generic;
 
 namespace Health_Insurance.Controllers
 {

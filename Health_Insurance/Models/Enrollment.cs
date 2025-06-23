@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Health_Insurance.Models // Ensure this namespace is correct based on your project name
+namespace Health_Insurance.Models
 {
     // Represents an Enrollment entity, mapping to the Enrollment table in the database.
     public class Enrollment
@@ -15,7 +15,7 @@ namespace Health_Insurance.Models // Ensure this namespace is correct based on y
         public int EmployeeId { get; set; }
 
         // Navigation property to the related Employee
-        [ForeignKey("EmployeeId")] // Specifies the foreign key property
+        [ForeignKey("EmployeeId")]
         public virtual Employee Employee { get; set; }
 
         // Foreign Key to the Policy table
@@ -34,9 +34,6 @@ namespace Health_Insurance.Models // Ensure this namespace is correct based on y
         [StringLength(20)]
         // You might add validation here or in a Service layer to restrict values to 'ACTIVE', 'CANCELLED'
         public string Status { get; set; }
-
-        // Navigation property for Claims related to this Enrollment (if needed)
-        // public virtual ICollection<Claim> Claims { get; set; }
     }
 }
 

@@ -1,9 +1,9 @@
 ﻿// Services/IClaimService.cs
-using Health_Insurance.Models; // Ensure namespace is correct for your Models
+using Health_Insurance.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Health_Insurance.Services // Ensure this namespace is correct for your Services folder
+namespace Health_Insurance.Services
 {
     // Interface defining the contract for the Claim Service
     public interface IClaimService

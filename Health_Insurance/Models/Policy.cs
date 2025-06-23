@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Health_Insurance.Models // Ensure this namespace is correct based on your project name
+namespace Health_Insurance.Models
 {
     // Represents a Policy entity, mapping to the Policy table in the database.
     public class Policy
@@ -29,9 +29,6 @@ namespace Health_Insurance.Models // Ensure this namespace is correct based on y
         [StringLength(20)]
         // You might add validation here or in a Service layer to restrict values to 'INDIVIDUAL', 'FAMILY'
         public string PolicyType { get; set; }
-
-        // Navigation property for Enrollments related to this Policy (if needed)
-        // public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }
 

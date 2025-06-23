@@ -1,9 +1,9 @@
 ﻿// Services/IReportService.cs
-using Health_Insurance.Models; // Ensure this namespace is correct
+using Health_Insurance.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Health_Insurance.Services // Ensure this namespace is correct
+namespace Health_Insurance.Services
 {
     // Interface defining the contract for the Reporting Service.
     public interface IReportService
@@ -22,10 +22,8 @@ namespace Health_Insurance.Services // Ensure this namespace is correct
         // Method to get data for a list of all claims
         Task<List<Claim>> GenerateAllClaimsReportAsync();
 
-        // Method to export report data to different formats (e.g., CSV, PDF, Excel).
+        // Method to export report data to different formats CSV & PDF
         // The return type can be a byte array for file content, or stream.
-        // For simplicity, we'll start with a basic string for CSV, then potentially byte array.
-        // Parameters: reportType (e.g., "Employee", "Policy"), format (e.g., "CSV", "Excel").
-        Task<byte[]> ExportReportAsync(string reportType, string format); // Return byte array for file content
+        Task<byte[]> ExportReportAsync(string reportType, string format);
     }
 }

@@ -1,7 +1,7 @@
 ﻿// Models/Admin.cs
 using System.ComponentModel.DataAnnotations;
 
-namespace Health_Insurance.Models // Ensure this namespace is correct based on your project name
+namespace Health_Insurance.Models
 {
     // Represents an Admin user for login purposes
     public class Admin
@@ -19,6 +19,6 @@ namespace Health_Insurance.Models // Ensure this namespace is correct based on y
 
         [Required]
         [StringLength(100)]
-        public string Name { get; set; } // Admin's full name
+        public string Name { get; set; }
     }
 }

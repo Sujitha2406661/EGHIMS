@@ -1,9 +1,9 @@
 ﻿// Services/IEnrollmentService.cs
-using Health_Insurance.Models; // Ensure namespace is correct
+using Health_Insurance.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Health_Insurance.Services // Ensure this namespace is correct
+namespace Health_Insurance.Services
 {
     // Interface defining the contract for the Enrollment Service
     public interface IEnrollmentService
@@ -19,8 +19,6 @@ namespace Health_Insurance.Services // Ensure this namespace is correct
 
         // Method to handle the cancellation of an employee's enrollment
         Task<bool> CancelEnrollmentAsync(int enrollmentId);
-
-        // You might add other methods as needed, e.g., GetPolicyDetails, GetEnrollmentDetails
     }
 }
 

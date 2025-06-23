@@ -1,16 +1,16 @@
 ﻿// Controllers/ClaimController.cs
-using Health_Insurance.Data; // Ensure namespace is correct for your DbContext
-using Health_Insurance.Models; // Ensure namespace is correct for your Models
-using Health_Insurance.Services; // Ensure namespace is correct for your Services
+using Health_Insurance.Data;
+using Health_Insurance.Models;
+using Health_Insurance.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore; // Needed for .ToListAsync(), .Include()
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims; // Still needed for ClaimTypes, ClaimsPrincipal, etc.
-using System; // For generic Exception handling
+using System.Security.Claims; 
+using System;
 
 namespace Health_Insurance.Controllers
 {
@@ -30,7 +30,7 @@ namespace Health_Insurance.Controllers
         // GET: /Claim/ListAllClaims or /Claim
         // Accessible to all authenticated users.
         // Admins see all claims. Employees see only their own claims.
-        public async Task<IActionResult> ListAllClaims(int? employeeId = null) // Make employeeId nullable
+        public async Task<IActionResult> ListAllClaims(int? employeeId = null) 
         {
             IEnumerable<Health_Insurance.Models.Claim> claims; // Explicitly use your model's Claim
 
@@ -44,7 +44,7 @@ namespace Health_Insurance.Controllers
                 System.Security.Claims.Claim employeeIdClaim = User.FindFirst("EmployeeId");
                 if (employeeIdClaim == null || !int.TryParse(employeeIdClaim.Value, out int actualEmployeeId))
                 {
-                    return Forbid(); // EmployeeId claim missing or invalid
+                    return Forbid(); 
                 }
 
                 // Employee sees only their own claims, ensure the parameter matches logged-in user
@@ -117,7 +117,6 @@ namespace Health_Insurance.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitClaim([Bind("ClaimId,EnrollmentId,ClaimAmount,ClaimReason,ClaimDate")] Health_Insurance.Models.Claim claim)
         {
-            // CRITICAL FIX: Set ClaimStatus to SUBMITTED before ModelState.IsValid check
             // Because ClaimStatus is [Required] in the model, and not bound from the form.
             claim.ClaimStatus = "SUBMITTED";
 
@@ -139,7 +138,6 @@ namespace Health_Insurance.Controllers
                 }
             }
 
-            // --- NEW VALIDATION: Claim Amount vs. Policy Coverage Amount ---
             // Fetch the enrollment *with* its policy details to get coverage amount
             var claimEnrollment = await _context.Enrollments
                                                 .Include(e => e.Policy)

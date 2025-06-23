@@ -7,8 +7,6 @@ namespace Health_Insurance.Models
     {
         public int TotalEmployees { get; set; }
         public int TotalOrganizations { get; set; }
-        // Remove or comment out this line if you don't use it:
-        // public int ActivePoliciesCount { get; set; }
         public int TotalClaimsSubmitted { get; set; }
         public int PendingClaimsCount { get; set; }
         public int ActivePoliciesCount { get; set; }

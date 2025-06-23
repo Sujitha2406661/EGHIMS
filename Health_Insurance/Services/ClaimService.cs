@@ -1,16 +1,16 @@
 ﻿// Services/ClaimService.cs
-using Health_Insurance.Data; // Ensure namespace is correct for your DbContext
-using Health_Insurance.Models; // Ensure namespace is correct for your Models
+using Health_Insurance.Data;
+using Health_Insurance.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Health_Insurance.Services // Ensure this namespace is correct for your Services folder
+namespace Health_Insurance.Services
 {
     // Implementation of the Claim Service
-    public class ClaimService : IClaimService // Explicitly implement the interface
+    public class ClaimService : IClaimService
     {
         private readonly ApplicationDbContext _context; // DbContext for database interaction
 
@@ -55,8 +55,8 @@ namespace Health_Insurance.Services // Ensure this namespace is correct for your
         {
             // Find the claim by ID, include the related Enrollment and Policy for details
             return await _context.Claims
-                .Include(c => c.Enrollment) // Include Enrollment details
-                .ThenInclude(e => e.Policy) // Then include Policy details from Enrollment
+                .Include(c => c.Enrollment)
+                .ThenInclude(e => e.Policy)
                 .FirstOrDefaultAsync(c => c.ClaimId == claimId);
         }
 
@@ -98,9 +98,6 @@ namespace Health_Insurance.Services // Ensure this namespace is correct for your
                .ThenInclude(e => e.Policy)
                .ToListAsync();
         }
-
-        // You would add more complex business logic here as needed
-        // e.g., logic for claim validation rules, processing approval/rejection
     }
 }
 

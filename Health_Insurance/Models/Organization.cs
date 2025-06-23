@@ -19,6 +19,13 @@ namespace Health_Insurance.Models
         [Display(Name = "Contact Person")]
         public string ContactPerson { get; set; }
 
+        // --- REMOVED PhoneNumber as it's not in your database ---
+        //[StringLength(15)]
+        //[RegularExpression(@"^[0-9]+$", ErrorMessage = "Phone number can only contain numbers.")]
+        //[Display(Name = "Phone Number")]
+        //public string PhoneNumber { get; set; }
+
+        // --- RENAMED EmailAddress to ContactEmail to match your database ---
         [StringLength(100)]
         [EmailAddress(ErrorMessage = "Invalid Email Address.")]
         [Display(Name = "Contact Email")] // Updated Display Name
